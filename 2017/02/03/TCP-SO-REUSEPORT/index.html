@@ -1,0 +1,717 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="tcp," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="当前Linux网络应用程序问题运行在Linux系统上网络应用程序，为了利用多核的优势，一般使用以下比较典型的多进程/多线程服务器模型：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP SO_REUSEPORT">
+<meta property="og:url" content="https://jamal-jiang.github.io/2017/02/03/TCP-SO-REUSEPORT/index.html">
+<meta property="og:site_name" content="落玄的博客">
+<meta property="og:description" content="当前Linux网络应用程序问题运行在Linux系统上网络应用程序，为了利用多核的优势，一般使用以下比较典型的多进程/多线程服务器模型：">
+<meta property="og:image" content="http://www.blogjava.net/images/blogjava_net/yongboy/Windows-Live-Writer/faa129bf323b_F48B/Image%282%29_thumb.png">
+<meta property="og:image" content="http://www.blogjava.net/images/blogjava_net/yongboy/Windows-Live-Writer/5264ea818301_D4ED/throughput_2.png">
+<meta property="og:image" content="http://www.blogjava.net/images/blogjava_net/yongboy/Windows-Live-Writer/5264ea818301_D4ED/image_thumb_4.png">
+<meta property="og:updated_time" content="2017-02-03T14:33:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP SO_REUSEPORT">
+<meta name="twitter:description" content="当前Linux网络应用程序问题运行在Linux系统上网络应用程序，为了利用多核的优势，一般使用以下比较典型的多进程/多线程服务器模型：">
+<meta name="twitter:image" content="http://www.blogjava.net/images/blogjava_net/yongboy/Windows-Live-Writer/faa129bf323b_F48B/Image%282%29_thumb.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jamal-jiang.github.io/2017/02/03/TCP-SO-REUSEPORT/"/>
+
+
+
+
+
+  <title> TCP SO_REUSEPORT | 落玄的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">落玄的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">落玄的博客</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/03/TCP-SO-REUSEPORT/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                TCP SO_REUSEPORT
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T22:30:37+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tcp/" itemprop="url" rel="index">
+                    <span itemprop="name">Tcp</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="当前Linux网络应用程序问题"><a href="#当前Linux网络应用程序问题" class="headerlink" title="当前Linux网络应用程序问题"></a>当前Linux网络应用程序问题</h4><p>运行在Linux系统上网络应用程序，为了利用多核的优势，一般使用以下比较典型的多进程/多线程服务器模型：<br><a id="more"></a><br>单线程listen/accept，多个工作线程接收任务分发，虽CPU的工作负载不再是问题，但会存在：<br>单线程listener，在处理高速率海量连接时，一样会成为瓶颈<br>CPU缓存行丢失套接字结构(socket structure)现象严重<br>所有工作线程都accept()在同一个服务器套接字上呢，一样存在问题：<br>多线程访问server socket锁竞争严重<br>高负载下，线程之间处理不均衡，有时高达3:1不均衡比例<br>导致CPU缓存行跳跃(cache line bouncing)<br>在繁忙CPU上存在较大延迟<br>上面模型虽然可以做到线程和CPU核绑定，但都会存在：</p>
+<p>单一listener工作线程在高速的连接接入处理时会成为瓶颈<br>缓存行跳跃<br>很难做到CPU之间的负载均衡<br>随着核数的扩展，性能并没有随着提升<br>比如HTTP CPS(Connection Per Second)吞吐量并没有随着CPU核数增加呈现线性增长：<br><img src="http://www.blogjava.net/images/blogjava_net/yongboy/Windows-Live-Writer/faa129bf323b_F48B/Image%282%29_thumb.png" alt="image"><br>Linux kernel 3.9带来了SO_REUSEPORT特性，可以解决以上大部分问题。</p>
+<h4 id="SO-REUSEPORT解决了什么问题"><a href="#SO-REUSEPORT解决了什么问题" class="headerlink" title="SO_REUSEPORT解决了什么问题"></a>SO_REUSEPORT解决了什么问题</h4><p>linux man文档中一段文字描述其作用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">The new socket option allows multiple sockets on the same host to bind to the same port, and is intended to improve the performance of multithreaded network server applications running on top of multicore systems.</div></pre></td></tr></table></figure></p>
+<p>SO_REUSEPORT支持多个进程或者线程绑定到同一端口，提高服务器程序的性能，解决的问题：</p>
+<ul>
+<li>允许多个套接字 bind()/listen() 同一个TCP/UDP端口<ul>
+<li>每一个线程拥有自己的服务器套接字</li>
+<li>在服务器套接字上没有了锁的竞争</li>
+</ul>
+</li>
+<li>内核层面实现负载均衡</li>
+<li>安全层面，监听同一个端口的套接字只能位于同一个用户下面<br>其核心的实现主要有三点：</li>
+<li>扩展 socket option，增加 SO_REUSEPORT 选项，用来设置 reuseport。</li>
+<li>修改 bind 系统调用实现，以便支持可以绑定到相同的 IP 和端口</li>
+<li>修改处理新建连接的实现，查找 listener 的时候，能够支持在监听相同 IP 和端口的多个 sock 之间均衡选择。<br>代码分析，可以参考引用资料 [多个进程绑定相同端口的实现分析[Google Patch]]。<h5 id="CPU之间平衡处理，水平扩展"><a href="#CPU之间平衡处理，水平扩展" class="headerlink" title="CPU之间平衡处理，水平扩展"></a>CPU之间平衡处理，水平扩展</h5>以前通过fork形式创建多个子进程，现在有了SO_REUSEPORT，可以不用通过fork的形式，让多进程监听同一个端口，各个进程中accept socket fd不一样，有新连接建立时，内核只会唤醒一个进程来accept，并且保证唤醒的均衡性。<br>模型简单，维护方便了，进程的管理和应用逻辑解耦，进程的管理水平扩展权限下放给程序员/管理员，可以根据实际进行控制进程启动/关闭，增加了灵活性。<br>这带来了一个较为微观的水平扩展思路，线程多少是否合适，状态是否存在共享，降低单个进程的资源依赖，针对无状态的服务器架构最为适合了。<h5 id="新特性测试或多个版本共存"><a href="#新特性测试或多个版本共存" class="headerlink" title="新特性测试或多个版本共存"></a>新特性测试或多个版本共存</h5>可以很方便的测试新特性，同一个程序，不同版本同时运行中，根据运行结果决定新老版本更迭与否。<br>针对对客户端而言，表面上感受不到其变动，因为这些工作完全在服务器端进行。<h5 id="服务器无缝重启-切换"><a href="#服务器无缝重启-切换" class="headerlink" title="服务器无缝重启/切换"></a>服务器无缝重启/切换</h5>想法是，我们迭代了一版本，需要部署到线上，为之启动一个新的进程后，稍后关闭旧版本进程程序，服务一直在运行中不间断，需要平衡过度。这就像Erlang语言层面所提供的热更新一样。<br>想法不错，但是实际操作起来，就不是那么平滑了，还好有一个hubtime开源工具，原理为SIGHUP信号处理器+SO_REUSEPORT+LD_RELOAD，可以帮助我们轻松做到，有需要的同学可以检出试用一下。<a href="https://github.com/amscanne/huptime" target="_blank" rel="external">https://github.com/amscanne/huptime</a></li>
+</ul>
+<h4 id="SO-REUSEPORT已知问题"><a href="#SO-REUSEPORT已知问题" class="headerlink" title="SO_REUSEPORT已知问题"></a>SO_REUSEPORT已知问题</h4><p>SO_REUSEPORT根据数据包的四元组{src ip, src port, dst ip, dst port}和当前绑定同一个端口的服务器套接字数量进行数据包分发。若服务器套接字数量产生变化，内核会把本该上一个服务器套接字所处理的客户端连接所发送的数据包（比如三次握手期间的半连接，以及已经完成握手但在队列中排队的连接）分发到其它的服务器套接字上面，可能会导致客户端请求失败，一般可以使用：</p>
+<ul>
+<li>使用固定的服务器套接字数量，不要在负载繁忙期间轻易变化</li>
+<li>允许多个服务器套接字共享TCP请求表(Tcp request table)</li>
+<li>不使用四元组作为Hash值进行选择本地套接字处理，挑选隶属于同一个CPU的套接字<br>与RFS/RPS/XPS-mq协作，可以获得进一步的性能：</li>
+<li>服务器线程绑定到CPUs</li>
+<li>RPS分发TCP SYN包到对应CPU核上</li>
+<li>TCP连接被已绑定到CPU上的线程accept()</li>
+<li>XPS-mq(Transmit Packet Steering for - multiqueue)，传输队列和CPU绑定，发送数据</li>
+<li>RFS/RPS保证同一个连接后续数据包都会被分发到同一个CPU上</li>
+<li>网卡接收队列已经绑定到CPU，则RFS/RPS则无须设置</li>
+<li>需要注意硬件支持与否<br>目的嘛，数据包的软硬中断、接收、处理等在一个CPU核上，并行化处理，尽可能做到资源利用最大化。</li>
+</ul>
+<h4 id="SO-REUSEPORT不是一贴万能膏药"><a href="#SO-REUSEPORT不是一贴万能膏药" class="headerlink" title="SO_REUSEPORT不是一贴万能膏药"></a>SO_REUSEPORT不是一贴万能膏药</h4><p>虽然SO_REUSEPORT解决了多个进程共同绑定/监听同一端口的问题，但根据新浪林晓峰同学测试结果来看，在多核扩展层面也未能够做到理想的线性扩展：<br><img src="http://www.blogjava.net/images/blogjava_net/yongboy/Windows-Live-Writer/5264ea818301_D4ED/throughput_2.png" alt="image"><br>可以参考Fastsocket在其基础之上的改进:<a href="http://www.blogjava.net/yongboy/archive/2015/02/05/422760.html" target="_blank" rel="external">http://www.blogjava.net/yongboy/archive/2015/02/05/422760.html</a></p>
+<h4 id="支持SO-REUSEPORT的Tengine"><a href="#支持SO-REUSEPORT的Tengine" class="headerlink" title="支持SO_REUSEPORT的Tengine"></a>支持SO_REUSEPORT的Tengine</h4><p>淘宝的Tengine已经支持了SO_REUSEPORT特性，在其测试报告中，有一个简单测试，可以看出来相对比SO_REUSEPORT所带来的性能提升：<br><img src="http://www.blogjava.net/images/blogjava_net/yongboy/Windows-Live-Writer/5264ea818301_D4ED/image_thumb_4.png" alt="image"><br>使用SO_REUSEPORT以后，最明显的效果是在压力下不容易出现丢请求的情况，CPU均衡性平稳。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tcp/" rel="tag"># tcp</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/03/升级CentOS6.5内核，开启Nginx的fastopen和reuseport特性/" rel="next" title="升级CentOS6.5内核，开启Nginx的fastopen和reuseport特性">
+                <i class="fa fa-chevron-left"></i> 升级CentOS6.5内核，开启Nginx的fastopen和reuseport特性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="jamal-jiang" />
+          <p class="site-author-name" itemprop="name">jamal-jiang</p>
+          <p class="site-description motion-element" itemprop="description">落玄,技术博客</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#当前Linux网络应用程序问题"><span class="nav-number">1.</span> <span class="nav-text">当前Linux网络应用程序问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SO-REUSEPORT解决了什么问题"><span class="nav-number">2.</span> <span class="nav-text">SO_REUSEPORT解决了什么问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CPU之间平衡处理，水平扩展"><span class="nav-number">2.1.</span> <span class="nav-text">CPU之间平衡处理，水平扩展</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#新特性测试或多个版本共存"><span class="nav-number">2.2.</span> <span class="nav-text">新特性测试或多个版本共存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#服务器无缝重启-切换"><span class="nav-number">2.3.</span> <span class="nav-text">服务器无缝重启/切换</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SO-REUSEPORT已知问题"><span class="nav-number">3.</span> <span class="nav-text">SO_REUSEPORT已知问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SO-REUSEPORT不是一贴万能膏药"><span class="nav-number">4.</span> <span class="nav-text">SO_REUSEPORT不是一贴万能膏药</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#支持SO-REUSEPORT的Tengine"><span class="nav-number">5.</span> <span class="nav-text">支持SO_REUSEPORT的Tengine</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jamal-jiang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

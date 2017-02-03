@@ -84,12 +84,12 @@
 
 
 
-<meta name="description" content="一、工作原理从图中可以看到，实际上https是在tcp层和http层中间插入了一层ssl层，对应到一般的业务架构中，会在前端设置成nginx + tomcat的模式，用nginx来做证书卸载和负载均衡，tomcat做实际的服务；而在实际的抓包过程中，会发现在常规的tcp三次握手之后，还会有ssl的握手过程，在握手之后的实际的业务请求中，也是ssl协议的报文。那么ssl是怎么做客户端和服务端的连接建">
+<meta name="description" content="一、工作原理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="https连接都发生了什么">
 <meta property="og:url" content="https://jamal-jiang.github.io/2017/02/03/https连接都发生了什么/index.html">
 <meta property="og:site_name" content="落玄的博客">
-<meta property="og:description" content="一、工作原理从图中可以看到，实际上https是在tcp层和http层中间插入了一层ssl层，对应到一般的业务架构中，会在前端设置成nginx + tomcat的模式，用nginx来做证书卸载和负载均衡，tomcat做实际的服务；而在实际的抓包过程中，会发现在常规的tcp三次握手之后，还会有ssl的握手过程，在握手之后的实际的业务请求中，也是ssl协议的报文。那么ssl是怎么做客户端和服务端的连接建">
+<meta property="og:description" content="一、工作原理">
 <meta property="og:image" content="http://img.blog.csdn.net/20161228120332868?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20161228120415792?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20161228120523699?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
@@ -100,10 +100,10 @@
 <meta property="og:image" content="https://jamal-jiang.github.io/media/14814262622015/14814641364720.jpg">
 <meta property="og:image" content="https://jamal-jiang.github.io/media/14814262622015/14814643735654.jpg">
 <meta property="og:image" content="https://jamal-jiang.github.io/media/14814262622015/14814647513912.jpg">
-<meta property="og:updated_time" content="2017-02-03T14:13:32.000Z">
+<meta property="og:updated_time" content="2017-02-03T14:33:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="https连接都发生了什么">
-<meta name="twitter:description" content="一、工作原理从图中可以看到，实际上https是在tcp层和http层中间插入了一层ssl层，对应到一般的业务架构中，会在前端设置成nginx + tomcat的模式，用nginx来做证书卸载和负载均衡，tomcat做实际的服务；而在实际的抓包过程中，会发现在常规的tcp三次握手之后，还会有ssl的握手过程，在握手之后的实际的业务请求中，也是ssl协议的报文。那么ssl是怎么做客户端和服务端的连接建">
+<meta name="twitter:description" content="一、工作原理">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20161228120332868?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
@@ -358,7 +358,7 @@
       
 
       
-        <h4 id="一、工作原理"><a href="#一、工作原理" class="headerlink" title="一、工作原理"></a>一、工作原理</h4><p><img src="http://img.blog.csdn.net/20161228120332868?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>从图中可以看到，实际上https是在tcp层和http层中间插入了一层ssl层，对应到一般的业务架构中，会在前端设置成nginx + tomcat的模式，用nginx来做证书卸载和负载均衡，tomcat做实际的服务；而在实际的抓包过程中，会发现在常规的tcp三次握手之后，还会有ssl的握手过程，在握手之后的实际的业务请求中，也是ssl协议的报文。<br>那么ssl是怎么做客户端和服务端的连接建立的呢？我们来看下面的一张图：<br><img src="http://img.blog.csdn.net/20161228120415792?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>上图是在tcp连接已经建立好了之后，开始的ssl的连接过程，过程可以分为以下几步：</p>
+        <h4 id="一、工作原理"><a href="#一、工作原理" class="headerlink" title="一、工作原理"></a>一、工作原理</h4><p><img src="http://img.blog.csdn.net/20161228120332868?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br><a id="more"></a><br>从图中可以看到，实际上https是在tcp层和http层中间插入了一层ssl层，对应到一般的业务架构中，会在前端设置成nginx + tomcat的模式，用nginx来做证书卸载和负载均衡，tomcat做实际的服务；而在实际的抓包过程中，会发现在常规的tcp三次握手之后，还会有ssl的握手过程，在握手之后的实际的业务请求中，也是ssl协议的报文。<br>那么ssl是怎么做客户端和服务端的连接建立的呢？我们来看下面的一张图：<br><img src="http://img.blog.csdn.net/20161228120415792?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>上图是在tcp连接已经建立好了之后，开始的ssl的连接过程，过程可以分为以下几步：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(1) client hello: 客户端向服务端发出ssl/tls协议的版本号、一个随机数(client random)和客户端支持的ssl加密算法列表；</div><div class="line">(2) server hello: 服务端确认双方使用的ssl加密算法，并给出服务端的数字证书和一个随机数(server random)；</div><div class="line">(3) 客户端确认证书有效，然后生成一个新的随机数(Premaster secret)，并使用数字证书中的公钥加密这个随机数，发给服务端；</div><div class="line">(4) 服务端使用自己的私钥解析客户端发来的随机数；</div><div class="line">(5) 客户端和服务端根据约定的加密算法，使用前面的三个随机数，生成秘钥(session key)，用来加密接下来的整个会话过程；</div></pre></td></tr></table></figure>
 <p>以上过程，用表格来表示，即是：</p>
 <table>
@@ -513,7 +513,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

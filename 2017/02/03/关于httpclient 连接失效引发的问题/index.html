@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="###　一　排查过程使用的httpclient客户端，版本是：12345&amp;lt;dependency&amp;gt;        &amp;lt;groupId&amp;gt;org.apache.httpcomponents&amp;lt;/groupId&amp;gt;        &amp;lt;artifactId&amp;gt;httpclient&amp;lt;/artifactId&amp;gt;        &amp;lt;version&amp;gt;4.3.">
+<meta name="description" content="###　一　排查过程使用的httpclient客户端，版本是：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于httpclient 连接失效引发的问题">
 <meta property="og:url" content="https://jamal-jiang.github.io/2017/02/03/关于httpclient 连接失效引发的问题/index.html">
 <meta property="og:site_name" content="落玄的博客">
-<meta property="og:description" content="###　一　排查过程使用的httpclient客户端，版本是：12345&amp;lt;dependency&amp;gt;        &amp;lt;groupId&amp;gt;org.apache.httpcomponents&amp;lt;/groupId&amp;gt;        &amp;lt;artifactId&amp;gt;httpclient&amp;lt;/artifactId&amp;gt;        &amp;lt;version&amp;gt;4.3.">
+<meta property="og:description" content="###　一　排查过程使用的httpclient客户端，版本是：">
 <meta property="og:image" content="http://img.blog.csdn.net/20161225215510947?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20161225220505111?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-02-03T14:15:23.000Z">
+<meta property="og:updated_time" content="2017-02-03T14:33:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于httpclient 连接失效引发的问题">
-<meta name="twitter:description" content="###　一　排查过程使用的httpclient客户端，版本是：12345&amp;lt;dependency&amp;gt;        &amp;lt;groupId&amp;gt;org.apache.httpcomponents&amp;lt;/groupId&amp;gt;        &amp;lt;artifactId&amp;gt;httpclient&amp;lt;/artifactId&amp;gt;        &amp;lt;version&amp;gt;4.3.">
+<meta name="twitter:description" content="###　一　排查过程使用的httpclient客户端，版本是：">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20161225215510947?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
@@ -350,7 +350,7 @@
       
 
       
-        <p>###　一　排查过程<br>使用的httpclient客户端，版本是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;httpclient&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;4.3.2&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+        <p>###　一　排查过程<br>使用的httpclient客户端，版本是：<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;httpclient&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;4.3.2&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
 <p>在生产环境发现有时会报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">org.apache.http.NoHttpResponseException: The target server failed to respond</div></pre></td></tr></table></figure></p>
 <p>怀疑是Nginx超时之后连接不可用，但是连接池里面没有剔除导致，为了简化排错，在本地直接设置了一个线程循环跑，把sleep时间调整成Nginx超时时间5s，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">DefaultHttpClient httpClient = new DefaultHttpClient();</div><div class="line">        httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));</div><div class="line">        HttpGet httpGet = new HttpGet(&quot;http://192.168.31.176/index_10s.html&quot;);</div><div class="line">        httpGet.addHeader(&quot;User-Agent&quot;, USER_AGENT);</div><div class="line">        CloseableHttpResponse httpResponse = null;</div><div class="line">        for (int i = 0; i &lt; 100; i++)</div><div class="line">            try &#123;</div><div class="line">                httpResponse = httpClient.execute(httpGet);</div><div class="line">                System.out.println(&quot;GET Response Status:: &quot;</div><div class="line">                        + httpResponse.getStatusLine().getStatusCode());</div><div class="line">                BufferedReader reader = null;</div><div class="line">                reader = new BufferedReader(new InputStreamReader(</div><div class="line">                        httpResponse.getEntity().getContent()));</div><div class="line">                String inputLine;</div><div class="line">                StringBuffer response = new StringBuffer();</div><div class="line">                while ((inputLine = reader.readLine()) != null) &#123;</div><div class="line">                    response.append(inputLine);</div><div class="line">                &#125;</div><div class="line">                Thread.sleep(5000);</div><div class="line">            &#125; catch (IOException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125; catch (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div></pre></td></tr></table></figure></p>
 <p>这里把httpclient设置成了不重试的机制。在跑了之后，发现确实出现了NoHttpResponseException报错。<br>把当时的包抓下来，看到如下所示：<br><img src="http://img.blog.csdn.net/20161225215510947?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"></p>
@@ -467,7 +467,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

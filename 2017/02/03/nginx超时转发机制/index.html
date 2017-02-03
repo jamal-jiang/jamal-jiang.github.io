@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="nginx超时转发机制配置在配置nginx的时候，我们经常会配置upstream来配置后端转发的一些规则，最常见的就是nginx后面挂了几台tomcat的机器，upstream写法如下示例：
-1234upstream linuxidc &amp;#123;      server 192.168.31.114:8080;      server 192.168.31.223:8080;&amp;#125;
-下面是">
+<meta name="description" content="nginx超时转发机制配置在配置nginx的时候，我们经常会配置upstream来配置后端转发的一些规则，最常见的就是nginx后面挂了几台tomcat的机器，upstream写法如下示例：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx超时转发机制">
 <meta property="og:url" content="https://jamal-jiang.github.io/2017/02/03/nginx超时转发机制/index.html">
 <meta property="og:site_name" content="落玄的博客">
-<meta property="og:description" content="nginx超时转发机制配置在配置nginx的时候，我们经常会配置upstream来配置后端转发的一些规则，最常见的就是nginx后面挂了几台tomcat的机器，upstream写法如下示例：
-1234upstream linuxidc &amp;#123;      server 192.168.31.114:8080;      server 192.168.31.223:8080;&amp;#125;
-下面是">
-<meta property="og:updated_time" content="2017-02-03T14:19:03.000Z">
+<meta property="og:description" content="nginx超时转发机制配置在配置nginx的时候，我们经常会配置upstream来配置后端转发的一些规则，最常见的就是nginx后面挂了几台tomcat的机器，upstream写法如下示例：">
+<meta property="og:updated_time" content="2017-02-03T14:33:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx超时转发机制">
-<meta name="twitter:description" content="nginx超时转发机制配置在配置nginx的时候，我们经常会配置upstream来配置后端转发的一些规则，最常见的就是nginx后面挂了几台tomcat的机器，upstream写法如下示例：
-1234upstream linuxidc &amp;#123;      server 192.168.31.114:8080;      server 192.168.31.223:8080;&amp;#125;
-下面是">
+<meta name="twitter:description" content="nginx超时转发机制配置在配置nginx的时候，我们经常会配置upstream来配置后端转发的一些规则，最常见的就是nginx后面挂了几台tomcat的机器，upstream写法如下示例：">
 
 
 
@@ -353,8 +347,7 @@
       
 
       
-        <h2 id="nginx超时转发机制"><a href="#nginx超时转发机制" class="headerlink" title="nginx超时转发机制"></a>nginx超时转发机制</h2><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>在配置nginx的时候，我们经常会配置upstream来配置后端转发的一些规则，最常见的就是nginx后面挂了几台tomcat的机器，upstream写法如下示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">upstream linuxidc &#123;</div><div class="line">      server 192.168.31.114:8080;</div><div class="line">      server 192.168.31.223:8080;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <h2 id="nginx超时转发机制"><a href="#nginx超时转发机制" class="headerlink" title="nginx超时转发机制"></a>nginx超时转发机制</h2><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>在配置nginx的时候，我们经常会配置upstream来配置后端转发的一些规则，最常见的就是nginx后面挂了几台tomcat的机器，upstream写法如下示例：<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">upstream linuxidc &#123;</div><div class="line">      server 192.168.31.114:8080;</div><div class="line">      server 192.168.31.223:8080;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>下面是对应的server的配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen       80;</div><div class="line">    server_name  localhost;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_pass http://linuxidc;</div><div class="line">        proxy_connect_timeout 2s;</div><div class="line">        proxy_read_timeout 2s;</div><div class="line">        proxy_send_timeout 2s;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>在nginx中，当一个请求到达后端机器，后端机器因某些原因（load高等等）响应变慢导致超时的时候，nginx会把这个请求转发到另外的后端机器上，这个配置是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">proxy_next_upstream  on;</div></pre></td></tr></table></figure></p>
 <p>在nginx中是默认打开的。以下来做个试验：<br>后端192.168.31.114 192.168.31.223两台机器都是node的一个server，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">192.168.31.114:server.js</div><div class="line">var http = require(&quot;http&quot;); </div><div class="line">http.createServer(function(request, response) &#123; </div><div class="line">    for(var i = 0; i &lt; 1000000; i++) &#123;</div><div class="line">        console.log(i);</div><div class="line">    &#125;</div><div class="line">    response.writeHead(200, &#123;&quot;Content-Type&quot;: &quot;text/plain&quot;&#125;); </div><div class="line">    response.write(&quot;Hello World&quot;); </div><div class="line">    response.end(); </div><div class="line">&#125;).listen(8080);</div><div class="line"></div><div class="line">192.168.31.223:server.js</div><div class="line">var http = require(&quot;http&quot;); </div><div class="line">http.createServer(function(request, response) &#123; </div><div class="line">    response.writeHead(200, &#123;&quot;Content-Type&quot;: &quot;text/plain&quot;&#125;); </div><div class="line">    response.write(&quot;Hello World&quot;);</div><div class="line">    response.end(); </div><div class="line">&#125;).listen(8080);</div></pre></td></tr></table></figure></p>
@@ -474,7 +467,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -84,25 +84,22 @@
 
 
 
-<meta name="description" content="先来看一张整体的大图：
-三次握手先看一下三次握手的过程：1231. 第一次握手：首先由client端发出一个SYN报文，此时SYN=1，ACK=0，tcp协议中规定SYN报文不能携带数据，但是必须消耗一个序列号，这时候的请求如果在网络中失败了，会超时之后重传。此时client端进入一个SYNC-SEND状态，等待server确认；2. 第二次握手：server端收到SYN包之后，回复对方SYN A">
+<meta name="description" content="先来看一张整体的大图：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="tcp三次握手和四次挥手">
 <meta property="og:url" content="https://jamal-jiang.github.io/2017/02/03/tcp三次握手和四次挥手/index.html">
 <meta property="og:site_name" content="落玄的博客">
-<meta property="og:description" content="先来看一张整体的大图：
-三次握手先看一下三次握手的过程：1231. 第一次握手：首先由client端发出一个SYN报文，此时SYN=1，ACK=0，tcp协议中规定SYN报文不能携带数据，但是必须消耗一个序列号，这时候的请求如果在网络中失败了，会超时之后重传。此时client端进入一个SYNC-SEND状态，等待server确认；2. 第二次握手：server端收到SYN包之后，回复对方SYN A">
+<meta property="og:description" content="先来看一张整体的大图：">
 <meta property="og:image" content="http://hi.csdn.net/attachment/201108/7/0_131271823564Rx.gif">
 <meta property="og:image" content="http://img.my.csdn.net/uploads/201210/23/1350985085_3123.jpg">
 <meta property="og:image" content="http://img.my.csdn.net/uploads/201210/23/1350985432_2318.jpg">
 <meta property="og:image" content="http://img.my.csdn.net/uploads/201210/23/1350990937_5362.jpg">
 <meta property="og:image" content="http://hi.csdn.net/attachment/201108/7/0_1312719804oSkK.gif">
 <meta property="og:image" content="http://hi.csdn.net/attachment/201108/7/0_1312719833030b.gif">
-<meta property="og:updated_time" content="2017-02-03T14:17:14.000Z">
+<meta property="og:updated_time" content="2017-02-03T14:33:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tcp三次握手和四次挥手">
-<meta name="twitter:description" content="先来看一张整体的大图：
-三次握手先看一下三次握手的过程：1231. 第一次握手：首先由client端发出一个SYN报文，此时SYN=1，ACK=0，tcp协议中规定SYN报文不能携带数据，但是必须消耗一个序列号，这时候的请求如果在网络中失败了，会超时之后重传。此时client端进入一个SYNC-SEND状态，等待server确认；2. 第二次握手：server端收到SYN包之后，回复对方SYN A">
+<meta name="twitter:description" content="先来看一张整体的大图：">
 <meta name="twitter:image" content="http://hi.csdn.net/attachment/201108/7/0_131271823564Rx.gif">
 
 
@@ -357,7 +354,7 @@
       
 
       
-        <p>先来看一张整体的大图：<br><img src="http://hi.csdn.net/attachment/201108/7/0_131271823564Rx.gif" alt="image"></p>
+        <p>先来看一张整体的大图：<br><img src="http://hi.csdn.net/attachment/201108/7/0_131271823564Rx.gif" alt="image"><br><a id="more"></a></p>
 <h4 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h4><p>先看一下三次握手的过程：<br><img src="http://img.my.csdn.net/uploads/201210/23/1350985085_3123.jpg" alt="image"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. 第一次握手：首先由client端发出一个SYN报文，此时SYN=1，ACK=0，tcp协议中规定SYN报文不能携带数据，但是必须消耗一个序列号，这时候的请求如果在网络中失败了，会超时之后重传。此时client端进入一个SYNC-SEND状态，等待server确认；</div><div class="line">2. 第二次握手：server端收到SYN包之后，回复对方SYN ACK报文，设置SYN=1，ACK=1，seq=y(随机值)，ack=x+1，这时候的请求如果在网络中失败了，会超时之后重传。此时server端进入SYNC_RCVD状态，client端仍在SYNC_SEND状态；</div><div class="line">3. 第三次握手：Client收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给Server，Server检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，Client和Server进入ESTABLISHED状态，完成三次握手，随后Client与Server之间可以开始传输数据了</div></pre></td></tr></table></figure></p>
 <p>这里有一个问题需要阐述一下：为什么client在收到server的SYN ACK报文之后还需要回复一个ACK报文呢？<br><img src="http://img.my.csdn.net/uploads/201210/23/1350985432_2318.jpg" alt="image"></p>
 <h4 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h4><p>由于TCP连接时全双工的，因此，每个方向都必须要单独进行关闭，这一原则是当一方完成数据发送任务后，发送一个FIN来终止这一方向的连接，收到一个FIN只是意味着这一方向上没有数据流动了，即不会再收到数据了，但是在这个TCP连接上仍然能够发送数据，直到这一方向也发送了FIN。首先进行关闭的一方将执行主动关闭，而另一方则执行被动关闭，上图描述的即是如此。<br>看一下四次挥手的过程：<br><img src="http://img.my.csdn.net/uploads/201210/23/1350990937_5362.jpg" alt="image"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. client首先发送FIN=1的报文，此时client端不会再向server发送数据，但是仍然可以接收server的数据，此时client进入FIN-WAIT-1的状态，此时如果网络有问题，client重传FIN包；</div><div class="line">2. server端收到FIN包后，回复一个ACK=1,seq=v,ack=u+1的报文，此时server端进入CLOSE-WAIT状态，此时server端仍然可以向client端发送数据；</div><div class="line">3. server端在数据发送完成之后，向client端发送FIN=1,ACK=1,seq=w,ack=u+1的报文，表示数据已经发送完成，server端不会再向client端发送数据，此时server进入LAST-ACK状态；</div><div class="line">4. client收到server报文后，回复server ACK=1,seq=u+1,ack=w+1的报文，确认连接可以断开，此时client端进入TIME-WAIT状态，server端在收到这个报文后就关闭这个连接，client在两个MSL时间之后，关闭连接；</div></pre></td></tr></table></figure></p>
@@ -478,7 +475,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

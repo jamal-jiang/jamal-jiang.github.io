@@ -1,0 +1,738 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="https," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一、工作原理从图中可以看到，实际上https是在tcp层和http层中间插入了一层ssl层，对应到一般的业务架构中，会在前端设置成nginx + tomcat的模式，用nginx来做证书卸载和负载均衡，tomcat做实际的服务；而在实际的抓包过程中，会发现在常规的tcp三次握手之后，还会有ssl的握手过程，在握手之后的实际的业务请求中，也是ssl协议的报文。那么ssl是怎么做客户端和服务端的连接建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="https连接都发生了什么">
+<meta property="og:url" content="https://jamal-jiang.github.io/2017/02/03/https连接都发生了什么/index.html">
+<meta property="og:site_name" content="落玄的博客">
+<meta property="og:description" content="一、工作原理从图中可以看到，实际上https是在tcp层和http层中间插入了一层ssl层，对应到一般的业务架构中，会在前端设置成nginx + tomcat的模式，用nginx来做证书卸载和负载均衡，tomcat做实际的服务；而在实际的抓包过程中，会发现在常规的tcp三次握手之后，还会有ssl的握手过程，在握手之后的实际的业务请求中，也是ssl协议的报文。那么ssl是怎么做客户端和服务端的连接建">
+<meta property="og:image" content="http://img.blog.csdn.net/20161228120332868?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20161228120415792?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20161228120523699?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20161228120640745?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20161228140247033?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20161229054901625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20161229054813498?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://jamal-jiang.github.io/media/14814262622015/14814641364720.jpg">
+<meta property="og:image" content="https://jamal-jiang.github.io/media/14814262622015/14814643735654.jpg">
+<meta property="og:image" content="https://jamal-jiang.github.io/media/14814262622015/14814647513912.jpg">
+<meta property="og:updated_time" content="2017-02-03T14:13:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="https连接都发生了什么">
+<meta name="twitter:description" content="一、工作原理从图中可以看到，实际上https是在tcp层和http层中间插入了一层ssl层，对应到一般的业务架构中，会在前端设置成nginx + tomcat的模式，用nginx来做证书卸载和负载均衡，tomcat做实际的服务；而在实际的抓包过程中，会发现在常规的tcp三次握手之后，还会有ssl的握手过程，在握手之后的实际的业务请求中，也是ssl协议的报文。那么ssl是怎么做客户端和服务端的连接建">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20161228120332868?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jamal-jiang.github.io/2017/02/03/https连接都发生了什么/"/>
+
+
+
+
+
+  <title> https连接都发生了什么 | 落玄的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">落玄的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">落玄的博客</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/03/https连接都发生了什么/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                https连接都发生了什么
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T22:12:10+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Http/" itemprop="url" rel="index">
+                    <span itemprop="name">Http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="一、工作原理"><a href="#一、工作原理" class="headerlink" title="一、工作原理"></a>一、工作原理</h4><p><img src="http://img.blog.csdn.net/20161228120332868?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>从图中可以看到，实际上https是在tcp层和http层中间插入了一层ssl层，对应到一般的业务架构中，会在前端设置成nginx + tomcat的模式，用nginx来做证书卸载和负载均衡，tomcat做实际的服务；而在实际的抓包过程中，会发现在常规的tcp三次握手之后，还会有ssl的握手过程，在握手之后的实际的业务请求中，也是ssl协议的报文。<br>那么ssl是怎么做客户端和服务端的连接建立的呢？我们来看下面的一张图：<br><img src="http://img.blog.csdn.net/20161228120415792?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>上图是在tcp连接已经建立好了之后，开始的ssl的连接过程，过程可以分为以下几步：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(1) client hello: 客户端向服务端发出ssl/tls协议的版本号、一个随机数(client random)和客户端支持的ssl加密算法列表；</div><div class="line">(2) server hello: 服务端确认双方使用的ssl加密算法，并给出服务端的数字证书和一个随机数(server random)；</div><div class="line">(3) 客户端确认证书有效，然后生成一个新的随机数(Premaster secret)，并使用数字证书中的公钥加密这个随机数，发给服务端；</div><div class="line">(4) 服务端使用自己的私钥解析客户端发来的随机数；</div><div class="line">(5) 客户端和服务端根据约定的加密算法，使用前面的三个随机数，生成秘钥(session key)，用来加密接下来的整个会话过程；</div></pre></td></tr></table></figure>
+<p>以上过程，用表格来表示，即是：</p>
+<table>
+<thead>
+<tr>
+<th>client</th>
+<th>server</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Client Hello</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2. Server Hello    <br> 3. certificate    <br> 4. server_key_exchange    <br> 5. *certificate_request    <br> 6. server_hello_done</td>
+</tr>
+<tr>
+<td>7. <em>certificate    <br> 8. client_key_exchange    <br> 9. </em>certificate_verify    <br> 10. change_cypher_spec</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>11. change_cypher_spec</td>
+</tr>
+</tbody>
+</table>
+<p>下面对连接中的一些细节点做一下解释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">1. ssl/tls握手过程可以分为两种类型：</div><div class="line">    * 单向认证： 客户端会认证服务端身份，服务端不会对客户端进行认证；</div><div class="line">    * 双向认证： 客户端和服务端互相认证，也就是两者之间会交换证书；</div><div class="line">2. 握手过程实际上是通信双发交换协商一个用于对称加密的秘钥的过程，这个过程本身是透明的</div><div class="line">3. 在这个过程中会产生单个随机数: Client Random、Server Random、pre-master secret，其中client server random是明文的，而pre-master是加密的（RSA或DH）。</div><div class="line">4. 根据3中，加密的算法可以选择RSA和DSA算法，这取决于server端使用什么证书。</div><div class="line">   * server使用RSA证书：RSA既可以用作签名也可以用作不对称加密，pre-master secret就是用server的RSA证书中包含的公钥加密的；</div><div class="line">   * server使用DSA证书：DSA只能用作签名，所以还需要使用DH算法来交换密钥；</div><div class="line">5. 上表中涉及到*的表示在双向认证中才会使用到。</div></pre></td></tr></table></figure>
+<h4 id="二、连接过程"><a href="#二、连接过程" class="headerlink" title="二、连接过程"></a>二、连接过程</h4><p>我们使用生成的证书，client端ip: 192.168.31.167 server端ip: 192.168.31.176 server端部署nginx，https配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen       443 ssl;</div><div class="line">    server_name  ssl.alipay.net;</div><div class="line"></div><div class="line">    ssl_certificate      ssl/xxx.net.crt;</div><div class="line">    ssl_certificate_key  ssl/xxx.net.key;</div><div class="line"></div><div class="line">    #ssl_session_cache    shared:SSL:1m;</div><div class="line">    ssl_session_timeout  5m;</div><div class="line"></div><div class="line">    ssl_ciphers  HIGH:!aNULL:!MD5;</div><div class="line">    ssl_prefer_server_ciphers  on;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        root   html;</div><div class="line">        index  index.html index.htm;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里只分析连接过程</p>
+<h6 id="1-tcp建联"><a href="#1-tcp建联" class="headerlink" title="1. tcp建联"></a>1. tcp建联<img src="http://img.blog.csdn.net/20161228120523699?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></h6><p>可以看到确实首先建立了tcp连接。</p>
+<h6 id="2-Client-Hello"><a href="#2-Client-Hello" class="headerlink" title="2. Client Hello"></a>2. Client Hello</h6><p><img src="http://img.blog.csdn.net/20161228120640745?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>看一下具体的报文包含了什么：<br><img src="http://img.blog.csdn.net/20161228140247033?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>这里可以看到客户端的session其实还是没有失效的，这时候如果服务端的session也没有失效的话，后续的连接过程是可以减少很多的，这个我们后面的实验再拿出来看。</p>
+<h6 id="3-Server-Hello"><a href="#3-Server-Hello" class="headerlink" title="3. Server Hello"></a>3. Server Hello</h6><p><img src="http://img.blog.csdn.net/20161229054901625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>我们可以看到两个信息：<br>(1) 这时候在server中，这个session是不存在的，这是因为重启nginx导致，实际的session保持是存在的，后面我们实验中继续看；<br>(2) 使用的是DSA算法；</p>
+<h6 id="4-server-certificate"><a href="#4-server-certificate" class="headerlink" title="4. server certificate"></a>4. server certificate</h6><p><img src="http://img.blog.csdn.net/20161229054813498?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>这个报文只在使用DSA算法的时候才会使用，我们可以从3中看到现在确实使用的是DSA算法。</p>
+<h6 id="5-server-key-exchange-amp-server-hello-done"><a href="#5-server-key-exchange-amp-server-hello-done" class="headerlink" title="5. server key exchange &amp; server hello done"></a>5. server key exchange &amp; server hello done</h6><p>这个报文里承载了两个信息，分别是key exchange和结束标识。</p>
+<h6 id="6-client-key-exchange-amp-change-cipher-spec-amp-Hello-Request"><a href="#6-client-key-exchange-amp-change-cipher-spec-amp-Hello-Request" class="headerlink" title="6. client_key_exchange &amp; change_cipher_spec &amp; Hello Request"></a>6. client_key_exchange &amp; change_cipher_spec &amp; Hello Request</h6><p><img src="media/14814262622015/14814641364720.jpg" alt=""><br>这里分为三个报文：<br>(1) client_key_exchange<br>包含pre-master secret。客户端生成第三个随机数。如果是采用RSA算法，会生成一个48字节随机数，然后用server的公钥加密之后再放入报文中；如果是DH算法，这里发送的就是客户端的DH参数，之后服务器和客户端根据DH算法，各自计算出相同的pre-master secret。<br>(2) change_cipher_spec<br>客户端通知服务器开始使用加密方式发送报文。客户端使用上面的3个随机数client random, server random, pre-master secret, 计算出48字节的master secret, 这个就是对称加密算法的密钥。<br>(3) hello request<br>客户端发送第一个加密报文。使用HMAC算法计算收到和发送的所有握手消息的摘要，然后通过RFC5246中定义的一个伪函数PRF计算出结果，加密后发送。</p>
+<h6 id="7-server-new-session-ticket-amp-change-cipher-spec-amp-第一个报文"><a href="#7-server-new-session-ticket-amp-change-cipher-spec-amp-第一个报文" class="headerlink" title="7. server new session ticket &amp; change_cipher_spec &amp; 第一个报文"></a>7. server new session ticket &amp; change_cipher_spec &amp; 第一个报文</h6><p><img src="media/14814262622015/14814643735654.jpg" alt=""><br>session ticket的用途后续再说。<br>至此，可以看到所有的连接过程如下：<br><img src="media/14814262622015/14814647513912.jpg" alt=""><br>如果是客户端也需要校验的，还会多出上面表中*给出的过程。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/https/" rel="tag"># https</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/03/jstorm本地开发环境搭建/" rel="next" title="jstorm本地开发环境搭建">
+                <i class="fa fa-chevron-left"></i> jstorm本地开发环境搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/03/关于httpclient 连接失效引发的问题/" rel="prev" title="关于httpclient 连接失效引发的问题">
+                关于httpclient 连接失效引发的问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="jamal-jiang" />
+          <p class="site-author-name" itemprop="name">jamal-jiang</p>
+          <p class="site-description motion-element" itemprop="description">落玄,技术博客</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、工作原理"><span class="nav-number">1.</span> <span class="nav-text">一、工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、连接过程"><span class="nav-number">2.</span> <span class="nav-text">二、连接过程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-tcp建联"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. tcp建联</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-Client-Hello"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. Client Hello</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-Server-Hello"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. Server Hello</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-server-certificate"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. server certificate</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-server-key-exchange-amp-server-hello-done"><span class="nav-number">2.0.5.</span> <span class="nav-text">5. server key exchange & server hello done</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-client-key-exchange-amp-change-cipher-spec-amp-Hello-Request"><span class="nav-number">2.0.6.</span> <span class="nav-text">6. client_key_exchange & change_cipher_spec & Hello Request</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#7-server-new-session-ticket-amp-change-cipher-spec-amp-第一个报文"><span class="nav-number">2.0.7.</span> <span class="nav-text">7. server new session ticket & change_cipher_spec & 第一个报文</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jamal-jiang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

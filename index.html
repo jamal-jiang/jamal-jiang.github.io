@@ -1,183 +1,1550 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>jamal的博客</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="jamal自己的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="jamal的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="jamal的博客">
-<meta property="og:description" content="jamal自己的博客">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jamal的博客">
-<meta name="twitter:description" content="jamal自己的博客">
-  
-    <link rel="alternate" href="/atom.xml" title="jamal的博客" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+<!doctype html>
+
+
+
   
 
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux,Jstorm,分布式" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="落玄,技术博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="落玄的博客">
+<meta property="og:url" content="https://jamal-jiang.github.io/index.html">
+<meta property="og:site_name" content="落玄的博客">
+<meta property="og:description" content="落玄,技术博客">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="落玄的博客">
+<meta name="twitter:description" content="落玄,技术博客">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jamal-jiang.github.io/"/>
+
+
+
+
+
+  <title> 落玄的博客 </title>
 </head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">jamal的博客</a>
-      </h1>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">落玄的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">落玄的博客</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/03/hello-world/" class="article-date">
-  <time datetime="2017-02-03T12:38:58.000Z" itemprop="datePublished">2017-02-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/03/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
 
       
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/02/03/hello-world/" data-id="ciypszw7300003cckbxyu7ubu" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
+    </ul>
   
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/02/03/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 jamal-jiang<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
   
 </nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/03/升级CentOS6.5内核，开启Nginx的fastopen和reuseport特性/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/03/升级CentOS6.5内核，开启Nginx的fastopen和reuseport特性/" itemprop="url">
+                  升级CentOS6.5内核，开启Nginx的fastopen和reuseport特性
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T22:19:54+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Centos/" itemprop="url" rel="index">
+                    <span itemprop="name">Centos</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="1-导入public-key"><a href="#1-导入public-key" class="headerlink" title="1. 导入public key"></a>1. 导入public key</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org</div></pre></td></tr></table></figure>
+<h4 id="2-安装ELRepo到Centos6-5中"><a href="#2-安装ELRepo到Centos6-5中" class="headerlink" title="2. 安装ELRepo到Centos6.5中"></a>2. 安装ELRepo到Centos6.5中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -ivh http://www.elrepo.org/elrepo-release-6-5.el6.elrepo.noarch.rpm</div></pre></td></tr></table></figure>
+<h4 id="3-安装kernel-lt"><a href="#3-安装kernel-lt" class="headerlink" title="3. 安装kernel-lt"></a>3. 安装kernel-lt</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum --enablerepo=elrepo-kernel install kernel-lt -y</div></pre></td></tr></table></figure>
+<h4 id="4-修改grub引导顺序"><a href="#4-修改grub引导顺序" class="headerlink" title="4. 修改grub引导顺序"></a>4. 修改grub引导顺序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#编辑grub配置文件</div><div class="line">vim /etc/grub.conf</div><div class="line"> </div><div class="line"># grub.conf generated by anaconda</div><div class="line">#</div><div class="line"># Note that you do not have to rerun grub after making changes to this file</div><div class="line"># NOTICE:  You have a /boot partition.  This means that</div><div class="line">#          all kernel and initrd paths are relative to /boot/, eg.</div><div class="line">#          root (hd0,0)</div><div class="line">#          kernel /vmlinuz-version ro root=/dev/sda3</div><div class="line">#          initrd /initrd-[generic-]version.img</div><div class="line">#boot=/dev/sda</div><div class="line">default=0  #一般最新升级的内核映像位于第一位，所以这里保证 default=0即可！</div><div class="line">timeout=5</div><div class="line">splashimage=(hd0,0)/grub/splash.xpm.gz</div><div class="line">hiddenmenu</div><div class="line">title CentOS (3.10.101-1.el6.elrepo.x86_64)  #最新3.10.101内核也就是这个了！</div><div class="line">        root (hd0,0)</div><div class="line">        kernel /vmlinuz-3.10.101-1.el6.elrepo.x86_64 ro root=UUID=6e3dc2ee-2daf-48a7-96e4-8b7ca821c23c rd_NO_LUKS rd_NO_LVM LANG=en_US.UTF-8 rd_NO_MD SYSFONT=latarcyrheb-sun16 crashkernel=auto  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet</div><div class="line">        initrd /initramfs-3.10.101-1.el6.elrepo.x86_64.img</div><div class="line">title CentOS (2.6.32-573.22.1.el6.x86_64)</div><div class="line">        root (hd0,0)</div><div class="line">        kernel /vmlinuz-2.6.32-573.22.1.el6.x86_64 ro root=UUID=6e3dc2ee-2daf-48a7-96e4-8b7ca821c23c rd_NO_LUKS rd_NO_LVM LANG=en_US.UTF-8 rd_NO_MD SYSFONT=latarcyrheb-sun16 crashkernel=auto  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet</div><div class="line">        initrd /initramfs-2.6.32-573.22.1.el6.x86_64.img</div><div class="line">title CentOS (2.6.32-431.el6.x86_64)</div><div class="line">        root (hd0,0)</div><div class="line">        kernel /vmlinuz-2.6.32-431.el6.x86_64 ro root=UUID=6e3dc2ee-2daf-48a7-96e4-8b7ca821c23c rd_NO_LUKS rd_NO_LVM LANG=en_US.UTF-8 rd_NO_MD SYSFONT=latarcyrheb-sun16 crashkernel=auto  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet</div><div class="line">        initrd /initramfs-2.6.32-431.el6.x86_64.img</div></pre></td></tr></table></figure>
+<h4 id="启用特性"><a href="#启用特性" class="headerlink" title="启用特性"></a>启用特性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo &quot;net.ipv4.tcp_fastopen = 3&quot; &gt;&gt;/etc/sysctl.conf</div></pre></td></tr></table></figure>
+<h4 id="重新编译"><a href="#重新编译" class="headerlink" title="重新编译"></a>重新编译</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=/usr/local/nginx --user=www --group=www --with-http_v2_module --with-http_ssl_module --with-http_gzip_static_module --with-http_realip_module --with-cc-opt=-DTCP_FASTOPEN=23</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
 
 
-<script src="/js/script.js"></script>
+    
+      
 
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/03/nginx超时转发机制/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/03/nginx超时转发机制/" itemprop="url">
+                  nginx超时转发机制
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T22:18:16+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">Nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="nginx超时转发机制"><a href="#nginx超时转发机制" class="headerlink" title="nginx超时转发机制"></a>nginx超时转发机制</h2><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>在配置nginx的时候，我们经常会配置upstream来配置后端转发的一些规则，最常见的就是nginx后面挂了几台tomcat的机器，upstream写法如下示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">upstream linuxidc &#123;</div><div class="line">      server 192.168.31.114:8080;</div><div class="line">      server 192.168.31.223:8080;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下面是对应的server的配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen       80;</div><div class="line">    server_name  localhost;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_pass http://linuxidc;</div><div class="line">        proxy_connect_timeout 2s;</div><div class="line">        proxy_read_timeout 2s;</div><div class="line">        proxy_send_timeout 2s;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在nginx中，当一个请求到达后端机器，后端机器因某些原因（load高等等）响应变慢导致超时的时候，nginx会把这个请求转发到另外的后端机器上，这个配置是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">proxy_next_upstream  on;</div></pre></td></tr></table></figure></p>
+<p>在nginx中是默认打开的。以下来做个试验：<br>后端192.168.31.114 192.168.31.223两台机器都是node的一个server，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">192.168.31.114:server.js</div><div class="line">var http = require(&quot;http&quot;); </div><div class="line">http.createServer(function(request, response) &#123; </div><div class="line">    for(var i = 0; i &lt; 1000000; i++) &#123;</div><div class="line">        console.log(i);</div><div class="line">    &#125;</div><div class="line">    response.writeHead(200, &#123;&quot;Content-Type&quot;: &quot;text/plain&quot;&#125;); </div><div class="line">    response.write(&quot;Hello World&quot;); </div><div class="line">    response.end(); </div><div class="line">&#125;).listen(8080);</div><div class="line"></div><div class="line">192.168.31.223:server.js</div><div class="line">var http = require(&quot;http&quot;); </div><div class="line">http.createServer(function(request, response) &#123; </div><div class="line">    response.writeHead(200, &#123;&quot;Content-Type&quot;: &quot;text/plain&quot;&#125;); </div><div class="line">    response.write(&quot;Hello World&quot;);</div><div class="line">    response.end(); </div><div class="line">&#125;).listen(8080);</div></pre></td></tr></table></figure></p>
+<p>可以看到两者的区别在于114的机器在每次请求的时候会走一个循环，循环会导致读取超时；223的机器则是立刻返回响应。</p>
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>（1）112 223开启，nginx开启转发机制：</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/03/tcp三次握手和四次挥手/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/03/tcp三次握手和四次挥手/" itemprop="url">
+                  tcp三次握手和四次挥手
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T22:16:35+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tcp/" itemprop="url" rel="index">
+                    <span itemprop="name">Tcp</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>先来看一张整体的大图：<br><img src="http://hi.csdn.net/attachment/201108/7/0_131271823564Rx.gif" alt="image"></p>
+<h4 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h4><p>先看一下三次握手的过程：<br><img src="http://img.my.csdn.net/uploads/201210/23/1350985085_3123.jpg" alt="image"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. 第一次握手：首先由client端发出一个SYN报文，此时SYN=1，ACK=0，tcp协议中规定SYN报文不能携带数据，但是必须消耗一个序列号，这时候的请求如果在网络中失败了，会超时之后重传。此时client端进入一个SYNC-SEND状态，等待server确认；</div><div class="line">2. 第二次握手：server端收到SYN包之后，回复对方SYN ACK报文，设置SYN=1，ACK=1，seq=y(随机值)，ack=x+1，这时候的请求如果在网络中失败了，会超时之后重传。此时server端进入SYNC_RCVD状态，client端仍在SYNC_SEND状态；</div><div class="line">3. 第三次握手：Client收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给Server，Server检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，Client和Server进入ESTABLISHED状态，完成三次握手，随后Client与Server之间可以开始传输数据了</div></pre></td></tr></table></figure></p>
+<p>这里有一个问题需要阐述一下：为什么client在收到server的SYN ACK报文之后还需要回复一个ACK报文呢？<br><img src="http://img.my.csdn.net/uploads/201210/23/1350985432_2318.jpg" alt="image"></p>
+<h4 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h4><p>由于TCP连接时全双工的，因此，每个方向都必须要单独进行关闭，这一原则是当一方完成数据发送任务后，发送一个FIN来终止这一方向的连接，收到一个FIN只是意味着这一方向上没有数据流动了，即不会再收到数据了，但是在这个TCP连接上仍然能够发送数据，直到这一方向也发送了FIN。首先进行关闭的一方将执行主动关闭，而另一方则执行被动关闭，上图描述的即是如此。<br>看一下四次挥手的过程：<br><img src="http://img.my.csdn.net/uploads/201210/23/1350990937_5362.jpg" alt="image"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. client首先发送FIN=1的报文，此时client端不会再向server发送数据，但是仍然可以接收server的数据，此时client进入FIN-WAIT-1的状态，此时如果网络有问题，client重传FIN包；</div><div class="line">2. server端收到FIN包后，回复一个ACK=1,seq=v,ack=u+1的报文，此时server端进入CLOSE-WAIT状态，此时server端仍然可以向client端发送数据；</div><div class="line">3. server端在数据发送完成之后，向client端发送FIN=1,ACK=1,seq=w,ack=u+1的报文，表示数据已经发送完成，server端不会再向client端发送数据，此时server进入LAST-ACK状态；</div><div class="line">4. client收到server报文后，回复server ACK=1,seq=u+1,ack=w+1的报文，确认连接可以断开，此时client端进入TIME-WAIT状态，server端在收到这个报文后就关闭这个连接，client在两个MSL时间之后，关闭连接；</div></pre></td></tr></table></figure></p>
+<p>这里面涉及到几个问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1. 连接中断可以是client也可以是server</div><div class="line">   假设Client端发起中断连接请求，也就是发送FIN报文。Server端接到FIN报文后，意思是说&quot;我Client端没有数据要发给你了&quot;，但是如果你还有数据没有发送完成，则不必急着关闭Socket，可以继续发送数据。所以你先发送ACK，&quot;告诉Client端，你的请求我收到了，但是我还没准备好，请继续你等我的消息&quot;。这个时候Client端就进入FIN_WAIT状态，继续等待Server端的FIN报文。当Server端确定数据已发送完成，则向Client端发送FIN报文，&quot;告诉Client端，好了，我这边数据发完了，准备好关闭连接了&quot;。Client端收到FIN报文后，&quot;就知道可以关闭连接了，但是他还是不相信网络，怕Server端不知道要关闭，所以发送ACK后进入TIME_WAIT状态，如果Server端没有收到ACK则可以重传。“，Server端收到ACK后，&quot;就知道可以断开连接了&quot;。Client端等待了2MSL后依然没有收到回复，则证明Server端已正常关闭，那好，我Client端也可以关闭连接了</div><div class="line">   </div><div class="line">2. 在TIME_WAIT状态中，如果TCP client端最后一次发送的ACK丢失了，它将重新发送。TIME_WAIT状态中所需要的时间是依赖于实现方法的。典型的值为30秒、1分钟和2分钟。等待之后连接正式关闭，并且所有的资源(包括端口号)都被释放。</div><div class="line"></div><div class="line">3. 为什么TIME_WAIT状态需要经过2MSL(最大报文段生存时间)才能返回到CLOSE状态？</div><div class="line">   理论上来说，四个报文发送完毕，就可以直接进入close状态了，但是必须考虑到网络是不可靠的，如果最后一个ack报文没有收到，那么server端会认为FIN ACK报文client报文没有收到，会重新发送FIN ACK报文，这时候如果client直接close了，将不会响应这个报文，服务端将会有很多连接处于close_wait状态。</div></pre></td></tr></table></figure></p>
+<p>在整个四次挥手过程中，client的状态变化如图：<br><img src="http://hi.csdn.net/attachment/201108/7/0_1312719804oSkK.gif" alt="image"></p>
+<p>server端状态变化：<br><img src="http://hi.csdn.net/attachment/201108/7/0_1312719833030b.gif" alt="image"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/03/关于httpclient 连接失效引发的问题/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/03/关于httpclient 连接失效引发的问题/" itemprop="url">
+                  关于httpclient 连接失效引发的问题
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T22:14:31+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Http/" itemprop="url" rel="index">
+                    <span itemprop="name">Http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>###　一　排查过程<br>使用的httpclient客户端，版本是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">        &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;httpclient&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;4.3.2&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+<p>在生产环境发现有时会报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">org.apache.http.NoHttpResponseException: The target server failed to respond</div></pre></td></tr></table></figure></p>
+<p>怀疑是Nginx超时之后连接不可用，但是连接池里面没有剔除导致，为了简化排错，在本地直接设置了一个线程循环跑，把sleep时间调整成Nginx超时时间5s，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">DefaultHttpClient httpClient = new DefaultHttpClient();</div><div class="line">        httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));</div><div class="line">        HttpGet httpGet = new HttpGet(&quot;http://192.168.31.176/index_10s.html&quot;);</div><div class="line">        httpGet.addHeader(&quot;User-Agent&quot;, USER_AGENT);</div><div class="line">        CloseableHttpResponse httpResponse = null;</div><div class="line">        for (int i = 0; i &lt; 100; i++)</div><div class="line">            try &#123;</div><div class="line">                httpResponse = httpClient.execute(httpGet);</div><div class="line">                System.out.println(&quot;GET Response Status:: &quot;</div><div class="line">                        + httpResponse.getStatusLine().getStatusCode());</div><div class="line">                BufferedReader reader = null;</div><div class="line">                reader = new BufferedReader(new InputStreamReader(</div><div class="line">                        httpResponse.getEntity().getContent()));</div><div class="line">                String inputLine;</div><div class="line">                StringBuffer response = new StringBuffer();</div><div class="line">                while ((inputLine = reader.readLine()) != null) &#123;</div><div class="line">                    response.append(inputLine);</div><div class="line">                &#125;</div><div class="line">                Thread.sleep(5000);</div><div class="line">            &#125; catch (IOException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125; catch (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div></pre></td></tr></table></figure></p>
+<p>这里把httpclient设置成了不重试的机制。在跑了之后，发现确实出现了NoHttpResponseException报错。<br>把当时的包抓下来，看到如下所示：<br><img src="http://img.blog.csdn.net/20161225215510947?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"></p>
+<ol>
+<li>首先是三次建联过程；</li>
+<li>中间两个get都成功，注意相差了5s，这是Nginx的keepalive时间；</li>
+<li>下面是关键过程:<br><img src="http://img.blog.csdn.net/20161225220505111?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"><br>我们看到，<br>（1）在首个包发送完成之后5s，已经到达Nginx的keepalive时间，此时服务端主动断开连接，发送了FIN包（注意这里的客户端服务端是指的现在192是客户端（发起http请求的一方），服务端指的是176（Nginx））。<br>（2）客户端响应服务端请求，发送ACK包，此时192处于CLOSE_WAIT状态，176处于FIN_WAIT2状态，此时192仍然可以向176发送数据，但是176不会再向192发送数据，但是仍人可以接收192的数据；<br>（3）这时候我们发现，192向176发送了get请求，这个请求自然就被rst了；</li>
+</ol>
+<p>###　二　httpclient使用<br>通常我们在使用的时候，不会考虑是否需要设置retry，实际上设置retry为false是非常重要的，在涉及到一致性的请求中，如果一次请求失败之后重新尝试，那中间会发生什么问题是未知的（代码返回失败！=请求失败）</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/03/https连接都发生了什么/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/03/https连接都发生了什么/" itemprop="url">
+                  https连接都发生了什么
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T22:12:10+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Http/" itemprop="url" rel="index">
+                    <span itemprop="name">Http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="一、工作原理"><a href="#一、工作原理" class="headerlink" title="一、工作原理"></a>一、工作原理</h4><p><img src="http://img.blog.csdn.net/20161228120332868?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>从图中可以看到，实际上https是在tcp层和http层中间插入了一层ssl层，对应到一般的业务架构中，会在前端设置成nginx + tomcat的模式，用nginx来做证书卸载和负载均衡，tomcat做实际的服务；而在实际的抓包过程中，会发现在常规的tcp三次握手之后，还会有ssl的握手过程，在握手之后的实际的业务请求中，也是ssl协议的报文。<br>那么ssl是怎么做客户端和服务端的连接建立的呢？我们来看下面的一张图：<br><img src="http://img.blog.csdn.net/20161228120415792?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>上图是在tcp连接已经建立好了之后，开始的ssl的连接过程，过程可以分为以下几步：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(1) client hello: 客户端向服务端发出ssl/tls协议的版本号、一个随机数(client random)和客户端支持的ssl加密算法列表；</div><div class="line">(2) server hello: 服务端确认双方使用的ssl加密算法，并给出服务端的数字证书和一个随机数(server random)；</div><div class="line">(3) 客户端确认证书有效，然后生成一个新的随机数(Premaster secret)，并使用数字证书中的公钥加密这个随机数，发给服务端；</div><div class="line">(4) 服务端使用自己的私钥解析客户端发来的随机数；</div><div class="line">(5) 客户端和服务端根据约定的加密算法，使用前面的三个随机数，生成秘钥(session key)，用来加密接下来的整个会话过程；</div></pre></td></tr></table></figure>
+<p>以上过程，用表格来表示，即是：</p>
+<table>
+<thead>
+<tr>
+<th>client</th>
+<th>server</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Client Hello</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2. Server Hello    <br> 3. certificate    <br> 4. server_key_exchange    <br> 5. *certificate_request    <br> 6. server_hello_done</td>
+</tr>
+<tr>
+<td>7. <em>certificate    <br> 8. client_key_exchange    <br> 9. </em>certificate_verify    <br> 10. change_cypher_spec</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>11. change_cypher_spec</td>
+</tr>
+</tbody>
+</table>
+<p>下面对连接中的一些细节点做一下解释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">1. ssl/tls握手过程可以分为两种类型：</div><div class="line">    * 单向认证： 客户端会认证服务端身份，服务端不会对客户端进行认证；</div><div class="line">    * 双向认证： 客户端和服务端互相认证，也就是两者之间会交换证书；</div><div class="line">2. 握手过程实际上是通信双发交换协商一个用于对称加密的秘钥的过程，这个过程本身是透明的</div><div class="line">3. 在这个过程中会产生单个随机数: Client Random、Server Random、pre-master secret，其中client server random是明文的，而pre-master是加密的（RSA或DH）。</div><div class="line">4. 根据3中，加密的算法可以选择RSA和DSA算法，这取决于server端使用什么证书。</div><div class="line">   * server使用RSA证书：RSA既可以用作签名也可以用作不对称加密，pre-master secret就是用server的RSA证书中包含的公钥加密的；</div><div class="line">   * server使用DSA证书：DSA只能用作签名，所以还需要使用DH算法来交换密钥；</div><div class="line">5. 上表中涉及到*的表示在双向认证中才会使用到。</div></pre></td></tr></table></figure>
+<h4 id="二、连接过程"><a href="#二、连接过程" class="headerlink" title="二、连接过程"></a>二、连接过程</h4><p>我们使用生成的证书，client端ip: 192.168.31.167 server端ip: 192.168.31.176 server端部署nginx，https配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen       443 ssl;</div><div class="line">    server_name  ssl.alipay.net;</div><div class="line"></div><div class="line">    ssl_certificate      ssl/xxx.net.crt;</div><div class="line">    ssl_certificate_key  ssl/xxx.net.key;</div><div class="line"></div><div class="line">    #ssl_session_cache    shared:SSL:1m;</div><div class="line">    ssl_session_timeout  5m;</div><div class="line"></div><div class="line">    ssl_ciphers  HIGH:!aNULL:!MD5;</div><div class="line">    ssl_prefer_server_ciphers  on;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        root   html;</div><div class="line">        index  index.html index.htm;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里只分析连接过程</p>
+<h6 id="1-tcp建联"><a href="#1-tcp建联" class="headerlink" title="1. tcp建联"></a>1. tcp建联<img src="http://img.blog.csdn.net/20161228120523699?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></h6><p>可以看到确实首先建立了tcp连接。</p>
+<h6 id="2-Client-Hello"><a href="#2-Client-Hello" class="headerlink" title="2. Client Hello"></a>2. Client Hello</h6><p><img src="http://img.blog.csdn.net/20161228120640745?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>看一下具体的报文包含了什么：<br><img src="http://img.blog.csdn.net/20161228140247033?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>这里可以看到客户端的session其实还是没有失效的，这时候如果服务端的session也没有失效的话，后续的连接过程是可以减少很多的，这个我们后面的实验再拿出来看。</p>
+<h6 id="3-Server-Hello"><a href="#3-Server-Hello" class="headerlink" title="3. Server Hello"></a>3. Server Hello</h6><p><img src="http://img.blog.csdn.net/20161229054901625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>我们可以看到两个信息：<br>(1) 这时候在server中，这个session是不存在的，这是因为重启nginx导致，实际的session保持是存在的，后面我们实验中继续看；<br>(2) 使用的是DSA算法；</p>
+<h6 id="4-server-certificate"><a href="#4-server-certificate" class="headerlink" title="4. server certificate"></a>4. server certificate</h6><p><img src="http://img.blog.csdn.net/20161229054813498?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>这个报文只在使用DSA算法的时候才会使用，我们可以从3中看到现在确实使用的是DSA算法。</p>
+<h6 id="5-server-key-exchange-amp-server-hello-done"><a href="#5-server-key-exchange-amp-server-hello-done" class="headerlink" title="5. server key exchange &amp; server hello done"></a>5. server key exchange &amp; server hello done</h6><p>这个报文里承载了两个信息，分别是key exchange和结束标识。</p>
+<h6 id="6-client-key-exchange-amp-change-cipher-spec-amp-Hello-Request"><a href="#6-client-key-exchange-amp-change-cipher-spec-amp-Hello-Request" class="headerlink" title="6. client_key_exchange &amp; change_cipher_spec &amp; Hello Request"></a>6. client_key_exchange &amp; change_cipher_spec &amp; Hello Request</h6><p><img src="media/14814262622015/14814641364720.jpg" alt=""><br>这里分为三个报文：<br>(1) client_key_exchange<br>包含pre-master secret。客户端生成第三个随机数。如果是采用RSA算法，会生成一个48字节随机数，然后用server的公钥加密之后再放入报文中；如果是DH算法，这里发送的就是客户端的DH参数，之后服务器和客户端根据DH算法，各自计算出相同的pre-master secret。<br>(2) change_cipher_spec<br>客户端通知服务器开始使用加密方式发送报文。客户端使用上面的3个随机数client random, server random, pre-master secret, 计算出48字节的master secret, 这个就是对称加密算法的密钥。<br>(3) hello request<br>客户端发送第一个加密报文。使用HMAC算法计算收到和发送的所有握手消息的摘要，然后通过RFC5246中定义的一个伪函数PRF计算出结果，加密后发送。</p>
+<h6 id="7-server-new-session-ticket-amp-change-cipher-spec-amp-第一个报文"><a href="#7-server-new-session-ticket-amp-change-cipher-spec-amp-第一个报文" class="headerlink" title="7. server new session ticket &amp; change_cipher_spec &amp; 第一个报文"></a>7. server new session ticket &amp; change_cipher_spec &amp; 第一个报文</h6><p><img src="media/14814262622015/14814643735654.jpg" alt=""><br>session ticket的用途后续再说。<br>至此，可以看到所有的连接过程如下：<br><img src="media/14814262622015/14814647513912.jpg" alt=""><br>如果是客户端也需要校验的，还会多出上面表中*给出的过程。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/03/jstorm本地开发环境搭建/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/03/jstorm本地开发环境搭建/" itemprop="url">
+                  jstorm本地开发环境搭建
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T22:02:25+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jstorm/" itemprop="url" rel="index">
+                    <span itemprop="name">Jstorm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="maven依赖"><a href="#maven依赖" class="headerlink" title="maven依赖"></a>maven依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;com.alibaba.jstorm&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;jstorm-core&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;2.1.1&lt;/version&gt;</div><div class="line">    &lt;!--&lt;scope&gt;provided&lt;/scope&gt;--&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;!--&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.apache.storm&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;storm-core&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;0.9.2-incubating&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;--&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;com.esotericsoftware.kryo&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;kryo&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;2.22&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;com.twitter&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;chill-java&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;0.8.1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>storm是spout获取数据源，bolt处理数据的框架，因此我们只要实现spout数据源读入，bolt处理数据的功能即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div></pre></td><td class="code"><pre><div class="line">spout:</div><div class="line">import backtype.storm.spout.SpoutOutputCollector;</div><div class="line">import backtype.storm.task.TopologyContext;</div><div class="line">import backtype.storm.topology.OutputFieldsDeclarer;</div><div class="line">import backtype.storm.topology.base.BaseRichSpout;</div><div class="line">import backtype.storm.tuple.Fields;</div><div class="line">import backtype.storm.tuple.Values;</div><div class="line">import backtype.storm.utils.Utils;</div><div class="line"></div><div class="line">import java.util.Map;</div><div class="line">import java.util.Random;</div><div class="line"></div><div class="line">// 随机发送一条内置消息，该spout继承BaseRichSpout/IRichSpout类</div><div class="line">@SuppressWarnings(&quot;serial&quot;)</div><div class="line">public class RandomSentenceSpout extends BaseRichSpout &#123;</div><div class="line"></div><div class="line">    SpoutOutputCollector spoutOutputCollector;</div><div class="line">    Random random;</div><div class="line"></div><div class="line">    // 进行spout的一些初始化工作，包括参数传递</div><div class="line">    @SuppressWarnings(&quot;rawtypes&quot;)</div><div class="line">    public void open(Map conf, TopologyContext context,</div><div class="line">                     SpoutOutputCollector collector) &#123;</div><div class="line">        spoutOutputCollector = collector;</div><div class="line">        random = new Random();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 进行Tuple处理的主要方法</div><div class="line">    public void nextTuple() &#123;</div><div class="line">        Utils.sleep(2000);</div><div class="line">        String[] sentences = new String[]&#123;</div><div class="line">                &quot;jikexueyuan is a good school&quot;,</div><div class="line">                &quot;And if the golden sun&quot;,</div><div class="line">                &quot;four score and seven years ago&quot;,</div><div class="line">                &quot;storm hadoop spark hbase&quot;,</div><div class="line">                &quot;blogchong is a good man&quot;,</div><div class="line">                &quot;Would make my whole world bright&quot;,</div><div class="line">                &quot;blogchong is a good website&quot;,</div><div class="line">                &quot;storm would have to be with you&quot;,</div><div class="line">                &quot;Pipe to subprocess seems to be broken No output read&quot;,</div><div class="line">                &quot; You make me feel so happy&quot;,</div><div class="line">                &quot;For the moon never beams without bringing me dreams Of the beautiful Annalbel Lee&quot;,</div><div class="line">                &quot;Who love jikexueyuan and blogchong&quot;,</div><div class="line">                &quot;blogchong.com is Magic sites&quot;,</div><div class="line">                &quot;Ko blogchong swayed my leaves and flowers in the sun&quot;,</div><div class="line">                &quot;You love blogchong.com&quot;, &quot;Now I may wither into the truth&quot;,</div><div class="line">                &quot;That the wind came out of the cloud&quot;,</div><div class="line">                &quot;at backtype storm utils ShellProcess&quot;,</div><div class="line">                &quot;Of those who were older than we&quot;&#125;;</div><div class="line">        // 从sentences数组中，随机获取一条语句，作为这次spout发送的消息</div><div class="line">        String sentence = sentences[random.nextInt(sentences.length)];</div><div class="line">        System.out.println(&quot;选择的数据源是: &quot; + sentence);</div><div class="line">        // 使用emit方法进行Tuple发布，参数用Values申明</div><div class="line">        spoutOutputCollector.emit(new Values(sentence.trim().toLowerCase()));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 消息保证机制中的ack确认方法</div><div class="line">    public void ack(Object id) &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 消息保证机制中的fail确认方法</div><div class="line">    public void fail(Object id) &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 声明字段</div><div class="line">    public void declareOutputFields(OutputFieldsDeclarer declarer) &#123;</div><div class="line">        declarer.declare(new Fields(&quot;word&quot;));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">bolt:</div><div class="line">import backtype.storm.topology.BasicOutputCollector;</div><div class="line">import backtype.storm.topology.OutputFieldsDeclarer;</div><div class="line">import backtype.storm.topology.base.BaseBasicBolt;</div><div class="line">import backtype.storm.tuple.Fields;</div><div class="line">import backtype.storm.tuple.Tuple;</div><div class="line"></div><div class="line">@SuppressWarnings(&quot;serial&quot;)</div><div class="line">public class PrintBolt extends BaseBasicBolt &#123;</div><div class="line"></div><div class="line">    public void execute(Tuple input, BasicOutputCollector collector) &#123;</div><div class="line">        try &#123;</div><div class="line">            String mesg = input.getString(0);</div><div class="line">            if (mesg != null)</div><div class="line">                System.out.println(mesg);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void declareOutputFields(OutputFieldsDeclarer declarer) &#123;</div><div class="line">        declarer.declare(new Fields(&quot;word&quot;));</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">topology:</div><div class="line">public class Topology1 &#123;</div><div class="line"></div><div class="line">    private static TopologyBuilder builder = new TopologyBuilder();</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line"></div><div class="line">        Config config = new Config();</div><div class="line"></div><div class="line">        builder.setSpout(&quot;RandomSentence&quot;, new RandomSentenceSpout(), 2);</div><div class="line">        builder.setBolt(&quot;WordNormalizer&quot;, new PrintBolt(), 2).shuffleGrouping(&quot;RandomSentence&quot;);</div><div class="line">        config.setDebug(false);</div><div class="line"></div><div class="line">        config.setMaxTaskParallelism(1);</div><div class="line">        LocalCluster cluster = new LocalCluster();</div><div class="line">        cluster.submitTopology(&quot;wordcount&quot;, config, builder.createTopology());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接下来只需要启动topology即可。</p>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ol>
+<li>报错1<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.ClassNotFoundException: com.twitter.chill.java.RegexSerializer, compiling:(carbonite/serializer.clj:1:1)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>添加依赖：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;com.twitter&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;chill-java&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;0.8.1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/03/cookie和session的区别/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/03/cookie和session的区别/" itemprop="url">
+                  cookie和session的区别
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T21:07:23+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Http/" itemprop="url" rel="index">
+                    <span itemprop="name">Http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>session，中文经常翻译为会话，其本来的含义是指有始有终的一系列动作/消息，比如打电话时从拿起电话拨号到挂断电话这中间的一系列过程可以称之为一个session。有时候我们可以看到这样的话“在一个浏览器会话期间，…”，这里的会话一词用的就是其本义，是指从一个浏览器窗口打开到关闭这个期间。最混乱的是“用户（客户端）在一次会话期间”这样一句话，它可能指用户的一系列动作（一般情况下是同某个具体目的相关的一系列动作，比如从登录到选购商品到结账登出这样一个网上购物的过程，有时候也被称为一个transaction），然而有时候也可能仅仅是指一次连接，也有可能是指含义，其中的差别只能靠上下文来推断。<br>然而当session一词与网络协议相关联时，它又往往隐含了“面向连接”和/或“保持状态”这样两个含义，“面向连接”指的是在通信双方在通信之前要先建立一个通信的渠道，比如打电话，直到对方接了电话通信才能开始，与此相对的是写信，在你把信发出去的时候你并不能确认对方的地址是否正确，通信渠道不一定能建立，但对发信人来说，通信已经开始了。“保持状态”则是指通信的一方能够把一系列的消息关联起来，使得消息之间可以互相依赖，比如一个服务员能够认出再次光临的老顾客并且记得上次这个顾客还欠店里一块钱。这一类的例子有“一个TCP session”或者“一个POP3 session”。<br>而到了web服务器蓬勃发展的时代，session在web开发语境下的语义又有了新的扩展，它的含义是指一类用来在客户端与服务器之间保持状态的解决方案。有时候session也用来指这种解决方案的存储结构，如“把xxx保存在session里”。由于各种用于web开发的语言在一定程度上都提供了对这种解决方案的支持，所以在某种特定语言的语境下，session也被用来指代该语言的解决方案，比如经常把Java里提供的javax.servlet.http.HttpSession简称为session。<br>鉴于这种混乱已不可改变，本文中session一词的运用也会根据上下文有不同的含义，请大家注意分辨。<br>在本文中，使用中文“浏览器会话期间”来表达含义，使用“session机制”来表达含义，使用“session”表达含义，使用具体的“HttpSession”来表达含义 </p>
+<h4 id="HTTP协议与状态保持"><a href="#HTTP协议与状态保持" class="headerlink" title="HTTP协议与状态保持"></a>HTTP协议与状态保持</h4><p>HTTP协议本身是无状态的，这与HTTP协议本来的目的是相符的，客户端只需要简单的向服务器请求下载某些文件，无论是客户端还是服务器都没有必要纪录彼此过去的行为，每一次请求之间都是独立的，好比一个顾客和一个自动售货机或者一个普通的（非会员制）大卖场之间的关系一样。<br>然而聪明（或者贪心？）的人们很快发现如果能够提供一些按需生成的动态信息会使web变得更加有用，就像给有线电视加上点播功能一样。这种需求一方面迫使HTML逐步添加了表单、脚本、DOM等客户端行为，另一方面在服务器端则出现了CGI规范以响应客户端的动态请求，作为传输载体的HTTP协议也添加了文件上载、cookie这些特性。其中cookie的作用就是为了解决HTTP协议无状态的缺陷所作出的努力。至于后来出现的session机制则是又一种在客户端与服务器之间保持状态的解决方案。<br>让我们用几个例子来描述一下cookie和session机制之间的区别与联系。笔者曾经常去的一家咖啡店有喝5杯咖啡免费赠一杯咖啡的优惠，然而一次性消费5杯咖啡的机会微乎其微，这时就需要某种方式来纪录某位顾客的消费数量。想象一下其实也无外乎下面的几种方案：<br>1、该店的店员很厉害，能记住每位顾客的消费数量，只要顾客一走进咖啡店，店员就知道该怎么对待了。这种做法就是协议本身支持状态。<br>2、发给顾客一张卡片，上面记录着消费的数量，一般还有个有效期限。每次消费时，如果顾客出示这张卡片，则此次消费就会与以前或以后的消费相联系起来。这种做法就是在客户端保持状态。<br>3、发给顾客一张会员卡，除了卡号之外什么信息也不纪录，每次消费时，如果顾客出示该卡片，则店员在店里的纪录本上找到这个卡号对应的纪录添加一些消费信息。这种做法就是在服务器端保持状态。<br>由于HTTP协议是无状态的，而出于种种考虑也不希望使之成为有状态的，因此，后面两种方案就成为现实的选择。具体来说cookie机制采用的是在客户端保持状态的方案，而session机制采用的是在服务器端保持状态的方案。同时我们也看到，由于采用服务器端保持状态的方案在客户端也需要保存一个标识，所以session机制可能需要借助于cookie机制来达到保存标识的目的，但实际上它还有其他选择。 </p>
+<h4 id="理解cookie机制"><a href="#理解cookie机制" class="headerlink" title="理解cookie机制"></a>理解cookie机制</h4><p>cookie机制的基本原理就如上面的例子一样简单，但是还有几个问题需要解决：“会员卡”如何分发；“会员卡”的内容；以及客户如何使用“会员卡”。<br>正统的cookie分发是通过扩展HTTP协议来实现的，服务器通过在HTTP的响应头中加上一行特殊的指示以提示浏览器按照指示生成相应的cookie。然而纯粹的客户端脚本如JavaScript或者VBScript也可以生成cookie。<br>而cookie的使用是由浏览器按照一定的原则在后台自动发送给服务器的。浏览器检查所有存储的cookie，如果某个cookie所声明的作用范围大于等于将要请求的资源所在的位置，则把该cookie附在请求资源的HTTP请求头上发送给服务器。意思是麦当劳的会员卡只能在麦当劳的店里出示，如果某家分店还发行了自己的会员卡，那么进这家店的时候除了要出示麦当劳的会员卡，还要出示这家店的会员卡。<br>cookie的内容主要包括：名字，值，过期时间，路径和域。<br>其中域可以指定某一个域比如.<a href="http://google.com，相当于总店招牌，比如宝洁公司，也可以指定一个域下的具体某台机器比如http://www.google.com或者froogle.google.com，可以用飘柔来做比。" target="_blank" rel="external">http://google.com，相当于总店招牌，比如宝洁公司，也可以指定一个域下的具体某台机器比如http://www.google.com或者froogle.google.com，可以用飘柔来做比。</a><br>路径就是跟在域名后面的URL路径，比如/或者/foo等等，可以用某飘柔专柜做比。<br>路径与域合在一起就构成了cookie的作用范围。<br>如果不设置过期时间，则表示这个cookie的生命期为浏览器会话期间，只要关闭浏览器窗口，cookie就消失了。这种生命期为浏览器会话期的cookie被称为会话cookie。会话cookie一般不存储在硬盘上而是保存在内存里，当然这种行为并不是规范规定的。如果设置了过期时间，浏览器就会把cookie保存到硬盘上，关闭后再次打开浏览器，这些cookie仍然有效直到超过设定的过期时间。<br>存储在硬盘上的cookie可以在不同的浏览器进程间共享，比如两个IE窗口。而对于保存在内存里的cookie，不同的浏览器有不同的处理方式。对于IE，在一个打开的窗口上按Ctrl-N（或者从文件菜单）打开的窗口可以与原窗口共享，而使用其他方式新开的IE进程则不能共享已经打开的窗口的内存cookie；对于Mozilla Firefox0.8，所有的进程和标签页都可以共享同样的cookie。一般来说是用javascript的window.open打开的窗口会与原窗口共享内存cookie。浏览器对于会话cookie的这种只认cookie不认人的处理方式经常给采用session机制的web应用程序开发者造成很大的困扰。<br>下面就是一个goolge设置cookie的响应头的例子<br>HTTP/1.1 302 Found<br>Location: <a href="http://www.google.com/intl/zh-CN/" target="_blank" rel="external">http://www.google.com/intl/zh-CN/</a><br>Set-Cookie: PREF=ID=0565f77e132de138:NW=1:TM=1098082649:LM=1098082649:S=KaeaCFPo49RiA_d8; expires=Sun, 17-Jan-2038 19:14:07 GMT; path=/; domain=.<a href="http://google.com" target="_blank" rel="external">http://google.com</a><br>Content-Type: text/html<br>浏览器在再次访问goolge的资源时自动向外发送cookie </p>
+<h4 id="理解session机制"><a href="#理解session机制" class="headerlink" title="理解session机制"></a>理解session机制</h4><p>session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。<br>当程序需要为某个客户端的请求创建一个session的时候，服务器首先检查这个客户端的请求里是否已包含了一个session标识 - 称为session id，如果已包含一个session id则说明以前已经为此客户端创建过session，服务器就按照session id把这个session检索出来使用（如果检索不到，可能会新建一个），如果客户端请求不包含session id，则为此客户端创建一个session并且生成一个与此session相关联的session id，session id的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个session id将被在本次响应中返回给客户端保存。 保存这个session id的方式可以采用cookie，这样在交互过程中浏览器可以自动的按照规则把这个标识发挥给服务器。一般这个cookie的名字都是类似于SEEESIONID，而。比如weblogic对于web应用程序生成的cookie，JSESSIONID=ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764，它的名字就是JSESSIONID。<br>由于cookie可以被人为的禁止，必须有其他机制以便在cookie被禁止时仍然能够把session id传递回服务器。经常被使用的一种技术叫做URL重写，就是把session id直接附加在URL路径的后面，附加方式也有两种，一种是作为URL路径的附加信息，表现形式为<a href="http://...../xxx;jsessionid=ByOK" target="_blank" rel="external">http://...../xxx;jsessionid=ByOK</a> … 99zWpBng!-145788764<br>另一种是作为查询字符串附加在URL后面，表现形式为<a href="http://...../xxx?jsessionid=ByOK" target="_blank" rel="external">http://...../xxx?jsessionid=ByOK</a> … 99zWpBng!-145788764<br>这两种方式对于用户来说是没有区别的，只是服务器在解析的时候处理的方式不同，采用第一种方式也有利于把session id的信息和正常程序参数区分开来。<br>为了在整个交互过程中始终保持状态，就必须在每个客户端可能请求的路径后面都包含这个session id。<br>另一种技术叫做表单隐藏字段。就是服务器会自动修改表单，添加一个隐藏字段，以便在表单提交时能够把session id传递回服务器。这种技术现在已较少应用，笔者接触过的很古老的iPlanet6(SunONE应用服务器的前身)就使用了这种技术。<br>实际上这种技术可以简单的用对action应用URL重写来代替。<br>在谈论session机制的时候，常常听到这样一种误解“只要关闭浏览器，session就消失了”。其实可以想象一下会员卡的例子，除非顾客主动对店家提出销卡，否则店家绝对不会轻易删除顾客的资料。对session来说也是一样的，除非程序通知服务器删除一个session，否则服务器会一直保留，程序一般都是在用户做log off的时候发个指令去删除session。然而浏览器从来不会主动在关闭之前通知服务器它将要关闭，因此服务器根本不会有机会知道浏览器已经关闭，之所以会有这种错觉，是大部分session机制都使用会话cookie来保存session id，而关闭浏览器后这个session id就消失了，再次连接服务器时也就无法找到原来的session。如果服务器设置的cookie被保存到硬盘上，或者使用某种手段改写浏览器发出的HTTP请求头，把原来的session id发送给服务器，则再次打开浏览器仍然能够找到原来的session。<br>恰恰是由于关闭浏览器不会导致session被删除，迫使服务器为seesion设置了一个失效时间，当距离客户端上一次使用session的时间超过这个失效时间时，服务器就可以认为客户端已经停止了活动，才会把session删除以节省存储空间。 </p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>session机制本身并不复杂，然而其实现和配置上的灵活性却使得具体情况复杂多变。这也要求我们不能把仅仅某一次的经验或者某一个浏览器，服务器的经验当作普遍适用的经验，而是始终需要具体情况具体分析。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+
+          
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
   </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="jamal-jiang" />
+          <p class="site-author-name" itemprop="name">jamal-jiang</p>
+          <p class="site-description motion-element" itemprop="description">落玄,技术博客</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jamal-jiang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
 </body>
 </html>

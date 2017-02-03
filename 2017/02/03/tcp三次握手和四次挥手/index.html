@@ -1,0 +1,703 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="tcp," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="先来看一张整体的大图：
+三次握手先看一下三次握手的过程：1231. 第一次握手：首先由client端发出一个SYN报文，此时SYN=1，ACK=0，tcp协议中规定SYN报文不能携带数据，但是必须消耗一个序列号，这时候的请求如果在网络中失败了，会超时之后重传。此时client端进入一个SYNC-SEND状态，等待server确认；2. 第二次握手：server端收到SYN包之后，回复对方SYN A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tcp三次握手和四次挥手">
+<meta property="og:url" content="https://jamal-jiang.github.io/2017/02/03/tcp三次握手和四次挥手/index.html">
+<meta property="og:site_name" content="落玄的博客">
+<meta property="og:description" content="先来看一张整体的大图：
+三次握手先看一下三次握手的过程：1231. 第一次握手：首先由client端发出一个SYN报文，此时SYN=1，ACK=0，tcp协议中规定SYN报文不能携带数据，但是必须消耗一个序列号，这时候的请求如果在网络中失败了，会超时之后重传。此时client端进入一个SYNC-SEND状态，等待server确认；2. 第二次握手：server端收到SYN包之后，回复对方SYN A">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201108/7/0_131271823564Rx.gif">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201210/23/1350985085_3123.jpg">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201210/23/1350985432_2318.jpg">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201210/23/1350990937_5362.jpg">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201108/7/0_1312719804oSkK.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201108/7/0_1312719833030b.gif">
+<meta property="og:updated_time" content="2017-02-03T14:17:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tcp三次握手和四次挥手">
+<meta name="twitter:description" content="先来看一张整体的大图：
+三次握手先看一下三次握手的过程：1231. 第一次握手：首先由client端发出一个SYN报文，此时SYN=1，ACK=0，tcp协议中规定SYN报文不能携带数据，但是必须消耗一个序列号，这时候的请求如果在网络中失败了，会超时之后重传。此时client端进入一个SYNC-SEND状态，等待server确认；2. 第二次握手：server端收到SYN包之后，回复对方SYN A">
+<meta name="twitter:image" content="http://hi.csdn.net/attachment/201108/7/0_131271823564Rx.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jamal-jiang.github.io/2017/02/03/tcp三次握手和四次挥手/"/>
+
+
+
+
+
+  <title> tcp三次握手和四次挥手 | 落玄的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">落玄的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">落玄的博客</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/03/tcp三次握手和四次挥手/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                tcp三次握手和四次挥手
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-03T22:16:35+08:00">
+                2017-02-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tcp/" itemprop="url" rel="index">
+                    <span itemprop="name">Tcp</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>先来看一张整体的大图：<br><img src="http://hi.csdn.net/attachment/201108/7/0_131271823564Rx.gif" alt="image"></p>
+<h4 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h4><p>先看一下三次握手的过程：<br><img src="http://img.my.csdn.net/uploads/201210/23/1350985085_3123.jpg" alt="image"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. 第一次握手：首先由client端发出一个SYN报文，此时SYN=1，ACK=0，tcp协议中规定SYN报文不能携带数据，但是必须消耗一个序列号，这时候的请求如果在网络中失败了，会超时之后重传。此时client端进入一个SYNC-SEND状态，等待server确认；</div><div class="line">2. 第二次握手：server端收到SYN包之后，回复对方SYN ACK报文，设置SYN=1，ACK=1，seq=y(随机值)，ack=x+1，这时候的请求如果在网络中失败了，会超时之后重传。此时server端进入SYNC_RCVD状态，client端仍在SYNC_SEND状态；</div><div class="line">3. 第三次握手：Client收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给Server，Server检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，Client和Server进入ESTABLISHED状态，完成三次握手，随后Client与Server之间可以开始传输数据了</div></pre></td></tr></table></figure></p>
+<p>这里有一个问题需要阐述一下：为什么client在收到server的SYN ACK报文之后还需要回复一个ACK报文呢？<br><img src="http://img.my.csdn.net/uploads/201210/23/1350985432_2318.jpg" alt="image"></p>
+<h4 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h4><p>由于TCP连接时全双工的，因此，每个方向都必须要单独进行关闭，这一原则是当一方完成数据发送任务后，发送一个FIN来终止这一方向的连接，收到一个FIN只是意味着这一方向上没有数据流动了，即不会再收到数据了，但是在这个TCP连接上仍然能够发送数据，直到这一方向也发送了FIN。首先进行关闭的一方将执行主动关闭，而另一方则执行被动关闭，上图描述的即是如此。<br>看一下四次挥手的过程：<br><img src="http://img.my.csdn.net/uploads/201210/23/1350990937_5362.jpg" alt="image"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. client首先发送FIN=1的报文，此时client端不会再向server发送数据，但是仍然可以接收server的数据，此时client进入FIN-WAIT-1的状态，此时如果网络有问题，client重传FIN包；</div><div class="line">2. server端收到FIN包后，回复一个ACK=1,seq=v,ack=u+1的报文，此时server端进入CLOSE-WAIT状态，此时server端仍然可以向client端发送数据；</div><div class="line">3. server端在数据发送完成之后，向client端发送FIN=1,ACK=1,seq=w,ack=u+1的报文，表示数据已经发送完成，server端不会再向client端发送数据，此时server进入LAST-ACK状态；</div><div class="line">4. client收到server报文后，回复server ACK=1,seq=u+1,ack=w+1的报文，确认连接可以断开，此时client端进入TIME-WAIT状态，server端在收到这个报文后就关闭这个连接，client在两个MSL时间之后，关闭连接；</div></pre></td></tr></table></figure></p>
+<p>这里面涉及到几个问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1. 连接中断可以是client也可以是server</div><div class="line">   假设Client端发起中断连接请求，也就是发送FIN报文。Server端接到FIN报文后，意思是说&quot;我Client端没有数据要发给你了&quot;，但是如果你还有数据没有发送完成，则不必急着关闭Socket，可以继续发送数据。所以你先发送ACK，&quot;告诉Client端，你的请求我收到了，但是我还没准备好，请继续你等我的消息&quot;。这个时候Client端就进入FIN_WAIT状态，继续等待Server端的FIN报文。当Server端确定数据已发送完成，则向Client端发送FIN报文，&quot;告诉Client端，好了，我这边数据发完了，准备好关闭连接了&quot;。Client端收到FIN报文后，&quot;就知道可以关闭连接了，但是他还是不相信网络，怕Server端不知道要关闭，所以发送ACK后进入TIME_WAIT状态，如果Server端没有收到ACK则可以重传。“，Server端收到ACK后，&quot;就知道可以断开连接了&quot;。Client端等待了2MSL后依然没有收到回复，则证明Server端已正常关闭，那好，我Client端也可以关闭连接了</div><div class="line">   </div><div class="line">2. 在TIME_WAIT状态中，如果TCP client端最后一次发送的ACK丢失了，它将重新发送。TIME_WAIT状态中所需要的时间是依赖于实现方法的。典型的值为30秒、1分钟和2分钟。等待之后连接正式关闭，并且所有的资源(包括端口号)都被释放。</div><div class="line"></div><div class="line">3. 为什么TIME_WAIT状态需要经过2MSL(最大报文段生存时间)才能返回到CLOSE状态？</div><div class="line">   理论上来说，四个报文发送完毕，就可以直接进入close状态了，但是必须考虑到网络是不可靠的，如果最后一个ack报文没有收到，那么server端会认为FIN ACK报文client报文没有收到，会重新发送FIN ACK报文，这时候如果client直接close了，将不会响应这个报文，服务端将会有很多连接处于close_wait状态。</div></pre></td></tr></table></figure></p>
+<p>在整个四次挥手过程中，client的状态变化如图：<br><img src="http://hi.csdn.net/attachment/201108/7/0_1312719804oSkK.gif" alt="image"></p>
+<p>server端状态变化：<br><img src="http://hi.csdn.net/attachment/201108/7/0_1312719833030b.gif" alt="image"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tcp/" rel="tag"># tcp</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/03/关于httpclient 连接失效引发的问题/" rel="next" title="关于httpclient 连接失效引发的问题">
+                <i class="fa fa-chevron-left"></i> 关于httpclient 连接失效引发的问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/03/nginx超时转发机制/" rel="prev" title="nginx超时转发机制">
+                nginx超时转发机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="jamal-jiang" />
+          <p class="site-author-name" itemprop="name">jamal-jiang</p>
+          <p class="site-description motion-element" itemprop="description">落玄,技术博客</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#三次握手"><span class="nav-number">1.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四次挥手"><span class="nav-number">2.</span> <span class="nav-text">四次挥手</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jamal-jiang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

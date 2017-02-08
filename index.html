@@ -354,25 +354,15 @@
 
       
         
-          
-            <p>CMake是一个跨平台的程序构建工具，比如起自己编写Makefile方便很多。</p>
-<p>本文件不介绍CMake的基本语法，下面是篇不错的入门教程：<br><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-cmake/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/linux/l-cn-cmake/</a></p>
-<p> 构建命令: mac下一般clang自带了cmake，可以使用：/Applications/CLion.app/Contents/bin/cmake/bin/cmake –build ~/Library/Caches/CLion2016.2/cmake/generated/include-8feac24f/8feac24f/Debug –target hello – -j 8</p>
-<h4 id="一，首先构建比较简单的工程，来对CMake有个简单的了解"><a href="#一，首先构建比较简单的工程，来对CMake有个简单的了解" class="headerlink" title="一，首先构建比较简单的工程，来对CMake有个简单的了解"></a>一，首先构建比较简单的工程，来对CMake有个简单的了解</h4><h5 id="1-构建一个工程的时候，需要做的几件事情（如果下面几件事你知道怎么做了，多大的工程就都不是问题了）："><a href="#1-构建一个工程的时候，需要做的几件事情（如果下面几件事你知道怎么做了，多大的工程就都不是问题了）：" class="headerlink" title="1.构建一个工程的时候，需要做的几件事情（如果下面几件事你知道怎么做了，多大的工程就都不是问题了）："></a>1.构建一个工程的时候，需要做的几件事情（如果下面几件事你知道怎么做了，多大的工程就都不是问题了）：</h5><p>A.源代码在哪里？<br>B.头文件在哪里？<br>C.怎么生成静态或者动态库？<br>D.程序链接的静态库在哪里？<br>E.如果工程的代码存放在很多地方，那又该怎么找到它们呢？</p>
-<h6 id="2-下面从一个最简单的HelloWorld开始，然后一步一步构建一个比较复杂的工程："><a href="#2-下面从一个最简单的HelloWorld开始，然后一步一步构建一个比较复杂的工程：" class="headerlink" title="2.下面从一个最简单的HelloWorld开始，然后一步一步构建一个比较复杂的工程："></a>2.下面从一个最简单的HelloWorld开始，然后一步一步构建一个比较复杂的工程：</h6><p>A.工程文件如下(只有一个helloworld.cpp源文件):<br>ciw@ubuntu:~/my_projects/test$ tree .<br>└── helloworld.cpp</p>
-<p>B.这时候，我们要写一个CMakeLists.txt（就3句代码）：<br>PROJECT(hello)                                             #定义整个CMake的工程名<br>FILE(GLOB SOURCE “./*.cpp”)                      #告诉CMake：工程的源文件在哪里？<br>ADD_EXECUTABLE(hello ${SOURCE})         #告诉CMake：我们要生成可执行文件（hello），并且源文件是由上面定义的<br>这样就可以在目录下生成一个hello可执行文件了。</p>
-<h5 id="3-下面，我们讲一个带头文件的，而且文件都是存放在不同地方："><a href="#3-下面，我们讲一个带头文件的，而且文件都是存放在不同地方：" class="headerlink" title="3.下面，我们讲一个带头文件的，而且文件都是存放在不同地方："></a>3.下面，我们讲一个带头文件的，而且文件都是存放在不同地方：</h5><p>A.代码分布如下（main.cpp是main函数，里面调用了hello.h声明的SayHello，定义在hello.cpp中）：<br>ciw@ubuntu:~/my_projects/test$ tree .<br>├── CMakeLists.txt<br>├── hello<br>│   └── hello.cpp<br>├── include<br>│   └── hello.h<br>└── main<br>    └── main.cpp<br>B.main的代码：</p>
-<p>  #include “hello.h“<br>  int main()<br>   {<br>       SayHello();<br>       return 0;<br>   }<br>C.CMakeLists.txt:<br>1 PROJECT(hello_2)<br>2<br>3 FILE(GLOB SOURCE_1 “${CMAKE_SOURCE_DIR}/main/<em>.cpp”) //下面2句告诉CMake，源文件在哪里？main.cpp<br>4 FILE(GLOB SOURCE_2 “${CMAKE_SOURCE_DIR}/hello/</em>.cpp”)//程序必须链接到hello.cpp里面的SayHello<br>5<br>6 INCLUDE_DIRECTORIES(“${CMAKE_SOURCE_DIR}/include/“)//告诉CMake头文件在哪里？<br>7<br>8 ADD_EXECUTABLE(hello_2 ${SOURCE_1} ${SOURCE_2})</p>
-<h5 id="4-最后来一个复杂的工程："><a href="#4-最后来一个复杂的工程：" class="headerlink" title="4.最后来一个复杂的工程："></a>4.最后来一个复杂的工程：</h5><p>A.工程描述：<br>该工程由一个静态库和一个可执行文件组成，头文件和源文件都不在同一个目录，并且CMake也是独立在一个目录</p>
-<p>B.代码分布：<br>ciw@ubuntu:~/my_projects/test$ tree .<br>test                                                         //工程根目录<br>├── cmake                                           //CMake目录：代码和CMake编译目录分离<br>│   ├── bin<br>│   │   └── main                                  //生成后的可执行文件<br>│   ├── CMakeLists.txt<br>│   ├── lib<br>│   │   └── libhello.a                          //生成后的静态库<br>│   └── src<br>│       ├── CMakeLists.txt<br>│       ├── hello<br>│       │   └── CMakeLists.txt<br>│       └── main<br>│           └── CMakeLists.txt<br>├── hello                                              //hello静态库的源代码<br>│   └── hello.cpp<br>├── include                                          //头文件<br>│   └── hello.h<br>└── main                                              //可执行文件的源代码目录<br>    └── main.cpp<br>可以看出，CMake里面的每一个子目录都有一个CMakeLists.txt<br>C.编译该工程的过程：<br>（a）.首先，需要给CMake的一个总入口，这个CMake设置一些全局的变量(cmake/CMakeLists.txt)：<br>PROJECT(hello_3)<br>SET(PROJECT_ROOT_PATH “${CMAKE_SOURCE_DIR}/../“)                 #工程的根目录，即test<br>SET(EXECUTABLE_OUTPUT_PATH “${CMAKE_SOURCE_DIR}/bin/“)    #可执行生成后存放的目录(CMAKE_SOURCE_DIR是cmake目录)<br>SET(LIBRARY_OUTPUT_PATH “${CMAKE_SOURCE_DIR}/lib/“)             #静态库生成后存放的目录</p>
-<p>INCLUDE_DIRECTORIES(“${PROJECT_ROOT_PATH}/include/“)            #告诉CMake头文件在哪里？</p>
-<p>LINK_DIRECTORIES(“${CMAKE_SOURCE_DIR}/lib/“)                             #告诉CMake静态库在哪里？</p>
-<p>ADD_SUBDIRECTORY(src)                                                                     #多目录，把src目录加进来，src里面才是真正编译main和hello的<br>(b).src目录下的CMakeList.txt，这个CMake只是简单地把main目录和hello目录链接起来：<br>ADD_SUBDIRECTORY(main)<br>ADD_SUBDIRECTORY(hello)<br>(c).hello静态库：<br>FILE(GLOB SOURCE_1 “${PROJECT_ROOT_PATH}/hello/*.cpp”)      #告诉CMake源文件在哪里？<br>ADD_LIBRARY(hello STATIC ${SOURCE_1})                                       #告诉CMake生成的是一个静态库</p>
-<p>(d).main可执行文件：<br>FILE(GLOB SOURCE_1 “${PROJECT_ROOT_PATH}/main/*.cpp”)     #告诉CMake源文件在哪里？</p>
-<p>ADD_EXECUTABLE(main ${SOURCE_1})                                          #告诉CMake生成一个main可执行文件<br>TARGET_LINK_LIBRARIES(main hello)                                              #告诉CMake静态库在哪里？</p>
-<p>整个编译的过程就是这样了，最主要的是记住上面”构建一个工程的时候，需要做的几件事情：头文件，源文件，静态库这个元素“，那么再复杂的工程都是这样一步一步构建的</p>
-
-          
+          <p>CMake是一个跨平台的程序构建工具，比如起自己编写Makefile方便很多。</p>
+<p>本文件不介绍CMake的基本语法，下面是篇不错的入门教程：<br><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-cmake/">http://www.ibm.com/developerworks/cn/linux/l-cn-cmake/</a><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/08/cmake使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

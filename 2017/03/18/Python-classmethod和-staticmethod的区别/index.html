@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="http," />
+  <meta name="keywords" content="python," />
 
 
 
@@ -86,15 +86,18 @@
 
 
 
+<meta name="description" content="基础概念这个问题的原文答案在：http://pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/一个类中的方法最常用的是实例方法，即以self为第一个参数的方法，如下代码所示：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用window.performance.timing检测页面加载速度">
-<meta property="og:url" content="https://jamal-jiang.github.io/2017/02/28/利用window.performance.timing检测页面加载速度/index.html">
+<meta property="og:title" content="Python-@classmethod和@staticmethod的区别">
+<meta property="og:url" content="https://jamal-jiang.github.io/2017/03/18/Python-classmethod和-staticmethod的区别/index.html">
 <meta property="og:site_name" content="落玄的博客">
-<meta property="og:image" content="http://img.blog.csdn.net/20170228223539695?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-02-28T14:41:00.000Z">
+<meta property="og:description" content="基础概念这个问题的原文答案在：http://pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/一个类中的方法最常用的是实例方法，即以self为第一个参数的方法，如下代码所示：">
+<meta property="og:image" content="https://pic4.zhimg.com/a2173bce20299607befc10abf8c7041b_b.jpg">
+<meta property="og:updated_time" content="2017-03-19T04:26:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用window.performance.timing检测页面加载速度">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20170228223539695?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:title" content="Python-@classmethod和@staticmethod的区别">
+<meta name="twitter:description" content="基础概念这个问题的原文答案在：http://pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/一个类中的方法最常用的是实例方法，即以self为第一个参数的方法，如下代码所示：">
+<meta name="twitter:image" content="https://pic4.zhimg.com/a2173bce20299607befc10abf8c7041b_b.jpg">
 
 
 
@@ -122,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://jamal-jiang.github.io/2017/02/28/利用window.performance.timing检测页面加载速度/"/>
+  <link rel="canonical" href="https://jamal-jiang.github.io/2017/03/18/Python-classmethod和-staticmethod的区别/"/>
 
 
 
 
 
-  <title> 利用window.performance.timing检测页面加载速度 | 落玄的博客 </title>
+  <title> Python-@classmethod和@staticmethod的区别 | 落玄的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -251,7 +254,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/28/利用window.performance.timing检测页面加载速度/">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/03/18/Python-classmethod和-staticmethod的区别/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="jamal-jiang">
@@ -275,7 +278,7 @@
             
             
               
-                利用window.performance.timing检测页面加载速度
+                Python-@classmethod和@staticmethod的区别
               
             
           </h2>
@@ -290,8 +293,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T22:27:08+08:00">
-                2017-02-28
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-18T22:29:42+08:00">
+                2017-03-18
               </time>
             
 
@@ -313,8 +316,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Http/" itemprop="url" rel="index">
-                    <span itemprop="name">Http</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
 
@@ -348,58 +351,18 @@
       
 
       
-        <p><img src="http://img.blog.csdn.net/20170228223539695?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br><a id="more"></a></p>
-<ol>
-<li><p>navigationStart：当前浏览器窗口的前一个网页关闭，发生unload事件时的Unix毫秒时间戳。如果没有前一个网页，则等于fetchStart属性。</p>
-</li>
-<li><p>unloadEventStart：如果前一个网页与当前网页属于同一个域名，则返回前一个网页的unload事件发生时的Unix毫秒时间戳。如果没有前一个网页，或者之前的网页跳转不是在同一个域名内，则返回值为0。</p>
-</li>
-<li><p>unloadEventEnd：如果前一个网页与当前网页属于同一个域名，则返回前一个网页unload事件的回调函数结束时的Unix毫秒时间戳。如果没有前一个网页，或者之前的网页跳转不是在同一个域名内，则返回值为0。</p>
-</li>
-<li><p>redirectStart：返回第一个HTTP跳转开始时的Unix毫秒时间戳。如果没有跳转，或者不是同一个域名内部的跳转，则返回值为0。</p>
-</li>
-<li><p>redirectEnd：返回最后一个HTTP跳转结束时（即跳转回应的最后一个字节接受完成时）的Unix毫秒时间戳。如果没有跳转，或者不是同一个域名内部的跳转，则返回值为0。</p>
-</li>
-<li><p>fetchStart：返回浏览器准备使用HTTP请求读取文档时的Unix毫秒时间戳。该事件在网页查询本地缓存之前发生。</p>
-</li>
-<li><p>domainLookupStart：返回域名查询开始时的Unix毫秒时间戳。如果使用持久连接，或者信息是从本地缓存获取的，则返回值等同于fetchStart属性的值。</p>
-</li>
-<li><p>domainLookupEnd：返回域名查询结束时的Unix毫秒时间戳。如果使用持久连接，或者信息是从本地缓存获取的，则返回值等同于fetchStart属性的值。</p>
-</li>
-<li><p>connectStart：返回HTTP请求开始向服务器发送时的Unix毫秒时间戳。如果使用持久连接（persistent connection），则返回值等同于fetchStart属性的值。</p>
-</li>
-<li><p>connectEnd：返回浏览器与服务器之间的连接建立时的Unix毫秒时间戳。如果建立的是持久连接，则返回值等同于fetchStart属性的值。连接建立指的是所有握手和认证过程全部结束。</p>
-</li>
-<li><p>secureConnectionStart：返回浏览器与服务器开始安全链接的握手时的Unix毫秒时间戳。如果当前网页不要求安全连接，则返回0。</p>
-</li>
-<li><p>requestStart：返回浏览器向服务器发出HTTP请求时（或开始读取本地缓存时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>responseStart：返回浏览器从服务器收到（或从本地缓存读取）第一个字节时的Unix毫秒时间戳。</p>
-</li>
-<li><p>responseEnd：返回浏览器从服务器收到（或从本地缓存读取）最后一个字节时（如果在此之前HTTP连接已经关闭，则返回关闭时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>domLoading：返回当前网页DOM结构开始解析时（即Document.readyState属性变为“loading”、相应的readystatechange事件触发时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>domInteractive：返回当前网页DOM结构结束解析、开始加载内嵌资源时（即Document.readyState属性变为“interactive”、相应的readystatechange事件触发时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>domContentLoadedEventStart：返回当前网页DOMContentLoaded事件发生时（即DOM结构解析完毕、所有脚本开始运行时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>domContentLoadedEventEnd：返回当前网页所有需要执行的脚本执行完成时的Unix毫秒时间戳。</p>
-</li>
-<li><p>domComplete：返回当前网页DOM结构生成时（即Document.readyState属性变为“complete”，以及相应的readystatechange事件发生时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>loadEventStart：返回当前网页load事件的回调函数开始时的Unix毫秒时间戳。如果该事件还没有发生，返回0。</p>
-</li>
-<li><p>loadEventEnd：返回当前网页load事件的回调函数运行结束时的Unix毫秒时间戳。如果该事件还没有发生，返回0。</p>
-</li>
-</ol>
-<p>英文解释</p>
-<h4 id="Redirect"><a href="#Redirect" class="headerlink" title="Redirect"></a>Redirect</h4><p>Immediately begins startTime.<br>If a redirect is happening, redirectStart begins as well.<br>If a redirect is occurring at the end of this phase then redirectEnd will be taken.</p>
-<h4 id="App-Cache"><a href="#App-Cache" class="headerlink" title="App Cache"></a>App Cache</h4><p>If it’s application cache fulfilling the request, a fetchStart time will be taken.</p>
-<h4 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h4><p>domainLookupStart time is taken at the beginning of the DNS request.<br>domainLookupEnd time is taken at the end of the DNS request.</p>
-<h4 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h4><p>connectStart is taken when initially connecting to the server.<br>If TLS or SSL are in use then secureConnectionStart will start when the handshake begins for securing the connection.<br>connectEnd is taken when the connection to the server is complete.</p>
-<h4 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h4><p>requestStart is taken once the request for a resource has been sent to the server.</p>
-<h5 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h5><p>responseStart is the time when the server initially responds to the request.<br>responseEnd is the time when the request ends and the data is retrieved.</p>
+        <h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p>这个问题的原文答案在：<a href="http://pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/" target="_blank" rel="external">http://pythoncentral.io/difference-between-staticmethod-and-classmethod-in-python/</a><br>一个类中的方法最常用的是实例方法，即以self为第一个参数的方法，如下代码所示：<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">class ClassStaticMethodTest(object):</div><div class="line">    def print(self, data):</div><div class="line">        print(&apos;print:(%s, %s)&apos; % (self, data))</div><div class="line"></div><div class="line">    @classmethod</div><div class="line">    def print_class(cls, data):</div><div class="line">        print(&apos;print_class:(%s, %s)&apos; % (cls, data))</div><div class="line"></div><div class="line">    @staticmethod</div><div class="line">    def print_static(data):</div><div class="line">        print(&apos;print_static: (%s)&apos; % data)</div><div class="line"></div><div class="line">a = ClassStaticMethodTest()</div><div class="line">a.print(&apos;normal&apos;)</div><div class="line">a.print_class(&apos;class&apos;)</div><div class="line">ClassStaticMethodTest.print_class(&apos;classMethod&apos;)</div><div class="line">a.print_static(&apos;static&apos;)</div><div class="line">ClassStaticMethodTest.print_static(&apos;staticMethod&apos;)</div></pre></td></tr></table></figure></p>
+<p>他的输出是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">print:(&lt;__main__.ClassStaticMethodTest object at 0x1011b8ac8&gt;, normal)</div><div class="line">print_class:(&lt;class &apos;__main__.ClassStaticMethodTest&apos;&gt;, class)</div><div class="line">print_class:(&lt;class &apos;__main__.ClassStaticMethodTest&apos;&gt;, classMethod)</div><div class="line">print_static: (static)</div><div class="line">print_static: (staticMethod)</div></pre></td></tr></table></figure></p>
+<p>如果直接调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ClassStaticMethodTest.print(&apos;aaa&apos;)</div></pre></td></tr></table></figure></p>
+<p>那么会报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Traceback (most recent call last):</div><div class="line">    ClassStaticMethodTest.print(&apos;aaa&apos;)</div><div class="line">TypeError: print() missing 1 required positional argument: &apos;data&apos;</div></pre></td></tr></table></figure></p>
+<p>从上面的代码中，我们可以看出差别：</p>
+<h4 id="1-普通方法"><a href="#1-普通方法" class="headerlink" title="1. 普通方法"></a>1. 普通方法</h4><p>其实是实例方法，即通过把实例作为第一个参数的方式调用方法，普通的类方法需要通过self参数隐式传递<code>当前类对象的实例</code>，普通方法只能通过类对象的实例来调用，知乎上有个图解释的比较好：<br><img src="https://pic4.zhimg.com/a2173bce20299607befc10abf8c7041b_b.jpg" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1，2参数传递给方法.</div><div class="line">3 self参数指向当前实例自身.</div><div class="line">4 我们不需要传递实例自身给方法，Python解释器自己会做这些操作的.</div></pre></td></tr></table></figure></p>
+<h4 id="2-classmethod"><a href="#2-classmethod" class="headerlink" title="2. @classmethod"></a>2. @classmethod</h4><p>需要通过cls传递<code>当前类对象</code>，可以通过类对象的实例和类对象类调用（但是需要注意不管是通过类对象还是类对象的实例，最终都是传递的类对象）。self和cls只是PEP8编程的一种规范，并不是强制要求的，self通常作为实例方法的第一个参数，cls通常作为类方法的第一个参数，即通常用self来传递当前类对象的实例，cls传递当前类对象。</p>
+<h4 id="3-staticmethod"><a href="#3-staticmethod" class="headerlink" title="3. @staticmethod"></a>3. @staticmethod</h4><p>不需要传递类对象或类对象的实例，其实就是一个静态方法。</p>
+<h4 id="4-继承和覆盖"><a href="#4-继承和覆盖" class="headerlink" title="4. 继承和覆盖"></a>4. 继承和覆盖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class B(ClassStaticMethodTest):</div><div class="line">    def print(self, data):</div><div class="line">        print(&apos;print:(%s, %s)&apos; % (self, data))</div><div class="line"></div><div class="line">    @classmethod</div><div class="line">    def print_class(cls, data):</div><div class="line">        print(&apos;print_class:(%s, %s)&apos; % (cls, data))</div><div class="line"></div><div class="line">    @staticmethod</div><div class="line">    def print_static(data):</div><div class="line">        print(&apos;print_static: (%s)&apos; % data)</div></pre></td></tr></table></figure>
+<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">print:(&lt;__main__.B object at 0x1014575f8&gt;, b1)</div><div class="line">print_class:(&lt;class &apos;__main__.B&apos;&gt;, b2)</div><div class="line">print_static: (b3)</div></pre></td></tr></table></figure></p>
+<p>与普通类实际上是一样的</p>
+<h3 id="为什么不直接使用普通函数"><a href="#为什么不直接使用普通函数" class="headerlink" title="为什么不直接使用普通函数"></a>为什么不直接使用普通函数</h3><p>@staticmethod是把函数嵌入到类中的一种方式，函数就属于类，同时表明函数不需要访问这个类。通过子类的继承覆盖，能更好的组织代码</p>
 
       
     </div>
@@ -423,7 +386,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/http/" rel="tag"># http</a>
+            <a href="/tags/python/" rel="tag"># python</a>
           
         </div>
       
@@ -432,8 +395,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/10/Linux-文件读写/" rel="next" title="Linux-文件读写">
-                <i class="fa fa-chevron-left"></i> Linux-文件读写
+              <a href="/2017/03/16/Python-迭代/" rel="next" title="Python-迭代">
+                <i class="fa fa-chevron-left"></i> Python-迭代
               </a>
             
           </div>
@@ -441,10 +404,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/16/Python-generator/" rel="prev" title="Python-生成器">
-                Python-生成器 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -567,7 +526,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Redirect"><span class="nav-number">1.</span> <span class="nav-text">Redirect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#App-Cache"><span class="nav-number">2.</span> <span class="nav-text">App Cache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS"><span class="nav-number">3.</span> <span class="nav-text">DNS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP"><span class="nav-number">4.</span> <span class="nav-text">TCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Request"><span class="nav-number">5.</span> <span class="nav-text">Request</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Response"><span class="nav-number">5.1.</span> <span class="nav-text">Response</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础概念"><span class="nav-number">1.</span> <span class="nav-text">基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-普通方法"><span class="nav-number">1.1.</span> <span class="nav-text">1. 普通方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-classmethod"><span class="nav-number">1.2.</span> <span class="nav-text">2. @classmethod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-staticmethod"><span class="nav-number">1.3.</span> <span class="nav-text">3. @staticmethod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-继承和覆盖"><span class="nav-number">1.4.</span> <span class="nav-text">4. 继承和覆盖</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么不直接使用普通函数"><span class="nav-number">2.</span> <span class="nav-text">为什么不直接使用普通函数</span></a></li></ol></div>
             
 
           </div>

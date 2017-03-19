@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="http," />
+  <meta name="keywords" content="python," />
 
 
 
@@ -86,15 +86,16 @@
 
 
 
+<meta name="description" content="通过List Comprehensions，我们可以很方便的生成一个列表，但是受限于内存等原因，列表的长度是有限制的，例如我们创建一个100w长度的列表，既浪费了空间，又如果我们只需要部分数据的话，那么大部分空间就被浪费了。所以，如果列表中的元素可以按照某种固定的算法推导出来，我们就可以在迭代中不断地通过这个算法计算出后面的值，这在python中叫做生成器(generator)。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用window.performance.timing检测页面加载速度">
-<meta property="og:url" content="https://jamal-jiang.github.io/2017/02/28/利用window.performance.timing检测页面加载速度/index.html">
+<meta property="og:title" content="Python-生成器">
+<meta property="og:url" content="https://jamal-jiang.github.io/2017/03/16/Python-generator/index.html">
 <meta property="og:site_name" content="落玄的博客">
-<meta property="og:image" content="http://img.blog.csdn.net/20170228223539695?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-02-28T14:41:00.000Z">
+<meta property="og:description" content="通过List Comprehensions，我们可以很方便的生成一个列表，但是受限于内存等原因，列表的长度是有限制的，例如我们创建一个100w长度的列表，既浪费了空间，又如果我们只需要部分数据的话，那么大部分空间就被浪费了。所以，如果列表中的元素可以按照某种固定的算法推导出来，我们就可以在迭代中不断地通过这个算法计算出后面的值，这在python中叫做生成器(generator)。">
+<meta property="og:updated_time" content="2017-03-16T14:59:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用window.performance.timing检测页面加载速度">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20170228223539695?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:title" content="Python-生成器">
+<meta name="twitter:description" content="通过List Comprehensions，我们可以很方便的生成一个列表，但是受限于内存等原因，列表的长度是有限制的，例如我们创建一个100w长度的列表，既浪费了空间，又如果我们只需要部分数据的话，那么大部分空间就被浪费了。所以，如果列表中的元素可以按照某种固定的算法推导出来，我们就可以在迭代中不断地通过这个算法计算出后面的值，这在python中叫做生成器(generator)。">
 
 
 
@@ -122,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://jamal-jiang.github.io/2017/02/28/利用window.performance.timing检测页面加载速度/"/>
+  <link rel="canonical" href="https://jamal-jiang.github.io/2017/03/16/Python-generator/"/>
 
 
 
 
 
-  <title> 利用window.performance.timing检测页面加载速度 | 落玄的博客 </title>
+  <title> Python-生成器 | 落玄的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -251,7 +252,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/28/利用window.performance.timing检测页面加载速度/">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/03/16/Python-generator/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="jamal-jiang">
@@ -275,7 +276,7 @@
             
             
               
-                利用window.performance.timing检测页面加载速度
+                Python-生成器
               
             
           </h2>
@@ -290,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T22:27:08+08:00">
-                2017-02-28
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-16T21:55:56+08:00">
+                2017-03-16
               </time>
             
 
@@ -313,8 +314,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Http/" itemprop="url" rel="index">
-                    <span itemprop="name">Http</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
 
@@ -348,58 +349,12 @@
       
 
       
-        <p><img src="http://img.blog.csdn.net/20170228223539695?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFtYWwxMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br><a id="more"></a></p>
-<ol>
-<li><p>navigationStart：当前浏览器窗口的前一个网页关闭，发生unload事件时的Unix毫秒时间戳。如果没有前一个网页，则等于fetchStart属性。</p>
-</li>
-<li><p>unloadEventStart：如果前一个网页与当前网页属于同一个域名，则返回前一个网页的unload事件发生时的Unix毫秒时间戳。如果没有前一个网页，或者之前的网页跳转不是在同一个域名内，则返回值为0。</p>
-</li>
-<li><p>unloadEventEnd：如果前一个网页与当前网页属于同一个域名，则返回前一个网页unload事件的回调函数结束时的Unix毫秒时间戳。如果没有前一个网页，或者之前的网页跳转不是在同一个域名内，则返回值为0。</p>
-</li>
-<li><p>redirectStart：返回第一个HTTP跳转开始时的Unix毫秒时间戳。如果没有跳转，或者不是同一个域名内部的跳转，则返回值为0。</p>
-</li>
-<li><p>redirectEnd：返回最后一个HTTP跳转结束时（即跳转回应的最后一个字节接受完成时）的Unix毫秒时间戳。如果没有跳转，或者不是同一个域名内部的跳转，则返回值为0。</p>
-</li>
-<li><p>fetchStart：返回浏览器准备使用HTTP请求读取文档时的Unix毫秒时间戳。该事件在网页查询本地缓存之前发生。</p>
-</li>
-<li><p>domainLookupStart：返回域名查询开始时的Unix毫秒时间戳。如果使用持久连接，或者信息是从本地缓存获取的，则返回值等同于fetchStart属性的值。</p>
-</li>
-<li><p>domainLookupEnd：返回域名查询结束时的Unix毫秒时间戳。如果使用持久连接，或者信息是从本地缓存获取的，则返回值等同于fetchStart属性的值。</p>
-</li>
-<li><p>connectStart：返回HTTP请求开始向服务器发送时的Unix毫秒时间戳。如果使用持久连接（persistent connection），则返回值等同于fetchStart属性的值。</p>
-</li>
-<li><p>connectEnd：返回浏览器与服务器之间的连接建立时的Unix毫秒时间戳。如果建立的是持久连接，则返回值等同于fetchStart属性的值。连接建立指的是所有握手和认证过程全部结束。</p>
-</li>
-<li><p>secureConnectionStart：返回浏览器与服务器开始安全链接的握手时的Unix毫秒时间戳。如果当前网页不要求安全连接，则返回0。</p>
-</li>
-<li><p>requestStart：返回浏览器向服务器发出HTTP请求时（或开始读取本地缓存时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>responseStart：返回浏览器从服务器收到（或从本地缓存读取）第一个字节时的Unix毫秒时间戳。</p>
-</li>
-<li><p>responseEnd：返回浏览器从服务器收到（或从本地缓存读取）最后一个字节时（如果在此之前HTTP连接已经关闭，则返回关闭时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>domLoading：返回当前网页DOM结构开始解析时（即Document.readyState属性变为“loading”、相应的readystatechange事件触发时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>domInteractive：返回当前网页DOM结构结束解析、开始加载内嵌资源时（即Document.readyState属性变为“interactive”、相应的readystatechange事件触发时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>domContentLoadedEventStart：返回当前网页DOMContentLoaded事件发生时（即DOM结构解析完毕、所有脚本开始运行时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>domContentLoadedEventEnd：返回当前网页所有需要执行的脚本执行完成时的Unix毫秒时间戳。</p>
-</li>
-<li><p>domComplete：返回当前网页DOM结构生成时（即Document.readyState属性变为“complete”，以及相应的readystatechange事件发生时）的Unix毫秒时间戳。</p>
-</li>
-<li><p>loadEventStart：返回当前网页load事件的回调函数开始时的Unix毫秒时间戳。如果该事件还没有发生，返回0。</p>
-</li>
-<li><p>loadEventEnd：返回当前网页load事件的回调函数运行结束时的Unix毫秒时间戳。如果该事件还没有发生，返回0。</p>
-</li>
-</ol>
-<p>英文解释</p>
-<h4 id="Redirect"><a href="#Redirect" class="headerlink" title="Redirect"></a>Redirect</h4><p>Immediately begins startTime.<br>If a redirect is happening, redirectStart begins as well.<br>If a redirect is occurring at the end of this phase then redirectEnd will be taken.</p>
-<h4 id="App-Cache"><a href="#App-Cache" class="headerlink" title="App Cache"></a>App Cache</h4><p>If it’s application cache fulfilling the request, a fetchStart time will be taken.</p>
-<h4 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h4><p>domainLookupStart time is taken at the beginning of the DNS request.<br>domainLookupEnd time is taken at the end of the DNS request.</p>
-<h4 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h4><p>connectStart is taken when initially connecting to the server.<br>If TLS or SSL are in use then secureConnectionStart will start when the handshake begins for securing the connection.<br>connectEnd is taken when the connection to the server is complete.</p>
-<h4 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h4><p>requestStart is taken once the request for a resource has been sent to the server.</p>
-<h5 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h5><p>responseStart is the time when the server initially responds to the request.<br>responseEnd is the time when the request ends and the data is retrieved.</p>
+        <p>通过List Comprehensions，我们可以很方便的生成一个列表，但是受限于内存等原因，列表的长度是有限制的，例如我们创建一个100w长度的列表，既浪费了空间，又如果我们只需要部分数据的话，那么大部分空间就被浪费了。<br>所以，如果列表中的元素可以按照某种固定的算法推导出来，我们就可以在迭代中不断地通过这个算法计算出后面的值，这在python中叫做生成器(generator)。<br><a id="more"></a><br>创建一个generator：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">a = [x * x for x in range(10)]</div><div class="line">b = (x * x for x in range(10))</div></pre></td></tr></table></figure></p>
+<p>可以用过next方法去访问生成器中的元素：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; b = (x * x for x in range(3))</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">0</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">1</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">4</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</div><div class="line">StopIteration</div></pre></td></tr></table></figure></p>
+<p>当访问到最后一个元素之后再次访问的时候，会引起StopIteration的报错。<br>我们来看看next函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">def next(iterator, default=None): # real signature unknown; restored from __doc__</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    next(iterator[, default])</div><div class="line">    </div><div class="line">    Return the next item from the iterator. If default is given and the iterator</div><div class="line">    is exhausted, it is returned instead of raising StopIteration.</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    pass</div></pre></td></tr></table></figure></p>
+<p>所以从本质上来说，生成器还是一个迭代器。当然在日常中我们会更多的用for循环来遍历。<br>前面讲过，实际上生成器保存的是一个算法，而不是一个值。让我们来看下面的一个函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">def test():</div><div class="line">    print(&quot;1&quot;)</div><div class="line">    yield 1</div><div class="line">    print(&quot;2&quot;)</div><div class="line">    yield 2</div><div class="line">    print(&quot;3&quot;)</div><div class="line">    yield 3</div><div class="line"></div><div class="line"></div><div class="line">a = test()</div><div class="line">next(a)</div><div class="line">print(&quot;111&quot;)</div><div class="line">next(a)</div><div class="line">print(&quot;222&quot;)</div><div class="line">next(a)</div><div class="line">print(&quot;333&quot;)</div></pre></td></tr></table></figure></p>
+<p>在函数中使用yield，这个函数就变成了一个生成器，我们看一下输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line">111</div><div class="line">2</div><div class="line">222</div><div class="line">3</div><div class="line">333</div></pre></td></tr></table></figure></p>
+<p>会发现实际上是每次都卡住了，我们再看一个斐波那契数列的例子：</p>
 
       
     </div>
@@ -423,7 +378,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/http/" rel="tag"># http</a>
+            <a href="/tags/python/" rel="tag"># python</a>
           
         </div>
       
@@ -432,8 +387,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/10/Linux-文件读写/" rel="next" title="Linux-文件读写">
-                <i class="fa fa-chevron-left"></i> Linux-文件读写
+              <a href="/2017/02/28/利用window.performance.timing检测页面加载速度/" rel="next" title="利用window.performance.timing检测页面加载速度">
+                <i class="fa fa-chevron-left"></i> 利用window.performance.timing检测页面加载速度
               </a>
             
           </div>
@@ -442,8 +397,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/16/Python-generator/" rel="prev" title="Python-生成器">
-                Python-生成器 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/16/Python-迭代/" rel="prev" title="Python-迭代">
+                Python-迭代 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -491,17 +446,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -557,22 +503,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Redirect"><span class="nav-number">1.</span> <span class="nav-text">Redirect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#App-Cache"><span class="nav-number">2.</span> <span class="nav-text">App Cache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS"><span class="nav-number">3.</span> <span class="nav-text">DNS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP"><span class="nav-number">4.</span> <span class="nav-text">TCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Request"><span class="nav-number">5.</span> <span class="nav-text">Request</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Response"><span class="nav-number">5.1.</span> <span class="nav-text">Response</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>

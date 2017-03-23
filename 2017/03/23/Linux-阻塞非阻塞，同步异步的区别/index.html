@@ -1,0 +1,724 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="EQ8iDaZYMG" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux,同步，异步,阻塞，非阻塞," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="要理解这两个概念，首先我们做一个简单的比喻：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux-阻塞非阻塞，同步异步的区别">
+<meta property="og:url" content="https://jamal-jiang.github.io/2017/03/23/Linux-阻塞非阻塞，同步异步的区别/index.html">
+<meta property="og:site_name" content="落玄的博客">
+<meta property="og:description" content="要理解这两个概念，首先我们做一个简单的比喻：">
+<meta property="og:image" content="https://pic2.zhimg.com/e83d68da03da2e8c1568b4b4b630edfd_b.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/4bc31cab27a9a732ab7d1ba9e674ed64_b.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/6294fb7f7f5c22e39187a490c35ac6f0_b.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/5819fd0fdff2bd4fdc9652291aca1831_b.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/8244d924a12eaf42d61b41718c559bff_b.jpg">
+<meta property="og:updated_time" content="2017-03-23T04:25:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux-阻塞非阻塞，同步异步的区别">
+<meta name="twitter:description" content="要理解这两个概念，首先我们做一个简单的比喻：">
+<meta name="twitter:image" content="https://pic2.zhimg.com/e83d68da03da2e8c1568b4b4b630edfd_b.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jamal-jiang.github.io/2017/03/23/Linux-阻塞非阻塞，同步异步的区别/"/>
+
+
+
+
+
+  <title> Linux-阻塞非阻塞，同步异步的区别 | 落玄的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">落玄的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">落玄的博客</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/03/23/Linux-阻塞非阻塞，同步异步的区别/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux-阻塞非阻塞，同步异步的区别
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-23T09:50:54+08:00">
+                2017-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>要理解这两个概念，首先我们做一个简单的比喻：<br><a id="more"></a><br>扒一个知乎上的比喻：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">老张爱喝茶，废话不说，煮开水。</div><div class="line">出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶）。</div><div class="line">1 老张把水壶放到火上，立等水开。（同步阻塞）老张觉得自己有点傻</div><div class="line">2 老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。（同步非阻塞）</div><div class="line">老张还是觉得自己有点傻，于是变高端了，买了把会响笛的那种水壶。水开之后，能大声发出嘀~~~~的噪音。</div><div class="line">3 老张把响水壶放到火上，立等水开。（异步阻塞）老张觉得这样傻等意义不大</div><div class="line">4 老张把响水壶放到火上，去客厅看电视，水壶响之前不再去看它了，响了再去拿壶。（异步非阻塞）</div><div class="line">老张觉得自己聪明了。</div></pre></td></tr></table></figure></p>
+<p>这个比喻其实比较形象的比喻了非阻塞的过程，对同步异步的过程其实比喻的不是太好，我改进了一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">老张爱喝茶，废话不说，煮开水。</div><div class="line">出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶），水壶。</div><div class="line">1 老张把水壶放到火上，立等水开，水开了之后老张把水倒进水壶。（同步阻塞）</div><div class="line">2 老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有，水开了之后老张把水倒进水壶。（同步非阻塞）</div><div class="line">老张还是觉得自己有点傻，于是变高端了，买了把会响笛的那种水壶。水开之后，能大声发出嘀~~~~的噪音。</div><div class="line">3 老张把响水壶放到火上，立等水开，水开了之后老张把水倒进水壶。（异步阻塞）老张觉得这样傻等意义不大</div><div class="line">4 老张把响水壶放到火上，去客厅看电视，水壶响之前不再去看它了，水开了之后自动流进水壶，然后发出响声，老张直接拿水壶走人（异步非阻塞）</div><div class="line">老张觉得自己聪明了。</div></pre></td></tr></table></figure></p>
+<p>好了，让我们回到权威，看看《UNIX网络编程》是怎么解释这几个概念的，摘自《UNIX网络编程1》第六章：<br>首先说一下Linux基本的IO模型：</p>
+<ol>
+<li>阻塞式IO</li>
+<li>非阻塞式IO</li>
+<li>IO复用（select poll epoll）</li>
+<li>信号驱动式（SIGIO）</li>
+<li>异步IO（POSIX的aio系列函数）<br>正常的一个输入操作包括两个部分组成：<br>（1）等待数据准备好；<br>（2）从内核向进程复制数据；<br>对于一个套接字上的输入操作，第一步通常涉及等待数据从网络中到达，第二步就是把数据从内核缓冲区复制到应用进程缓冲区。<h3 id="1-阻塞式IO"><a href="#1-阻塞式IO" class="headerlink" title="1. 阻塞式IO"></a>1. 阻塞式IO</h3><img src="https://pic2.zhimg.com/e83d68da03da2e8c1568b4b4b630edfd_b.jpg" alt=""><br>应用进程阻塞在标红的这部分。进程调用recvfrom，其系统调用知道数据报到达且被复制到应用进程的缓冲区中或者发生错误的时候才返回，我们说进程在从调用recvfrom开始到它返回的整段时间内是被阻塞的，recvfrom成功返回后，应用进程开始处理数据报。<h3 id="2-非阻塞式IO"><a href="#2-非阻塞式IO" class="headerlink" title="2. 非阻塞式IO"></a>2. 非阻塞式IO</h3><img src="https://pic1.zhimg.com/4bc31cab27a9a732ab7d1ba9e674ed64_b.jpg" alt=""><br>这句话很重要：进程把一个套接字设置成非阻塞是在通知内核：当所有的请求IO操作非得把这个进程投入睡眠才能完成时，不要把进程投入睡眠，而是返回一个错误。<br>当一个应用进程像这样对一个非阻塞描述符循环调用recvfrom时，我们称之为<code>轮训</code>(polling)。应用进程持续轮询内核，以查看某个操作是否就绪，这样的做法往往会消耗大量的CPU时间。<br>在上图中，可以看到recvfrom总是立即返回并不阻塞，但是这时候从内核复制到用户进程还是同步的。<h3 id="3-IO复用（select-poll-epoll）"><a href="#3-IO复用（select-poll-epoll）" class="headerlink" title="3. IO复用（select poll epoll）"></a>3. IO复用（select poll epoll）</h3>!()[<a href="https://pic1.zhimg.com/b1ec6a4f16844a27c175d5a6a94cd7f8_b.jpg" target="_blank" rel="external">https://pic1.zhimg.com/b1ec6a4f16844a27c175d5a6a94cd7f8_b.jpg</a>]<br>IO复用也是阻塞的，这时候会阻塞在select poll这两个系统调用上，而不是阻塞在真正的IO调用上。<br>阻塞在select调用，等待数据报套接字变成可读，当select返回套接字可读的时候，调用recvfrom把数据报复制到应用进程缓冲区，这时候读取数据的操作也是阻塞的。<h3 id="4-信号驱动式（SIGIO）"><a href="#4-信号驱动式（SIGIO）" class="headerlink" title="4. 信号驱动式（SIGIO）"></a>4. 信号驱动式（SIGIO）</h3><img src="https://pic1.zhimg.com/6294fb7f7f5c22e39187a490c35ac6f0_b.jpg" alt=""><br>信号驱动先不细说。<h3 id="5-异步IO（POSIX的aio系列函数）"><a href="#5-异步IO（POSIX的aio系列函数）" class="headerlink" title="5. 异步IO（POSIX的aio系列函数）"></a>5. 异步IO（POSIX的aio系列函数）</h3><img src="https://pic2.zhimg.com/5819fd0fdff2bd4fdc9652291aca1831_b.jpg" alt=""><br>异步的工作机制是：告知内核启动某个操作，并让内核在整个操作（包括将数据从内核缓冲区复制到应用进程缓冲区）完成后通知我们。这个模式和信号驱动的区别在于：信号驱动是内核通知我们什么时候可以启动一个IO操作，而异步IO是内核通知我们IO操作什么时候完成。</li>
+</ol>
+<h3 id="IO模型的比较"><a href="#IO模型的比较" class="headerlink" title="IO模型的比较"></a>IO模型的比较</h3><ol>
+<li>同步IO：导致请求进程阻塞，直到IO操作完成；</li>
+<li>异步IO：不导致请求进程阻塞；<br>可能会有人问：你是说了各种IO，但还是没有说明白阻塞非阻塞，同步异步的区别，别急，我们看看下面一幅图：<br><img src="https://pic4.zhimg.com/8244d924a12eaf42d61b41718c559bff_b.jpg" alt=""><br>实际上前面的四种IO模型，唯一的区别在于等待数据的过程中是怎么处理的，实际在从内核拷贝数据到用户进程的时候都是阻塞的，所以都是同步IO，只有最后一个异步IO模型才是完全异步的。<br>总结一下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1. 阻塞，非阻塞：进程/线程要访问的数据是否就绪，进程/线程是否需要等待；</div><div class="line">2. 同步，异步：访问数据的方式，同步需要主动读写数据，在读写数据的过程中还是会阻塞；异步只需要I/O操作完成的通知，并不主动读写数据，由操作系统内核完成数据的读写。</div></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/同步，异步/" rel="tag"># 同步，异步</a>
+          
+            <a href="/tags/阻塞，非阻塞/" rel="tag"># 阻塞，非阻塞</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/22/Python-理解PYTHON中的装饰器/" rel="next" title="Python-理解PYTHON中的装饰器">
+                <i class="fa fa-chevron-left"></i> Python-理解PYTHON中的装饰器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="jamal-jiang" />
+          <p class="site-author-name" itemprop="name">jamal-jiang</p>
+          <p class="site-description motion-element" itemprop="description">落玄,程序员,技术,生活</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-阻塞式IO"><span class="nav-number">1.</span> <span class="nav-text">1. 阻塞式IO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-非阻塞式IO"><span class="nav-number">2.</span> <span class="nav-text">2. 非阻塞式IO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-IO复用（select-poll-epoll）"><span class="nav-number">3.</span> <span class="nav-text">3. IO复用（select poll epoll）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-信号驱动式（SIGIO）"><span class="nav-number">4.</span> <span class="nav-text">4. 信号驱动式（SIGIO）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-异步IO（POSIX的aio系列函数）"><span class="nav-number">5.</span> <span class="nav-text">5. 异步IO（POSIX的aio系列函数）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IO模型的比较"><span class="nav-number">6.</span> <span class="nav-text">IO模型的比较</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jamal-jiang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

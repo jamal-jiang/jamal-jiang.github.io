@@ -92,7 +92,7 @@
 <meta property="og:url" content="https://jamal-jiang.github.io/2017/03/16/Python-generator/index.html">
 <meta property="og:site_name" content="落玄的博客">
 <meta property="og:description" content="通过List Comprehensions，我们可以很方便的生成一个列表，但是受限于内存等原因，列表的长度是有限制的，例如我们创建一个100w长度的列表，既浪费了空间，又如果我们只需要部分数据的话，那么大部分空间就被浪费了。所以，如果列表中的元素可以按照某种固定的算法推导出来，我们就可以在迭代中不断地通过这个算法计算出后面的值，这在python中叫做生成器(generator)。">
-<meta property="og:updated_time" content="2017-03-16T14:59:59.000Z">
+<meta property="og:updated_time" content="2017-03-19T13:15:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python-生成器">
 <meta name="twitter:description" content="通过List Comprehensions，我们可以很方便的生成一个列表，但是受限于内存等原因，列表的长度是有限制的，例如我们创建一个100w长度的列表，既浪费了空间，又如果我们只需要部分数据的话，那么大部分空间就被浪费了。所以，如果列表中的元素可以按照某种固定的算法推导出来，我们就可以在迭代中不断地通过这个算法计算出后面的值，这在python中叫做生成器(generator)。">
@@ -354,7 +354,10 @@
 <p>当访问到最后一个元素之后再次访问的时候，会引起StopIteration的报错。<br>我们来看看next函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">def next(iterator, default=None): # real signature unknown; restored from __doc__</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    next(iterator[, default])</div><div class="line">    </div><div class="line">    Return the next item from the iterator. If default is given and the iterator</div><div class="line">    is exhausted, it is returned instead of raising StopIteration.</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    pass</div></pre></td></tr></table></figure></p>
 <p>所以从本质上来说，生成器还是一个迭代器。当然在日常中我们会更多的用for循环来遍历。<br>前面讲过，实际上生成器保存的是一个算法，而不是一个值。让我们来看下面的一个函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">def test():</div><div class="line">    print(&quot;1&quot;)</div><div class="line">    yield 1</div><div class="line">    print(&quot;2&quot;)</div><div class="line">    yield 2</div><div class="line">    print(&quot;3&quot;)</div><div class="line">    yield 3</div><div class="line"></div><div class="line"></div><div class="line">a = test()</div><div class="line">next(a)</div><div class="line">print(&quot;111&quot;)</div><div class="line">next(a)</div><div class="line">print(&quot;222&quot;)</div><div class="line">next(a)</div><div class="line">print(&quot;333&quot;)</div></pre></td></tr></table></figure></p>
 <p>在函数中使用yield，这个函数就变成了一个生成器，我们看一下输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line">111</div><div class="line">2</div><div class="line">222</div><div class="line">3</div><div class="line">333</div></pre></td></tr></table></figure></p>
-<p>会发现实际上是每次都卡住了，我们再看一个斐波那契数列的例子：</p>
+<p>会发现实际上是每次都卡住了，我们再看一个斐波那契数列的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">def fibn(max):</div><div class="line">    a, b, n = 0, 1, 0</div><div class="line">    while n &lt; max:</div><div class="line">        yield b</div><div class="line">        a, b = b, a + b</div><div class="line">        n += 1</div><div class="line">    return &apos;done&apos;</div><div class="line"></div><div class="line">f = fibn(6)</div><div class="line">print(f)</div></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;generator object fibn at 0x1013c00f8&gt;</div></pre></td></tr></table></figure></p>
+<p>这里，最难理解的就是generator和函数的执行流程不一样。函数是顺序执行，遇到return语句或者最后一行函数语句就返回。而变成generator的函数，在每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行。<br>但是在调用生成器的时候，会发现拿不到最后return的值，要获取这个值必须捕获StopIteration的错误，如下代码中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">def fibn(max):</div><div class="line">    a, b, n = 0, 1, 0</div><div class="line">    while n &lt; max:</div><div class="line">        yield b</div><div class="line">        a, b = b, a + b</div><div class="line">        n += 1</div><div class="line">    return &apos;done&apos;</div><div class="line"></div><div class="line"></div><div class="line">f = fibn(2)</div><div class="line">while True:</div><div class="line">    try:</div><div class="line">        x = next(f)</div><div class="line">        print(x)</div><div class="line">    except StopIteration as e:</div><div class="line">        print(&apos;stopIter error: %s&apos; % e.value)</div><div class="line">        break</div></pre></td></tr></table></figure></p>
+<p>执行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line">1</div><div class="line">stopIter error: done</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -460,7 +463,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -469,7 +472,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -478,7 +481,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

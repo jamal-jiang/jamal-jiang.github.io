@@ -88,14 +88,14 @@
 
 <meta name="description" content="安装了core系统之后，是什么都没有的，需要自己重新装所有东西，这时候ifconfig也不可以看，只能先安装net-tools，但是centos默认网络是关的，需要手动开启。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Centos:core安装后联网和安装ifconfig.md">
+<meta property="og:title" content="Centos:core安装后联网和安装ifconfig">
 <meta property="og:url" content="https://jamal-jiang.github.io/2017/12/02/Centos:core安装后联网和安装ifconfig/index.html">
 <meta property="og:site_name" content="落玄的博客">
 <meta property="og:description" content="安装了core系统之后，是什么都没有的，需要自己重新装所有东西，这时候ifconfig也不可以看，只能先安装net-tools，但是centos默认网络是关的，需要手动开启。">
 <meta property="og:image" content="https://jamal-jiang.github.io/images/15122284469645.jpg">
-<meta property="og:updated_time" content="2017-12-02T15:32:26.000Z">
+<meta property="og:updated_time" content="2017-12-13T12:01:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Centos:core安装后联网和安装ifconfig.md">
+<meta name="twitter:title" content="Centos:core安装后联网和安装ifconfig">
 <meta name="twitter:description" content="安装了core系统之后，是什么都没有的，需要自己重新装所有东西，这时候ifconfig也不可以看，只能先安装net-tools，但是centos默认网络是关的，需要手动开启。">
 <meta name="twitter:image" content="https://jamal-jiang.github.io/images/15122284469645.jpg">
 
@@ -131,7 +131,7 @@
 
 
 
-  <title> Centos:core安装后联网和安装ifconfig.md | 落玄的博客 </title>
+  <title> Centos:core安装后联网和安装ifconfig | 落玄的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -278,7 +278,7 @@
             
             
               
-                Centos:core安装后联网和安装ifconfig.md
+                Centos:core安装后联网和安装ifconfig
               
             
           </h2>
@@ -330,6 +330,7 @@
 
       
         <p>安装了core系统之后，是什么都没有的，需要自己重新装所有东西，这时候ifconfig也不可以看，只能先安装net-tools，但是centos默认网络是关的，需要手动开启。<br><a id="more"></a><br>到/etc/sysconfig/network-scripts/目录下，<br><img src="/images/15122284469645.jpg" alt=""><br>看到有ifcfg-eno1，这个是随机的，我的这个机器有两个网口，所以有两个文件，注意这里哪张网卡能联网就开启哪张，否则网卡重启不起来，<br>把里面的ONBOOT=no改成ONBOOT=yes<br>service network restart 重启网卡。<br>yum install net-tools，装完就可以用ifconifg了</p>
+<p>最小化安装的时候，man也是不能用的，要用yum -y install man-pages装一下</p>
 
       
     </div>
@@ -362,8 +363,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/02/sublime:sublime-snipper设置自定义文件头信息/" rel="next" title="sublime:sublime-snipper设置自定义文件头信息.md">
-                <i class="fa fa-chevron-left"></i> sublime:sublime-snipper设置自定义文件头信息.md
+              <a href="/2017/12/02/sublime:sublime-snipper设置自定义文件头信息/" rel="next" title="sublime:sublime-snipper设置自定义文件头信息">
+                <i class="fa fa-chevron-left"></i> sublime:sublime-snipper设置自定义文件头信息
               </a>
             
           </div>
@@ -371,6 +372,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/13/gethostbyname与DNS/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -431,7 +436,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -440,7 +445,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -449,7 +454,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

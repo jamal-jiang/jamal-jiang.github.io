@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux,Jstorm,分布式" />
+  <meta name="keywords" content="Linux," />
 
 
 
@@ -86,34 +86,16 @@
 
 
 
-<meta name="description" content="gethostbyname与DNS
-title: gethostbyname与DNSdate: 2017-12-14 02:50:54tags:
-
-Linuxcategories: Linux
-
-
-首先，这个文档不错：https://lfckop.github.io/gethostbyname-and-DNS/">
+<meta name="description" content="首先，这个文档不错：https://lfckop.github.io/gethostbyname-and-DNS/">
 <meta property="og:type" content="article">
-<meta property="og:title" content="落玄的博客">
-<meta property="og:url" content="https://jamal-jiang.github.io/2017/12/13/gethostbyname与DNS/index.html">
+<meta property="og:title" content="gethostbyname与DNS">
+<meta property="og:url" content="https://jamal-jiang.github.io/2017/12/14/gethostbyname与DNS/index.html">
 <meta property="og:site_name" content="落玄的博客">
-<meta property="og:description" content="gethostbyname与DNS
-title: gethostbyname与DNSdate: 2017-12-14 02:50:54tags:
-
-Linuxcategories: Linux
-
-
-首先，这个文档不错：https://lfckop.github.io/gethostbyname-and-DNS/">
-<meta property="og:updated_time" content="2017-12-14T07:04:06.000Z">
+<meta property="og:description" content="首先，这个文档不错：https://lfckop.github.io/gethostbyname-and-DNS/">
+<meta property="og:updated_time" content="2017-12-14T07:08:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="落玄的博客">
-<meta name="twitter:description" content="gethostbyname与DNS
-title: gethostbyname与DNSdate: 2017-12-14 02:50:54tags:
-
-Linuxcategories: Linux
-
-
-首先，这个文档不错：https://lfckop.github.io/gethostbyname-and-DNS/">
+<meta name="twitter:title" content="gethostbyname与DNS">
+<meta name="twitter:description" content="首先，这个文档不错：https://lfckop.github.io/gethostbyname-and-DNS/">
 
 
 
@@ -141,13 +123,13 @@ Linuxcategories: Linux
 
 
 
-  <link rel="canonical" href="https://jamal-jiang.github.io/2017/12/13/gethostbyname与DNS/"/>
+  <link rel="canonical" href="https://jamal-jiang.github.io/2017/12/14/gethostbyname与DNS/"/>
 
 
 
 
 
-  <title>  | 落玄的博客 </title>
+  <title> gethostbyname与DNS | 落玄的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +252,7 @@ Linuxcategories: Linux
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/12/13/gethostbyname与DNS/">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/12/14/gethostbyname与DNS/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="jamal-jiang">
@@ -294,7 +276,7 @@ Linuxcategories: Linux
             
             
               
-                
+                gethostbyname与DNS
               
             
           </h2>
@@ -309,8 +291,8 @@ Linuxcategories: Linux
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-13T19:49:27+08:00">
-                2017-12-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-14T02:50:54+08:00">
+                2017-12-14
               </time>
             
 
@@ -319,6 +301,28 @@ Linuxcategories: Linux
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -345,13 +349,7 @@ Linuxcategories: Linux
       
 
       
-        <h1 id="gethostbyname与DNS"><a href="#gethostbyname与DNS" class="headerlink" title="gethostbyname与DNS"></a>gethostbyname与DNS</h1><hr>
-<p>title: gethostbyname与DNS<br>date: 2017-12-14 02:50:54<br>tags:</p>
-<ul>
-<li>Linux<br>categories: Linux</li>
-</ul>
-<hr>
-<p>首先，这个文档不错：<a href="https://lfckop.github.io/gethostbyname-and-DNS/" target="_blank" rel="external">https://lfckop.github.io/gethostbyname-and-DNS/</a><br><a id="more"></a><br>下午验证商户的时候发现一个奇怪的问题，商户本地没绑host，但是仍然只能访问到一个ip，后来排查是因为对方机器本地有nscd进程在跑（这里不得不吐槽，不是自己的机器找人执行命令真是难），中间有一个比较有意思的事情，ping的时候只能ping到一个ip，但是dig能跑出两个，这个其实比较容易知道是什么原因导致的，但是这里就有一个比较有意思的点可以去探究的：<br>我们都清楚或者说知道DNS解析的大概流程，也大概知道可能会有host绑定、缓存等等的情况出现，但是细想一下好像都说不清具体在代码层面Linux系统是怎么去做这件事情的，所以不妨手动做一下测试，看看究竟是怎么做的。</p>
+        <p>首先，这个文档不错：<a href="https://lfckop.github.io/gethostbyname-and-DNS/" target="_blank" rel="external">https://lfckop.github.io/gethostbyname-and-DNS/</a><br><a id="more"></a><br>下午验证商户的时候发现一个奇怪的问题，商户本地没绑host，但是仍然只能访问到一个ip，后来排查是因为对方机器本地有nscd进程在跑（这里不得不吐槽，不是自己的机器找人执行命令真是难），中间有一个比较有意思的事情，ping的时候只能ping到一个ip，但是dig能跑出两个，这个其实比较容易知道是什么原因导致的，但是这里就有一个比较有意思的点可以去探究的：<br>我们都清楚或者说知道DNS解析的大概流程，也大概知道可能会有host绑定、缓存等等的情况出现，但是细想一下好像都说不清具体在代码层面Linux系统是怎么去做这件事情的，所以不妨手动做一下测试，看看究竟是怎么做的。</p>
 <p>我们从ping开始，首先ltrace跟踪一下ping的代码执行过程：ltrace ping -c 1 baidu.com 2&gt;&amp;1</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">[root@izj6c3cqwumhn7qc8it7wiz log]# ltrace ping -c 1 baidu.com 2&gt;&amp;1 | grep get</div><div class="line">cap_get_proc(0x7ffcb9159230, 0x7ffcb9159348, 0x7ffcb9159370, 0) = 0x55dc4ce20014</div><div class="line">cap_get_flag(0x55dc4ce20014, 12, 1, 0x7ffcb9159194) = 0</div><div class="line">cap_get_flag(0x55dc4ce20014, 13, 1, 0x7ffcb9159194) = 0</div><div class="line">getuid()                                         = 0</div><div class="line">getuid()                                         = 0</div><div class="line">geteuid()                                        = 0</div><div class="line">getopt(4, 0x7ffcb9159348, &quot;h?4bRT:6F:N:aABc:dDfi:I:l:Lm:M:n&quot;...) = 99</div><div class="line">getopt(4, 0x7ffcb9159348, &quot;h?4bRT:6F:N:aABc:dDfi:I:l:Lm:M:n&quot;...) = -1</div><div class="line">cap_get_proc(13, 1, 3, 0)                        = 0x55dc4ce20014</div><div class="line">cap_get_flag(0x55dc4ce20014, 13, 1, 0x7ffcb9159194) = 0</div><div class="line">cap_get_proc(13, 0, 1, -1)                       = 0x55dc4ce20014</div><div class="line">cap_get_flag(0x55dc4ce20014, 13, 1, 0x7ffcb9159194) = 0</div><div class="line">getaddrinfo(&quot;baidu.com&quot;, nil, 0x7ffcb9159200, 0x7ffcb91591d8) = 0</div><div class="line">getsockname(4, 0x55dc4c3fa070, 0x7ffcb9158cec, -1) = 0</div><div class="line">getsockopt(3, 1, 8, 0x7ffcb9158ca0)              = 0</div><div class="line">getpid()                                         = 16594</div><div class="line">gettimeofday(0x55dc4c3fc6c0, nil)                = 0</div><div class="line">gettimeofday(0x55dc4c3fe6f0, nil)                = 0</div><div class="line">gettimeofday(0x7ffcb9157ad0, nil)                = 0</div><div class="line">getnameinfo(0x7ffcb9157c00, 16, &quot;&quot;, 1025, nil, 0, 33) = 0</div><div class="line">getnameinfo(0x7ffcb9157c00, 16, &quot;&quot;, 1025, nil, 0, 32) = 0</div></pre></td></tr></table></figure>
 <p>至于为啥我要执行grep get，只是知道以前写echoserver这种tcp应用的时候会用到gethostbyname而已，哈哈。<br>不过这里是没有这个函数的，但是我注意到了有这么一个函数：getaddrinfo，man一下看到了</p>
@@ -417,6 +415,12 @@ Linuxcategories: Linux
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
       
 
       
@@ -554,7 +558,7 @@ Linuxcategories: Linux
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gethostbyname与DNS"><span class="nav-number">1.</span> <span class="nav-text">gethostbyname与DNS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实验过程"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">实验过程</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#实验过程"><span class="nav-number">1.</span> <span class="nav-text">实验过程</span></a></li></ol></div>
             
 
           </div>

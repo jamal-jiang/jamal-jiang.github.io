@@ -338,8 +338,7 @@
 <li>Linux<br>categories: Linux</li>
 </ul>
 <hr>
-<p>首先，这个文档不错：<a href="https://lfckop.github.io/gethostbyname-and-DNS/">https://lfckop.github.io/gethostbyname-and-DNS/</a></p>
-<p>下午验证商户的时候发现一个奇怪的问题，商户本地没绑host，但是仍然只能访问到一个ip，后来排查是因为对方机器本地有nscd进程在跑（这里不得不吐槽，不是自己的机器找人执行命令真是难），中间有一个比较有意思的事情，ping的时候只能ping到一个ip，但是dig能跑出两个，这个其实比较容易知道是什么原因导致的，但是这里就有一个比较有意思的点可以去探究的：<br>我们都清楚或者说知道DNS解析的大概流程，也大概知道可能会有host绑定、缓存等等的情况出现，但是细想一下好像都说不清具体在代码层面Linux系统是怎么去做这件事情的，所以不妨手动做一下测试，看看究竟是怎么做的。<br>
+<p>首先，这个文档不错：<a href="https://lfckop.github.io/gethostbyname-and-DNS/">https://lfckop.github.io/gethostbyname-and-DNS/</a><br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/12/13/gethostbyname与DNS/#more" rel="contents">

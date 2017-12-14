@@ -92,7 +92,8 @@ title: gethostbyname与DNSdate: 2017-12-14 02:50:54tags:
 Linuxcategories: Linux
 
 
-下午验证商户的时候发现一个奇怪的问题，商户本地没绑host，但是仍然只能访问到一个ip，后来排查是因为对方机器本地有nscd进程在跑（这里不得不吐槽，不是自己的机器找人执行命令真是难），中间有一个比较有">
+首先，这个文档不错：https://lfckop.github.io/gethostbyname-and-DNS/
+下午验证商户的时候发现一个奇怪的问题，商户本地没绑host，但是仍然只能访问到一个ip">
 <meta property="og:type" content="article">
 <meta property="og:title" content="落玄的博客">
 <meta property="og:url" content="https://jamal-jiang.github.io/2017/12/13/gethostbyname与DNS/index.html">
@@ -103,8 +104,9 @@ title: gethostbyname与DNSdate: 2017-12-14 02:50:54tags:
 Linuxcategories: Linux
 
 
-下午验证商户的时候发现一个奇怪的问题，商户本地没绑host，但是仍然只能访问到一个ip，后来排查是因为对方机器本地有nscd进程在跑（这里不得不吐槽，不是自己的机器找人执行命令真是难），中间有一个比较有">
-<meta property="og:updated_time" content="2017-12-13T18:51:18.000Z">
+首先，这个文档不错：https://lfckop.github.io/gethostbyname-and-DNS/
+下午验证商户的时候发现一个奇怪的问题，商户本地没绑host，但是仍然只能访问到一个ip">
+<meta property="og:updated_time" content="2017-12-14T07:01:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="落玄的博客">
 <meta name="twitter:description" content="gethostbyname与DNS
@@ -113,7 +115,8 @@ title: gethostbyname与DNSdate: 2017-12-14 02:50:54tags:
 Linuxcategories: Linux
 
 
-下午验证商户的时候发现一个奇怪的问题，商户本地没绑host，但是仍然只能访问到一个ip，后来排查是因为对方机器本地有nscd进程在跑（这里不得不吐槽，不是自己的机器找人执行命令真是难），中间有一个比较有">
+首先，这个文档不错：https://lfckop.github.io/gethostbyname-and-DNS/
+下午验证商户的时候发现一个奇怪的问题，商户本地没绑host，但是仍然只能访问到一个ip">
 
 
 
@@ -351,7 +354,8 @@ Linuxcategories: Linux
 <li>Linux<br>categories: Linux</li>
 </ul>
 <hr>
-<p>下午验证商户的时候发现一个奇怪的问题，商户本地没绑host，但是仍然只能访问到一个ip，后来排查是因为对方机器本地有nscd进程在跑（这里不得不吐槽，不是自己的机器找人执行命令真是难），中间有一个比较有意思的事情，ping的时候只能ping到一个ip，但是dig能跑出两个，这个其实比较容易知道是什么原因导致的，但是这里就有一个比较有意思的点可以去探究的：<br>我们都清楚或者说知道DNS解析的大概流程，也大概知道可能会有host绑定、缓存等等的情况出现，但是细想一下好像都说不清具体在代码层面Linux系统是怎么去做这件事情的，所以不妨手动做一下测试，看看究竟是怎么做的。<br>我们从ping开始，首先ltrace跟踪一下ping的代码执行过程：ltrace ping -c 1 baidu.com 2&gt;&amp;1</p>
+<p>首先，这个文档不错：<a href="https://lfckop.github.io/gethostbyname-and-DNS/" target="_blank" rel="external">https://lfckop.github.io/gethostbyname-and-DNS/</a></p>
+<p>下午验证商户的时候发现一个奇怪的问题，商户本地没绑host，但是仍然只能访问到一个ip，后来排查是因为对方机器本地有nscd进程在跑（这里不得不吐槽，不是自己的机器找人执行命令真是难），中间有一个比较有意思的事情，ping的时候只能ping到一个ip，但是dig能跑出两个，这个其实比较容易知道是什么原因导致的，但是这里就有一个比较有意思的点可以去探究的：<br>我们都清楚或者说知道DNS解析的大概流程，也大概知道可能会有host绑定、缓存等等的情况出现，但是细想一下好像都说不清具体在代码层面Linux系统是怎么去做这件事情的，所以不妨手动做一下测试，看看究竟是怎么做的。<br><a id="more"></a><br>我们从ping开始，首先ltrace跟踪一下ping的代码执行过程：ltrace ping -c 1 baidu.com 2&gt;&amp;1</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">[root@izj6c3cqwumhn7qc8it7wiz log]# ltrace ping -c 1 baidu.com 2&gt;&amp;1 | grep get</div><div class="line">cap_get_proc(0x7ffcb9159230, 0x7ffcb9159348, 0x7ffcb9159370, 0) = 0x55dc4ce20014</div><div class="line">cap_get_flag(0x55dc4ce20014, 12, 1, 0x7ffcb9159194) = 0</div><div class="line">cap_get_flag(0x55dc4ce20014, 13, 1, 0x7ffcb9159194) = 0</div><div class="line">getuid()                                         = 0</div><div class="line">getuid()                                         = 0</div><div class="line">geteuid()                                        = 0</div><div class="line">getopt(4, 0x7ffcb9159348, &quot;h?4bRT:6F:N:aABc:dDfi:I:l:Lm:M:n&quot;...) = 99</div><div class="line">getopt(4, 0x7ffcb9159348, &quot;h?4bRT:6F:N:aABc:dDfi:I:l:Lm:M:n&quot;...) = -1</div><div class="line">cap_get_proc(13, 1, 3, 0)                        = 0x55dc4ce20014</div><div class="line">cap_get_flag(0x55dc4ce20014, 13, 1, 0x7ffcb9159194) = 0</div><div class="line">cap_get_proc(13, 0, 1, -1)                       = 0x55dc4ce20014</div><div class="line">cap_get_flag(0x55dc4ce20014, 13, 1, 0x7ffcb9159194) = 0</div><div class="line">getaddrinfo(&quot;baidu.com&quot;, nil, 0x7ffcb9159200, 0x7ffcb91591d8) = 0</div><div class="line">getsockname(4, 0x55dc4c3fa070, 0x7ffcb9158cec, -1) = 0</div><div class="line">getsockopt(3, 1, 8, 0x7ffcb9158ca0)              = 0</div><div class="line">getpid()                                         = 16594</div><div class="line">gettimeofday(0x55dc4c3fc6c0, nil)                = 0</div><div class="line">gettimeofday(0x55dc4c3fe6f0, nil)                = 0</div><div class="line">gettimeofday(0x7ffcb9157ad0, nil)                = 0</div><div class="line">getnameinfo(0x7ffcb9157c00, 16, &quot;&quot;, 1025, nil, 0, 33) = 0</div><div class="line">getnameinfo(0x7ffcb9157c00, 16, &quot;&quot;, 1025, nil, 0, 32) = 0</div></pre></td></tr></table></figure>
 <p>至于为啥我要执行grep get，只是知道以前写echoserver这种tcp应用的时候会用到gethostbyname而已，哈哈。<br>不过这里是没有这个函数的，但是我注意到了有这么一个函数：getaddrinfo，man一下看到了</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Given  node  and service, which identify an Internet host and a service, getaddrinfo() returns one or more addrinfo structures, each</div><div class="line">       of which contains an Internet address that can be specified in a call to bind(2) or connect(2).  The getaddrinfo() function combines</div><div class="line">       the  functionality  provided  by  the gethostbyname(3) and getservbyname(3) functions into a single interface, but unlike the latter</div><div class="line">       functions, getaddrinfo() is reentrant and allows programs to eliminate IPv4-versus-IPv6 dependencies.</div></pre></td></tr></table></figure>

@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux,Jstorm,分布式" />
+  <meta name="keywords" content="Linux," />
 
 
 
@@ -86,16 +86,18 @@
 
 
 
-<meta name="description" content="落玄,程序员,技术,生活">
+<meta name="description" content="俗话说，无图无真相，先上图：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="落玄的博客">
-<meta property="og:url" content="https://jamal-jiang.github.io/2018/02/12/Linux进程状态/index.html">
+<meta property="og:title" content="Linux进程状态">
+<meta property="og:url" content="https://jamal-jiang.github.io/2018/02/15/Linux进程状态/index.html">
 <meta property="og:site_name" content="落玄的博客">
-<meta property="og:description" content="落玄,程序员,技术,生活">
-<meta property="og:updated_time" content="2018-02-13T07:25:08.000Z">
+<meta property="og:description" content="俗话说，无图无真相，先上图：">
+<meta property="og:image" content="https://jamal-jiang.github.io/images/15186966371628.jpg">
+<meta property="og:updated_time" content="2018-02-15T12:13:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="落玄的博客">
-<meta name="twitter:description" content="落玄,程序员,技术,生活">
+<meta name="twitter:title" content="Linux进程状态">
+<meta name="twitter:description" content="俗话说，无图无真相，先上图：">
+<meta name="twitter:image" content="https://jamal-jiang.github.io/images/15186966371628.jpg">
 
 
 
@@ -123,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://jamal-jiang.github.io/2018/02/12/Linux进程状态/"/>
+  <link rel="canonical" href="https://jamal-jiang.github.io/2018/02/15/Linux进程状态/"/>
 
 
 
 
 
-  <title>  | 落玄的博客 </title>
+  <title> Linux进程状态 | 落玄的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -252,7 +254,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2018/02/12/Linux进程状态/">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2018/02/15/Linux进程状态/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="jamal-jiang">
@@ -276,7 +278,7 @@
             
             
               
-                
+                Linux进程状态
               
             
           </h2>
@@ -291,8 +293,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-12T19:57:45+08:00">
-                2018-02-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-15T20:09:00+08:00">
+                2018-02-15
               </time>
             
 
@@ -301,6 +303,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -332,7 +356,16 @@
       
 
       
-        
+        <p>俗话说，无图无真相，先上图：<br><a id="more"></a><br><img src="/images/15186966371628.jpg" alt=""><br>先说明下各个状态：</p>
+<ul>
+<li>运行状态（TASK_RUNNING -&gt; R）</li>
+<li>可中断睡眠状态（TASK_INTERRUPTIBLE -&gt; S）</li>
+<li>不可中断睡眠状态（TASK_UNINTERRUPTIBLE -&gt; D）</li>
+<li>暂停状态（TASK_STOPPED -&gt; T）</li>
+<li>僵死状态（TASK_ZOMBIE -&gt; Z）</li>
+<li>退出状态（EXIT_DEAD -&gt; X）</li>
+</ul>
+
       
     </div>
 
@@ -352,6 +385,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
       
 
       

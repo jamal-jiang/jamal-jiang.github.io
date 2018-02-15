@@ -1,0 +1,749 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="EQ8iDaZYMG" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="以下是工作中学习到的一些技巧和原理性的介绍，主要来自于各个同事写的文章知识总结，对同事们表示感谢">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux load_average解析">
+<meta property="og:url" content="https://jamal-jiang.github.io/2018/02/12/load average解析/index.html">
+<meta property="og:site_name" content="落玄的博客">
+<meta property="og:description" content="以下是工作中学习到的一些技巧和原理性的介绍，主要来自于各个同事写的文章知识总结，对同事们表示感谢">
+<meta property="og:updated_time" content="2018-02-15T08:37:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux load_average解析">
+<meta name="twitter:description" content="以下是工作中学习到的一些技巧和原理性的介绍，主要来自于各个同事写的文章知识总结，对同事们表示感谢">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jamal-jiang.github.io/2018/02/12/load average解析/"/>
+
+
+
+
+
+  <title> Linux load_average解析 | 落玄的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">落玄的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">落玄的博客</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2018/02/12/load average解析/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="落玄的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="落玄的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux load_average解析
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-12T17:29:00+08:00">
+                2018-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>以下是工作中学习到的一些技巧和原理性的介绍，主要来自于各个同事写的文章知识总结，对同事们表示感谢<br><a id="more"></a><br>另外微信公众号上也有一篇相关的文章：<a href="https://mp.weixin.qq.com/s/Jl1Fr81FfBbz6He6Pqf6Gg" target="_blank" rel="external">文章地址</a></p>
+<h4 id="Linux-load的准确含义"><a href="#Linux-load的准确含义" class="headerlink" title="Linux load的准确含义"></a>Linux load的准确含义</h4><p>日常运维中我们经常会碰到Linux系统load过高的问题，但是什么是load，load是怎么得到的，以及在load高的时候应该是怎样的排查思路，都没有一个很好的说明文档，在这里，尝试全面阐述一下Linux load的计算原理和相关的排查方法。<br>日常我们在排查问题的时候经常会使用到的就是top uptime等命令，实际上这些命令都是通过/proc/loadavg获取的，我们可以使用如下的命令进行验证：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">[root@iZhp357raozla15gapy0h0Z hexo]# rpm -ql procps-ng | grep bin</div><div class="line">/usr/bin/free</div><div class="line">/usr/bin/pgrep</div><div class="line">/usr/bin/pkill</div><div class="line">/usr/bin/pmap</div><div class="line">/usr/bin/ps</div><div class="line">/usr/bin/pwdx</div><div class="line">/usr/bin/skill</div><div class="line">/usr/bin/slabtop</div><div class="line">/usr/bin/snice</div><div class="line">/usr/bin/tload</div><div class="line">/usr/bin/top</div><div class="line">/usr/bin/uptime</div><div class="line">/usr/bin/vmstat</div><div class="line">/usr/bin/w</div><div class="line">/usr/bin/watch</div><div class="line">/usr/sbin/sysctl</div></pre></td></tr></table></figure>
+<p>实际上都是来自procps-ng这个rpm包中。<br>/proc/目录中mount的是Linux的伪文件系统，主要是被用作和内核数据结构的接口，我们查看其中loadavg的含义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/proc/loadavg</div><div class="line">              The first three fields in this file are load average figures giving the number of jobs in the run queue (state R)  or  waiting  for</div><div class="line">              disk  I/O (state D) averaged over 1, 5, and 15 minutes.  They are the same as the load average numbers given by uptime(1) and other</div><div class="line">              programs.  The fourth field consists of two numbers separated by a slash (/).  The first of these is the number of  currently  exe-</div><div class="line">              cuting kernel scheduling entities (processes, threads); this will be less than or equal to the number of CPUs.  The value after the</div><div class="line">              slash is the number of kernel scheduling entities that currently exist on the system.  The fifth field is the PID  of  the  process</div><div class="line">              that was most recently created on the system.</div></pre></td></tr></table></figure>
+<p>注意centos7之后的系统（未验证过）已经取消了这个的man信息<br>从这段话中我们可以总结以下信息：</p>
+<ul>
+<li>/proc/loadavg前三个值表示的是load1 load5 load15的值</li>
+<li>load值代表的是对应时间内jobs的平均数量，比如load1表示过去1min内jobs数量的平均值，这里的jobs其实应该是内核中的tasks或者用户态的threads概念</li>
+<li>load计算的值只包括状态为R和D的两种jobs，其他不包含在内，其中R表示运行队列，D表示在等待磁盘（具体的进程的状态转移请参考另一篇文章）</li>
+</ul>
+<h4 id="load分析工具"><a href="#load分析工具" class="headerlink" title="load分析工具"></a>load分析工具</h4><p>在这里我们先抛开其他因素，先看一下日常会用到的脚本分析工具：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#!/bin/sh</div><div class="line">ps -e -L h o state,ucmd  | awk &apos;&#123;if($1==&quot;R&quot;||$1==&quot;D&quot;)&#123;print $0&#125;&#125;&apos; | sort | uniq -c | sort -k 1nr</div></pre></td></tr></table></figure>
+<p>简单介绍一下几个参数：</p>
+<ul>
+<li>-e表示显示当前系统中的所有进程</li>
+<li>-L表示对每一个进程都展示所包含的所有线程，每个线程一行</li>
+<li>h表示隐藏ps命令第一行的header标题信息</li>
+<li>o state,ucmd，这里他们是组合在一起生效的，只输出state和ucmd这两列信息，state表示线程状态，ucmd表示线程的名称<br>找一台比较繁忙的机器运行下脚本，我这边起了一个打cpu的进程，代码就是微信公众号文章的那个代码，输出结果：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># ./loadprocess.sh </div><div class="line">    101 R cpuburn</div><div class="line">      1 R AliYunDun</div><div class="line">      1 R ps</div><div class="line">      1 R rcu_sched</div><div class="line"># uptime</div><div class="line"> 15:58:35 up 4 min,  2 users,  load average: 83.50, 29.94, 10.80</div></pre></td></tr></table></figure>
+<p>这里发现脚本输出的第一列相加在104，和uptime load1输出的差不多。此时如果想要将load1值拆解到具体的线程级别上，就可以看到影响这个load输出结果的最重要因素是这个cpuburn的，状态是R，数量上贡献了101个。</p>
+<h4 id="内核里load是怎么计算的"><a href="#内核里load是怎么计算的" class="headerlink" title="内核里load是怎么计算的"></a>内核里load是怎么计算的</h4><p>注：这一段是看其他同学做的分析的结果，我自己本身并未做相关的分析实验，此处只是拿其他同学的分析结果。<br>首先来看下/proc/loadavg伪文件对应的内核代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">......</div><div class="line">        unsigned long avnrun[3], nr_runnable = 0;</div><div class="line">......</div><div class="line">                get_avenrun(avnrun, FIXED_1/200, 0);</div><div class="line">......</div><div class="line">        seq_printf(m, &quot;%lu.%02lu %lu.%02lu %lu.%02lu %ld/%d %d\n&quot;,</div><div class="line">                LOAD_INT(avnrun[0]), LOAD_FRAC(avnrun[0]),</div><div class="line">                LOAD_INT(avnrun[1]), LOAD_FRAC(avnrun[1]),</div><div class="line">                LOAD_INT(avnrun[2]), LOAD_FRAC(avnrun[2]),</div><div class="line">                nr_runnable, nr_threads,</div><div class="line">                task_active_pid_ns(current)-&gt;last_pid);</div><div class="line">......</div></pre></td></tr></table></figure>
+<p>预编译之后如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">......</div><div class="line">  get_avenrun(avnrun, (1&lt;&lt;11)/200, 0);</div><div class="line">......</div><div class="line"> seq_printf(m, &quot;%lu.%02lu %lu.%02lu %lu.%02lu %ld/%d %d\n&quot;,</div><div class="line">  ((avnrun[0]) &gt;&gt; 11), ((((avnrun[0]) &amp; ((1&lt;&lt;11)-1)) * 100) &gt;&gt; 11),</div><div class="line">  ((avnrun[1]) &gt;&gt; 11), ((((avnrun[1]) &amp; ((1&lt;&lt;11)-1)) * 100) &gt;&gt; 11),</div><div class="line">  ((avnrun[2]) &gt;&gt; 11), ((((avnrun[2]) &amp; ((1&lt;&lt;11)-1)) * 100) &gt;&gt; 11),</div><div class="line">  nr_runnable, nr_threads,</div><div class="line">  task_active_pid_ns(get_current())-&gt;last_pid);</div><div class="line">......</div></pre></td></tr></table></figure>
+<p>LOAD_INT(avnrun[0]), LOAD_FRAC(avnrun[0])预编译之后是((avnrun[0]) &gt;&gt; 11), ((((avnrun[0]) &amp; ((1&lt;<11)-1)) *="" 100)="">&gt; 11)。由于内核没有小数计算，这段代码本质上是实现了avnrun[0]除以2048且取2位小数的浮点运算<br>get_avenrun函数定义在kernel/sched/core.c中：</11)-1))></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">static atomic_long_t calc_load_tasks;</div><div class="line">static unsigned long calc_load_update;</div><div class="line">unsigned long avenrun[3];</div><div class="line"></div><div class="line">void get_avenrun(unsigned long *loads, unsigned long offset, int shift)</div><div class="line">&#123;</div><div class="line">        loads[0] = (avenrun[0] + offset) &lt;&lt; shift;</div><div class="line">        loads[1] = (avenrun[1] + offset) &lt;&lt; shift;</div><div class="line">        loads[2] = (avenrun[2] + offset) &lt;&lt; shift;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static long calc_load_fold_active(struct rq *this_rq)</div><div class="line">&#123;</div><div class="line">        long nr_active, delta = 0;</div><div class="line"></div><div class="line">        nr_active = this_rq-&gt;nr_running;</div><div class="line">        nr_active += (long) this_rq-&gt;nr_uninterruptible;</div><div class="line"></div><div class="line">        if (nr_active != this_rq-&gt;calc_load_active) &#123;</div><div class="line">                delta = nr_active - this_rq-&gt;calc_load_active;</div><div class="line">                this_rq-&gt;calc_load_active = nr_active;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return delta;</div><div class="line">&#125;</div><div class="line"></div><div class="line">unsigned long</div><div class="line">calc_load(unsigned long load, unsigned long exp, unsigned long active)</div><div class="line">&#123;</div><div class="line">        load *= exp;</div><div class="line">        load += active * (FIXED_1 - exp);</div><div class="line">        load += 1UL &lt;&lt; (FSHIFT - 1);</div><div class="line">        return load &gt;&gt; FSHIFT;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void calc_global_load(unsigned long ticks)</div><div class="line">&#123;</div><div class="line">        long active, delta;</div><div class="line"></div><div class="line">        if (time_before(jiffies, calc_load_update + 10))</div><div class="line">                return;</div><div class="line"></div><div class="line">        delta = calc_load_fold_idle();</div><div class="line">        if (delta)</div><div class="line">                atomic_long_add(delta, &amp;calc_load_tasks);</div><div class="line"></div><div class="line">        active = atomic_long_read(&amp;calc_load_tasks);</div><div class="line">        active = active &gt; 0 ? active * FIXED_1 : 0;</div><div class="line"></div><div class="line">        avenrun[0] = calc_load(avenrun[0], EXP_1, active);</div><div class="line">        avenrun[1] = calc_load(avenrun[1], EXP_5, active);</div><div class="line">        avenrun[2] = calc_load(avenrun[2], EXP_15, active);</div><div class="line"></div><div class="line">#ifdef CONFIG_CGROUP_CPUACCT</div><div class="line">        cpuacct_cgroup_walk_tree(NULL);</div><div class="line">#endif</div><div class="line"></div><div class="line">        calc_load_update += LOAD_FREQ;</div><div class="line">        calc_global_nohz();</div><div class="line">&#125;</div><div class="line"></div><div class="line">static void calc_load_account_active(struct rq *this_rq)</div><div class="line">&#123;</div><div class="line">        long delta;</div><div class="line"></div><div class="line">        if (time_before(jiffies, this_rq-&gt;calc_load_update))</div><div class="line">                return;</div><div class="line"></div><div class="line">        delta  = calc_load_fold_active(this_rq);</div><div class="line">        if (delta)</div><div class="line">                atomic_long_add(delta, &amp;calc_load_tasks);</div><div class="line"></div><div class="line">        this_rq-&gt;calc_load_update += LOAD_FREQ;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>预编译后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">void get_avenrun(unsigned long *loads, unsigned long offset, int shift)</div><div class="line">&#123;</div><div class="line"> loads[0] = (avenrun[0] + offset) &lt;&lt; shift;</div><div class="line"> loads[1] = (avenrun[1] + offset) &lt;&lt; shift;</div><div class="line"> loads[2] = (avenrun[2] + offset) &lt;&lt; shift;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static long calc_load_fold_active(struct rq *this_rq)</div><div class="line">&#123;</div><div class="line"> long nr_active, delta = 0;</div><div class="line"></div><div class="line"> nr_active = this_rq-&gt;nr_running;</div><div class="line"> nr_active += (long) this_rq-&gt;nr_uninterruptible;</div><div class="line"></div><div class="line"> if (nr_active != this_rq-&gt;calc_load_active) &#123;</div><div class="line">  delta = nr_active - this_rq-&gt;calc_load_active;</div><div class="line">  this_rq-&gt;calc_load_active = nr_active;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> return delta;</div><div class="line">&#125;</div><div class="line"></div><div class="line">unsigned long</div><div class="line">calc_load(unsigned long load, unsigned long exp, unsigned long active)</div><div class="line">&#123;</div><div class="line"> load *= exp;</div><div class="line"> load += active * ((1&lt;&lt;11) - exp);</div><div class="line"> load += 1UL &lt;&lt; (11 - 1);</div><div class="line"> return load &gt;&gt; 11;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void calc_global_load(unsigned long ticks)</div><div class="line">&#123;</div><div class="line"> long active, delta;</div><div class="line"></div><div class="line"> if (((&#123; unsigned long __dummy; typeof(calc_load_update + 10) __dummy2; (void)(&amp;__dummy == &amp;__dummy2); 1; &#125;) &amp;&amp; (&#123; unsigned long __dummy; typeo</div><div class="line">f(jiffies) __dummy2; (void)(&amp;__dummy == &amp;__dummy2); 1; &#125;) &amp;&amp; ((long)(jiffies) - (long)(calc_load_update + 10) &lt; 0)))</div><div class="line">  return;</div><div class="line"></div><div class="line"> delta = calc_load_fold_idle();</div><div class="line"> if (delta)</div><div class="line">  atomic_long_add(delta, &amp;calc_load_tasks);</div><div class="line"></div><div class="line"> active = atomic_long_read(&amp;calc_load_tasks);</div><div class="line"> active = active &gt; 0 ? active * (1&lt;&lt;11) : 0;</div><div class="line"></div><div class="line"> avenrun[0] = calc_load(avenrun[0], 1884, active);</div><div class="line"> avenrun[1] = calc_load(avenrun[1], 2014, active);</div><div class="line"> avenrun[2] = calc_load(avenrun[2], 2037, active);</div><div class="line"></div><div class="line"> cpuacct_cgroup_walk_tree(((void *)0));</div><div class="line"></div><div class="line"> calc_load_update += (5*1000 +1);</div><div class="line"> calc_global_nohz();</div><div class="line">&#125;</div><div class="line"></div><div class="line">static void calc_load_account_active(struct rq *this_rq)</div><div class="line">&#123;</div><div class="line"> long delta;</div><div class="line"></div><div class="line"> if (((&#123; unsigned long __dummy; typeof(this_rq-&gt;calc_load_update) __dummy2; (void)(&amp;__dummy == &amp;__dummy2); 1; &#125;) &amp;&amp; (&#123; unsigned long __dummy; t</div><div class="line">ypeof(jiffies) __dummy2; (void)(&amp;__dummy == &amp;__dummy2); 1; &#125;) &amp;&amp; ((long)(jiffies) - (long)(this_rq-&gt;calc_load_update) &lt; 0)))</div><div class="line">  return;</div><div class="line"></div><div class="line"> delta = calc_load_fold_active(this_rq);</div><div class="line"> if (delta)</div><div class="line">  atomic_long_add(delta, &amp;calc_load_tasks);</div><div class="line"></div><div class="line"> this_rq-&gt;calc_load_update += (5*1000 +1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们可以看到get_avenrun函数通过avenrun全局数组变量，返回上面的avnrun数组变量。avenrun全局数组变量在calc_global_load函数中每隔5001毫秒，由calc_load函数将active值添加到原有的load值中，进而产生新的load值。其中load1、load5和load15的区别只是第二个exp参数传入给calc_load函数不同的值，依次为1884、2014和2037。这里active值从calc_load_tasks全局结构体变量获取。calc_load_tasks全局结构体变量在calc_load_account_active函数中设置，而整个值的最初来源是calc_load_fold_active函数。<br>  在函数calc_load_fold_active中，我们可以看到最终获取的是rq（run queue）队列中的this_rq-&gt;nr_running和this_rq-&gt;nr_uninterruptible两种状态的task数。熟悉cpu调度算法的同学知道，这里实际上是把每个cpu队列里的nr_running和nr_uninterruptible值都汇总到一起。而nr_running和nr_uninterruptible正好对应于用户空间中的R和D两种状态的线程的数量。<br>  回头再看前面man page说明中的jobs概念显然是不对的，正确的应该是tasks概念（用户空间对应threads概念）。<br>  load2process输出结果中第一列之和、load5s和load1值之间的关系也一目了然。load2process第一列之和是运行这个脚本的瞬时nr_running和nr_uninterruptible状态线程数之和。load5s值是每5001毫秒对nr_running和nr_uninterruptible状态线程数之和的一个采样。load1是对之前历史所有load5s采样值按某种算法的平均值。
+  </p>
+<h4 id="如何分析load高的问题"><a href="#如何分析load高的问题" class="headerlink" title="如何分析load高的问题"></a>如何分析load高的问题</h4><p>上面我们已经基本搞清楚了load的原理，也有了load分析的工具，接下来我们利用上述的工具来具体看看怎么分析load的问题。<br>前面我们说到，load的计算过程中，取得是R和D两种状态的数据进行计算，其中R状态代表的是running状态的线程，D状态代表的是uninterruptible状态的线程，具体的进程状态请参考Linux进程状态<br>而事实上，R和D状态对系统的影响度是完全不同的，一般来说：</p>
+<ul>
+<li>R状态导致的load高，主要和CPU核数有关，大于CPU核数2倍以上，就会出现严重问题，出现CPU争抢问题</li>
+<li>D状态的数据，则在load高的时候，系统有可能还是能正常服务，只是在读写操作上需要等待<br>因此我们需要分开监控R和D状态，kernel为我们提供了这样的数据：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># cat /proc/loadavg</div><div class="line">101.00 100.62 84.29 103/199 1699</div></pre></td></tr></table></figure>
+<p>在内核中，还提供了另外的几个参数：103代表此时正在运行的R状态的线程数。<br>另外，我们在日常运维的过程中，经常会在load过高的情况下去top看一下CPU占用，但其实只有在R状态的时候才耗费CPU，如果load高是因为D状态导致的，那么这时候去看top是无效的，即使是由R状态导致的，如果在运行top的时候R状态已经停止了，那么也是看不到相关信息的，默认情况下，top是3s刷新一次，显示3s内的CPU信息。<br>我们总结上述的几种规律：</p>
+<ul>
+<li>单线程R状态过高导致load高，这种一般都是我们自己代码写的问题</li>
+<li>多线程R状态高导致load高，这种不多出现</li>
+<li>单线程D状态过高导致load高，可以查看当前这个程序对应进程的waiting channel信息：/proc/<pid>/wchan，表示当前线程在这个函数位置，D状态导致load高的原因有很多种，需要具体分析</pid></li>
+<li>多个线程D状态高导致load高，需要具体分析，可能是系统或者磁盘损坏了。<br>在这里，也分享几个查看load高的时候排查的脚本：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">系统load高时排查处于运行队列的进程</div><div class="line">#!/bin/bash</div><div class="line">LANG=C</div><div class="line">PATH=/sbin:/usr/sbin:/bin:/usr/bin</div><div class="line">interval=1</div><div class="line">length=86400</div><div class="line">for i in $(seq 1 $(expr $&#123;length&#125; / $&#123;interval&#125;))</div><div class="line">do</div><div class="line">    date</div><div class="line">    LANG=C ps -eTo stat,pid,tid,ppid,comm --no-header | sed -e &apos;s/^ \*//&apos; | perl -nE &apos;chomp;say if (m!^\S*[RD]+\S*!)&apos;</div><div class="line">    date</div><div class="line">    cat /proc/loadavg</div><div class="line">    echo -e &quot;\n&quot;</div><div class="line">    sleep $&#123;interval&#125;</div><div class="line">done</div><div class="line"></div><div class="line">查CPU使用率比较高的线程小脚本</div><div class="line">#!/bin/bash</div><div class="line">LANG=C</div><div class="line">PATH=/sbin:/usr/sbin:/bin:/usr/bin</div><div class="line">interval=1</div><div class="line">length=86400</div><div class="line">for i in $(seq 1 $(expr $&#123;length&#125; / $&#123;interval&#125;))</div><div class="line">do</div><div class="line">    date</div><div class="line">    LANG=C ps -eT -o%cpu,pid,tid,ppid,comm | grep -v CPU | sort -n -r | head -20</div><div class="line">    date</div><div class="line">    LANG=C cat /proc/loadavg</div><div class="line">    &#123; LANG=C ps -eT -o%cpu,pid,tid,ppid,comm | sed -e &apos;s/^ *//&apos; | tr -s &apos; &apos; | grep -v CPU | sort -n -r | cut -d &apos; &apos; -f 1 | xargs -I&#123;&#125; echo -n &quot;&#123;&#125; + &quot; &amp;&amp; echo &apos; 0&apos;; &#125; | bc -l</div><div class="line">    sleep $&#123;interval&#125;</div><div class="line">done</div><div class="line">fuser -k $0</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/12/Linux_command/" rel="next" title="一些使用的Linux command">
+                <i class="fa fa-chevron-left"></i> 一些使用的Linux command
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/12/Linux进程状态/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="jamal-jiang" />
+          <p class="site-author-name" itemprop="name">jamal-jiang</p>
+          <p class="site-description motion-element" itemprop="description">落玄,程序员,技术,生活</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux-load的准确含义"><span class="nav-number">1.</span> <span class="nav-text">Linux load的准确含义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#load分析工具"><span class="nav-number">2.</span> <span class="nav-text">load分析工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内核里load是怎么计算的"><span class="nav-number">3.</span> <span class="nav-text">内核里load是怎么计算的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何分析load高的问题"><span class="nav-number">4.</span> <span class="nav-text">如何分析load高的问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jamal-jiang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

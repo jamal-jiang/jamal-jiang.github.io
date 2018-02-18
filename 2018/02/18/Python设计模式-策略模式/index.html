@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Log4j," />
+  <meta name="keywords" content="Python," />
 
 
 
@@ -86,16 +86,18 @@
 
 
 
-<meta name="description" content="一、Log4j简介Log4j有三个主要的组件：Loggers(记录器)，Appenders (输出源)和Layouts(布局)。这里可简单理解为日志类别，日志要输出的地方和日志以何种形式输出。综合使用这三个组件可以轻松地记录信息的类型和级别，并可以在运行时控制日志输出的样式和位置。">
+<meta name="description" content="策略模式意思是说在同一个问题上，可以使用多种方法来解决，以排序问题为例，可以使用的排序算法有很多，但是每种算法的时间、空间复杂度是不一样的，所以在不同的情况下，就需要选择不同的算法进行排序运算。策略模式鼓励使用多种算法来解决一个问题，其特性是能够在运行时透明的切换算法而客户端不需要感知这个变化。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Log4j日志配置">
-<meta property="og:url" content="https://jamal-jiang.github.io/2017/02/05/Log4j日志配置/index.html">
+<meta property="og:title" content="Python设计模式-策略模式(Strategy pattern)">
+<meta property="og:url" content="https://jamal-jiang.github.io/2018/02/18/Python设计模式-策略模式/index.html">
 <meta property="og:site_name" content="落玄的博客">
-<meta property="og:description" content="一、Log4j简介Log4j有三个主要的组件：Loggers(记录器)，Appenders (输出源)和Layouts(布局)。这里可简单理解为日志类别，日志要输出的地方和日志以何种形式输出。综合使用这三个组件可以轻松地记录信息的类型和级别，并可以在运行时控制日志输出的样式和位置。">
-<meta property="og:updated_time" content="2017-02-05T14:25:01.000Z">
+<meta property="og:description" content="策略模式意思是说在同一个问题上，可以使用多种方法来解决，以排序问题为例，可以使用的排序算法有很多，但是每种算法的时间、空间复杂度是不一样的，所以在不同的情况下，就需要选择不同的算法进行排序运算。策略模式鼓励使用多种算法来解决一个问题，其特性是能够在运行时透明的切换算法而客户端不需要感知这个变化。">
+<meta property="og:image" content="https://jamal-jiang.github.io/images/15189654754363.jpg">
+<meta property="og:updated_time" content="2018-02-18T15:16:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Log4j日志配置">
-<meta name="twitter:description" content="一、Log4j简介Log4j有三个主要的组件：Loggers(记录器)，Appenders (输出源)和Layouts(布局)。这里可简单理解为日志类别，日志要输出的地方和日志以何种形式输出。综合使用这三个组件可以轻松地记录信息的类型和级别，并可以在运行时控制日志输出的样式和位置。">
+<meta name="twitter:title" content="Python设计模式-策略模式(Strategy pattern)">
+<meta name="twitter:description" content="策略模式意思是说在同一个问题上，可以使用多种方法来解决，以排序问题为例，可以使用的排序算法有很多，但是每种算法的时间、空间复杂度是不一样的，所以在不同的情况下，就需要选择不同的算法进行排序运算。策略模式鼓励使用多种算法来解决一个问题，其特性是能够在运行时透明的切换算法而客户端不需要感知这个变化。">
+<meta name="twitter:image" content="https://jamal-jiang.github.io/images/15189654754363.jpg">
 
 
 
@@ -123,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://jamal-jiang.github.io/2017/02/05/Log4j日志配置/"/>
+  <link rel="canonical" href="https://jamal-jiang.github.io/2018/02/18/Python设计模式-策略模式/"/>
 
 
 
 
 
-  <title> Log4j日志配置 | 落玄的博客 </title>
+  <title> Python设计模式-策略模式(Strategy pattern) | 落玄的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -252,7 +254,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/02/05/Log4j日志配置/">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2018/02/18/Python设计模式-策略模式/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="jamal-jiang">
@@ -276,7 +278,7 @@
             
             
               
-                Log4j日志配置
+                Python设计模式-策略模式(Strategy pattern)
               
             
           </h2>
@@ -291,8 +293,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-05T22:14:01+08:00">
-                2017-02-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-18T22:38:00+08:00">
+                2018-02-18
               </time>
             
 
@@ -314,8 +316,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
 
@@ -354,10 +356,102 @@
       
 
       
-        <h4 id="一、Log4j简介"><a href="#一、Log4j简介" class="headerlink" title="一、Log4j简介"></a>一、Log4j简介</h4><p>Log4j有三个主要的组件：Loggers(记录器)，Appenders (输出源)和Layouts(布局)。这里可简单理解为日志类别，日志要输出的地方和日志以何种形式输出。综合使用这三个组件可以轻松地记录信息的类型和级别，并可以在运行时控制日志输出的样式和位置。<br><a id="more"></a></p>
-<h5 id="1、Loggers"><a href="#1、Loggers" class="headerlink" title="1、Loggers"></a>1、Loggers</h5><p>Loggers组件在此系统中被分为五个级别：DEBUG、INFO、WARN、ERROR和FATAL。这五个级别是有顺序的，分别用来指定这条日志信息的重要程度，明白这一点很重要，Log4j有一个规则：只输出级别不低于设定级别的日志信息，假设Loggers级别设定为INFO，则INFO、WARN、ERROR和FATAL级别的日志信息都会输出，而级别比INFO低的DEBUG则不会输出。</p>
-<h5 id="2、Appenders"><a href="#2、Appenders" class="headerlink" title="2、Appenders"></a>2、Appenders</h5><p>禁用和使用日志请求只是Log4j的基本功能，Log4j日志系统还提供许多强大的功能，比如允许把日志输出到不同的地方，如控制台（Console）、文件（Files）等，可以根据天数或者文件大小产生新的文件，可以以流的形式发送到其它地方等等。<br>常使用的类如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">org.apache.log4j.ConsoleAppender（控制台）</div><div class="line">org.apache.log4j.FileAppender（文件）</div><div class="line">org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件）</div><div class="line">org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件）</div><div class="line">org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）</div></pre></td></tr></table></figure></p>
-<p>配置模式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">log4j.appender.appenderName = className</div><div class="line">log4j.appender.appenderName.Option1 = value1</div><div class="line">log4j.appender.appenderName.OptionN = valueN</div></pre></td></tr></table></figure></p>
+        <p>策略模式意思是说在同一个问题上，可以使用多种方法来解决，以排序问题为例，可以使用的排序算法有很多，但是每种算法的时间、空间复杂度是不一样的，所以在不同的情况下，就需要选择不同的算法进行排序运算。策略模式鼓励使用多种算法来解决一个问题，其特性是能够在运行时透明的切换算法而客户端不需要感知这个变化。<br><a id="more"></a></p>
+<h4 id="模式概述"><a href="#模式概述" class="headerlink" title="模式概述"></a>模式概述</h4><p>《设计模式：可复用面向对象软件的基础》中是这样描述“策略模式”的：<br><code>定义一系列算法，把它们一一封装起来，并且是它们可以相互替换。本模式使得算法可以独立于使用它的客户端而存在</code></p>
+<h4 id="软件实例"><a href="#软件实例" class="headerlink" title="软件实例"></a>软件实例</h4><p>Python中的sorted()和list.sort()就是策略模式的例子，两个函数都接受一个命名参数key，这个参数本质上是实现了一个排序策略的函数的名称</p>
+<h4 id="生活中的实例"><a href="#生活中的实例" class="headerlink" title="生活中的实例"></a>生活中的实例</h4><p>电商领域有个功能可以明显使用策略模式，就是根据客户的属性或订单中的商品计算折扣。我们假设有一个网站设定了如下规则：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">* 有1000或以上积分的顾客，每个订单享受5%折扣</div><div class="line">* 同一订单中，单个商品的数量达到20个或以上，享受10%折扣</div><div class="line">* 订单中的不同商品达到10个或以上，享受7%折扣</div></pre></td></tr></table></figure>
+<p>简单起见，我们假设一个订单一次只能享受一次折扣，我们画出以下的UML图：<br><img src="/images/15189654754363.jpg" alt=""></p>
+<ul>
+<li>上下文：把一些计算委托给不同算法的可互换组件，他提供服务。在这个示例中上下文是Order，他会根据不同的算法计算促销折扣</li>
+<li>策略：实现不同算法的组件共同的接口。在这个示例中，Promotion这个抽象类扮演这个角色</li>
+<li>具体策略：“策略”的具体子类，这里是如图的三个实际策略</li>
+</ul>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><p>以下是上述模式的具体实现，按照《设计模式》的说明，具体的策略由上下文类的客户端进行选择。</p>
+<pre><code class="Python"><span class="keyword">from</span> abc <span class="keyword">import</span> ABC, abstractmethod
+<span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple
+
+Customer = namedtuple(<span class="string">"Customer"</span>, <span class="string">"name, fidelity"</span>)
+
+
+<span class="class"><span class="keyword">class</span> <span class="title">LineItem</span>:</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, product, quantity, price)</span>:</span>
+        self.product = product
+        self.quantity = quantity
+        self.price = price
+
+    <span class="function"><span class="keyword">def</span> <span class="title">total</span><span class="params">(self)</span>:</span>
+        <span class="keyword">return</span> self.price * self.quantity
+
+
+<span class="class"><span class="keyword">class</span> <span class="title">Order</span>:</span>  <span class="comment"># 上下文</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, customer, cart, promotion=None)</span>:</span>
+        self.customer = customer
+        self.cart = list(cart)
+        self.promotion = promotion
+
+    <span class="function"><span class="keyword">def</span> <span class="title">total</span><span class="params">(self)</span>:</span>
+        <span class="keyword">if</span> <span class="keyword">not</span> hasattr(self, <span class="string">"__total"</span>):
+            self.__total = sum(item.total() <span class="keyword">for</span> item <span class="keyword">in</span> self.cart)
+        <span class="keyword">return</span> self.__total
+
+    <span class="function"><span class="keyword">def</span> <span class="title">due</span><span class="params">(self)</span>:</span>
+        <span class="keyword">if</span> self.promotion <span class="keyword">is</span> <span class="keyword">None</span>:
+            discount = <span class="number">0</span>
+        <span class="keyword">else</span>:
+            discount = self.promotion.discount(self)
+        <span class="keyword">return</span> self.total() - discount
+
+    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span>
+        fmt = <span class="string">"&lt;Order total: {:.2f} due: {:.2f}&gt;"</span>
+        <span class="keyword">return</span> fmt.format(self.total(), self.due())
+
+
+<span class="class"><span class="keyword">class</span> <span class="title">Promotion</span><span class="params">(ABC)</span>:</span>
+<span class="meta">    @abstractmethod</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">discount</span><span class="params">(self, order)</span>:</span>
+        <span class="keyword">pass</span>
+
+
+<span class="class"><span class="keyword">class</span> <span class="title">BulkItemPromo</span><span class="params">(Promotion)</span>:</span>
+    <span class="string">"""单个商品为20个或以上时提供10%折扣"""</span>
+
+    <span class="function"><span class="keyword">def</span> <span class="title">discount</span><span class="params">(self, order)</span>:</span>
+        discount = <span class="number">0</span>
+        <span class="keyword">for</span> item <span class="keyword">in</span> order.cart:
+            <span class="keyword">if</span> item.quantity &gt;= <span class="number">20</span>:
+                discount += item.total() * <span class="number">0.1</span>
+        <span class="keyword">return</span> discount
+
+
+<span class="class"><span class="keyword">class</span> <span class="title">FideliltPromo</span><span class="params">(Promotion)</span>:</span>
+    <span class="string">"""为积分1000以上的提供5%折扣"""</span>
+
+    <span class="function"><span class="keyword">def</span> <span class="title">discount</span><span class="params">(self, order)</span>:</span>
+        <span class="keyword">return</span> order.total() * <span class="number">0.05</span> <span class="keyword">if</span> order.customer.fidelity &gt;= <span class="number">1000</span> <span class="keyword">else</span> <span class="number">0</span>
+
+
+<span class="class"><span class="keyword">class</span> <span class="title">LargeOrderPromo</span><span class="params">(Promotion)</span>:</span>
+    <span class="string">"""订单中的不同商品达到10个或以上，享受7%折扣"""</span>
+
+    <span class="function"><span class="keyword">def</span> <span class="title">discount</span><span class="params">(self, order)</span>:</span>
+        discount_item = {item.product <span class="keyword">for</span> item <span class="keyword">in</span> order.cart}
+        <span class="keyword">if</span> len(discount_item) &gt;= <span class="number">10</span>:
+            <span class="keyword">return</span> order.total() * <span class="number">0.07</span>
+        <span class="keyword">return</span> <span class="number">0</span>
+
+
+<span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span>
+    joe = Customer(<span class="string">"john"</span>, <span class="number">0</span>)
+    ann = Customer(<span class="string">"ann"</span>, <span class="number">1000</span>)
+    cart = [LineItem(<span class="string">"apple"</span>, <span class="number">4</span>, <span class="number">.5</span>), LineItem(<span class="string">"a1"</span>, <span class="number">10</span>, <span class="number">1.5</span>), LineItem(<span class="string">"a3"</span>, <span class="number">5</span>, <span class="number">5.0</span>)]
+    print(Order(joe, cart, FideliltPromo()))
+    print(Order(ann, cart, FideliltPromo()))
+
+
+<span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:
+    main()
+</code></pre>
 
       
     </div>
@@ -381,7 +475,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Log4j/" rel="tag"># Log4j</a>
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
         </div>
       
@@ -390,8 +484,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/04/cookie实践/" rel="next" title="cookie实践">
-                <i class="fa fa-chevron-left"></i> cookie实践
+              <a href="/2018/02/15/Linux进程状态/" rel="next" title="Linux进程状态">
+                <i class="fa fa-chevron-left"></i> Linux进程状态
               </a>
             
           </div>
@@ -399,10 +493,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/05/ssh远程批量执行shell的代码/" rel="prev" title="ssh远程批量执行shell的代码">
-                ssh远程批量执行shell的代码 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -525,7 +615,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、Log4j简介"><span class="nav-number">1.</span> <span class="nav-text">一、Log4j简介</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、Loggers"><span class="nav-number">1.1.</span> <span class="nav-text">1、Loggers</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、Appenders"><span class="nav-number">1.2.</span> <span class="nav-text">2、Appenders</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#模式概述"><span class="nav-number">1.</span> <span class="nav-text">模式概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件实例"><span class="nav-number">2.</span> <span class="nav-text">软件实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生活中的实例"><span class="nav-number">3.</span> <span class="nav-text">生活中的实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">4.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
             
 
           </div>

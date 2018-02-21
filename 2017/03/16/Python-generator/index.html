@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python," />
+  <meta name="keywords" content="Python," />
 
 
 
@@ -92,7 +92,7 @@
 <meta property="og:url" content="https://jamal-jiang.github.io/2017/03/16/Python-generator/index.html">
 <meta property="og:site_name" content="落玄的博客">
 <meta property="og:description" content="通过List Comprehensions，我们可以很方便的生成一个列表，但是受限于内存等原因，列表的长度是有限制的，例如我们创建一个100w长度的列表，既浪费了空间，又如果我们只需要部分数据的话，那么大部分空间就被浪费了。所以，如果列表中的元素可以按照某种固定的算法推导出来，我们就可以在迭代中不断地通过这个算法计算出后面的值，这在python中叫做生成器(generator)。">
-<meta property="og:updated_time" content="2017-03-19T13:15:49.000Z">
+<meta property="og:updated_time" content="2018-02-21T13:46:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python-生成器">
 <meta name="twitter:description" content="通过List Comprehensions，我们可以很方便的生成一个列表，但是受限于内存等原因，列表的长度是有限制的，例如我们创建一个100w长度的列表，既浪费了空间，又如果我们只需要部分数据的话，那么大部分空间就被浪费了。所以，如果列表中的元素可以按照某种固定的算法推导出来，我们就可以在迭代中不断地通过这个算法计算出后面的值，这在python中叫做生成器(generator)。">
@@ -354,15 +354,32 @@
       
 
       
-        <p>通过List Comprehensions，我们可以很方便的生成一个列表，但是受限于内存等原因，列表的长度是有限制的，例如我们创建一个100w长度的列表，既浪费了空间，又如果我们只需要部分数据的话，那么大部分空间就被浪费了。<br>所以，如果列表中的元素可以按照某种固定的算法推导出来，我们就可以在迭代中不断地通过这个算法计算出后面的值，这在python中叫做生成器(generator)。<br><a id="more"></a><br>创建一个generator：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">a = [x * x for x in range(10)]</div><div class="line">b = (x * x for x in range(10))</div></pre></td></tr></table></figure></p>
-<p>可以用过next方法去访问生成器中的元素：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; b = (x * x for x in range(3))</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">0</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">1</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">4</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</div><div class="line">StopIteration</div></pre></td></tr></table></figure></p>
-<p>当访问到最后一个元素之后再次访问的时候，会引起StopIteration的报错。<br>我们来看看next函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">def next(iterator, default=None): # real signature unknown; restored from __doc__</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    next(iterator[, default])</div><div class="line">    </div><div class="line">    Return the next item from the iterator. If default is given and the iterator</div><div class="line">    is exhausted, it is returned instead of raising StopIteration.</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    pass</div></pre></td></tr></table></figure></p>
-<p>所以从本质上来说，生成器还是一个迭代器。当然在日常中我们会更多的用for循环来遍历。<br>前面讲过，实际上生成器保存的是一个算法，而不是一个值。让我们来看下面的一个函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">def test():</div><div class="line">    print(&quot;1&quot;)</div><div class="line">    yield 1</div><div class="line">    print(&quot;2&quot;)</div><div class="line">    yield 2</div><div class="line">    print(&quot;3&quot;)</div><div class="line">    yield 3</div><div class="line"></div><div class="line"></div><div class="line">a = test()</div><div class="line">next(a)</div><div class="line">print(&quot;111&quot;)</div><div class="line">next(a)</div><div class="line">print(&quot;222&quot;)</div><div class="line">next(a)</div><div class="line">print(&quot;333&quot;)</div></pre></td></tr></table></figure></p>
-<p>在函数中使用yield，这个函数就变成了一个生成器，我们看一下输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line">111</div><div class="line">2</div><div class="line">222</div><div class="line">3</div><div class="line">333</div></pre></td></tr></table></figure></p>
-<p>会发现实际上是每次都卡住了，我们再看一个斐波那契数列的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">def fibn(max):</div><div class="line">    a, b, n = 0, 1, 0</div><div class="line">    while n &lt; max:</div><div class="line">        yield b</div><div class="line">        a, b = b, a + b</div><div class="line">        n += 1</div><div class="line">    return &apos;done&apos;</div><div class="line"></div><div class="line">f = fibn(6)</div><div class="line">print(f)</div></pre></td></tr></table></figure></p>
-<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;generator object fibn at 0x1013c00f8&gt;</div></pre></td></tr></table></figure></p>
-<p>这里，最难理解的就是generator和函数的执行流程不一样。函数是顺序执行，遇到return语句或者最后一行函数语句就返回。而变成generator的函数，在每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行。<br>但是在调用生成器的时候，会发现拿不到最后return的值，要获取这个值必须捕获StopIteration的错误，如下代码中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">def fibn(max):</div><div class="line">    a, b, n = 0, 1, 0</div><div class="line">    while n &lt; max:</div><div class="line">        yield b</div><div class="line">        a, b = b, a + b</div><div class="line">        n += 1</div><div class="line">    return &apos;done&apos;</div><div class="line"></div><div class="line"></div><div class="line">f = fibn(2)</div><div class="line">while True:</div><div class="line">    try:</div><div class="line">        x = next(f)</div><div class="line">        print(x)</div><div class="line">    except StopIteration as e:</div><div class="line">        print(&apos;stopIter error: %s&apos; % e.value)</div><div class="line">        break</div></pre></td></tr></table></figure></p>
-<p>执行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line">1</div><div class="line">stopIter error: done</div></pre></td></tr></table></figure></p>
+        <p>通过List Comprehensions，我们可以很方便的生成一个列表，但是受限于内存等原因，列表的长度是有限制的，例如我们创建一个100w长度的列表，既浪费了空间，又如果我们只需要部分数据的话，那么大部分空间就被浪费了。<br>所以，如果列表中的元素可以按照某种固定的算法推导出来，我们就可以在迭代中不断地通过这个算法计算出后面的值，这在python中叫做生成器(generator)。<br><a id="more"></a></p>
+<h3 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h3><p>带有 yield 关键字的的函数在 Python 中被称之为 generator(生成器)。Python 解释器会将带有 yield 关键字的函数视为一个 generator 来处理。一个函数或者子程序都只能 return 一次，但是一个生成器能暂停执行并返回一个中间的结果 —— 这就是 yield 语句的功能 : 返回一个中间值给调用者并暂停执行。<br>创建一个generator：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">a = [x * x for x in range(10)]</div><div class="line">b = (x * x for x in range(10))</div></pre></td></tr></table></figure>
+<p>可以用过next方法去访问生成器中的元素：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; b = (x * x for x in range(3))</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">0</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">1</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">4</div><div class="line">&gt;&gt;&gt; next(b)</div><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</div><div class="line">StopIteration</div></pre></td></tr></table></figure>
+<p>当访问到最后一个元素之后再次访问的时候，会引起StopIteration的报错。<br>我们来看看next函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">def next(iterator, default=None): # real signature unknown; restored from __doc__</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    next(iterator[, default])</div><div class="line">    </div><div class="line">    Return the next item from the iterator. If default is given and the iterator</div><div class="line">    is exhausted, it is returned instead of raising StopIteration.</div><div class="line">    &quot;&quot;&quot;</div><div class="line">    pass</div></pre></td></tr></table></figure>
+<p>所以从本质上来说，生成器还是一个迭代器。当然在日常中我们会更多的用for循环来遍历。<br>前面讲过，实际上生成器保存的是一个算法，而不是一个值。让我们来看下面的一个函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">def test():</div><div class="line">    print(&quot;1&quot;)</div><div class="line">    yield 1</div><div class="line">    print(&quot;2&quot;)</div><div class="line">    yield 2</div><div class="line">    print(&quot;3&quot;)</div><div class="line">    yield 3</div><div class="line"></div><div class="line"></div><div class="line">a = test()</div><div class="line">next(a)</div><div class="line">print(&quot;111&quot;)</div><div class="line">next(a)</div><div class="line">print(&quot;222&quot;)</div><div class="line">next(a)</div><div class="line">print(&quot;333&quot;)</div></pre></td></tr></table></figure>
+<p>在函数中使用yield，这个函数就变成了一个生成器，我们看一下输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line">111</div><div class="line">2</div><div class="line">222</div><div class="line">3</div><div class="line">333</div></pre></td></tr></table></figure>
+<p>会发现实际上是每次都卡住了，我们再看一个斐波那契数列的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">def fibn(max):</div><div class="line">    a, b, n = 0, 1, 0</div><div class="line">    while n &lt; max:</div><div class="line">        yield b</div><div class="line">        a, b = b, a + b</div><div class="line">        n += 1</div><div class="line">    return &apos;done&apos;</div><div class="line"></div><div class="line">f = fibn(6)</div><div class="line">print(f)</div></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;generator object fibn at 0x1013c00f8&gt;</div></pre></td></tr></table></figure>
+<p>这里，最难理解的就是generator和函数的执行流程不一样。函数是顺序执行，遇到return语句或者最后一行函数语句就返回。而变成generator的函数，在每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行。<br>但是在调用生成器的时候，会发现拿不到最后return的值，要获取这个值必须捕获StopIteration的错误，如下代码中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">def fibn(max):</div><div class="line">    a, b, n = 0, 1, 0</div><div class="line">    while n &lt; max:</div><div class="line">        yield b</div><div class="line">        a, b = b, a + b</div><div class="line">        n += 1</div><div class="line">    return &apos;done&apos;</div><div class="line"></div><div class="line"></div><div class="line">f = fibn(2)</div><div class="line">while True:</div><div class="line">    try:</div><div class="line">        x = next(f)</div><div class="line">        print(x)</div><div class="line">    except StopIteration as e:</div><div class="line">        print(&apos;stopIter error: %s&apos; % e.value)</div><div class="line">        break</div></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line">1</div><div class="line">stopIter error: done</div></pre></td></tr></table></figure>
+<h3 id="生成器表达式"><a href="#生成器表达式" class="headerlink" title="生成器表达式"></a>生成器表达式</h3><p>生成器表达式是列表解析的拓展，列表解析的不足在于它必须一次性生成所有的数据用于创建对象，所以不适合用于迭代大量的数据。生成器表达式通过结合列表解析和生成器来解决这个问题：</p>
+<ul>
+<li>列表解析： [expr for iter_var in iterable if cond_expr]</li>
+<li>生成器： (expr for iter_var in iterable if cond_expr)</li>
+</ul>
+<p>两者的语法很相似，区别在于生成器返回的是一个生成器对象，而列表解析返回的是一个列表。<br>我们来看一个读取文件的实例，我们读取一个文件，选择出其中最长的一行并返回长度：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"># 代码1: 通用做法,打开文件,通过循环将更长的行赋值给变量longest_line</div><div class="line">longest_line = 0</div><div class="line">with open(&apos;data/data&apos;, &apos;r&apos;) as f:</div><div class="line">    while True:</div><div class="line">        line_len = len(f.readline().strip())</div><div class="line">        if not line_len:</div><div class="line">            break</div><div class="line">        if line_len &gt; longest_line:</div><div class="line">            longest_line = line_len</div><div class="line"></div><div class="line">print(longest_line)</div><div class="line"></div><div class="line"># 代码2: 改进1,在读取文件的时候,应该尽早释放文件句柄</div><div class="line">longest_line = 0</div><div class="line">all_lines = None</div><div class="line">with open(&apos;data/data&apos;, &apos;r&apos;) as f:</div><div class="line">    all_lines = f.readlines()</div><div class="line">for line in all_lines:</div><div class="line">    line_len = len(line.strip())</div><div class="line">    if not line_len:</div><div class="line">        break</div><div class="line">    if line_len &gt; longest_line:</div><div class="line">        longest_line = line_len</div><div class="line"></div><div class="line">print(longest_line)</div><div class="line"></div><div class="line"># 代码3: 改进2,使用列表推导来简化代码</div><div class="line">longest_line = 0</div><div class="line">all_lines = None</div><div class="line">with open(&apos;data/data&apos;, &apos;r&apos;) as f:</div><div class="line">    all_lines = [x.strip() for x in f.readlines()]</div><div class="line">for line in all_lines:</div><div class="line">    line_len = len(line.strip())</div><div class="line">    if not line_len:</div><div class="line">        break</div><div class="line">    if line_len &gt; longest_line:</div><div class="line">        longest_line = line_len</div><div class="line"></div><div class="line">print(longest_line)</div><div class="line"></div><div class="line"># 代码4: 改进3,当文件比较大时,直接readlines需要读取文件中所有的行,然后再进行遍历,我们可以使用文件迭代器优化代码</div><div class="line">longest_line = 0</div><div class="line">all_lines_len = None</div><div class="line">with open(&apos;data/data&apos;, &apos;r&apos;) as f:</div><div class="line">    all_lines_len = [len(x.strip()) for x in f]</div><div class="line"></div><div class="line">print(max(all_lines_len))</div><div class="line"></div><div class="line"># 代码5: 改进4,代码4中,在列表推导的时候需要将文件的所有行一下子读取到内存中,然后再创建一个列表对象,我们使用生成器来替代列表推导</div><div class="line">longest_line = 0</div><div class="line">with open(&apos;data/data&apos;, &apos;r&apos;) as f:</div><div class="line">    longest_line = max(len(x.strip()) for x in f)</div><div class="line"></div><div class="line">print(longest_line)</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -386,7 +403,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
         </div>
       
@@ -454,8 +471,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -468,7 +494,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -486,7 +512,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -511,6 +537,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成器"><span class="nav-number">1.</span> <span class="nav-text">生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成器表达式"><span class="nav-number">2.</span> <span class="nav-text">生成器表达式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

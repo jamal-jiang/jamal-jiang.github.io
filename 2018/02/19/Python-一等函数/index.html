@@ -92,7 +92,7 @@
 <meta property="og:url" content="https://jamal-jiang.github.io/2018/02/19/Python-一等函数/index.html">
 <meta property="og:site_name" content="落玄的博客">
 <meta property="og:description" content="在Python中，函数是一等对象。">
-<meta property="og:updated_time" content="2018-02-19T14:22:45.000Z">
+<meta property="og:updated_time" content="2018-02-21T14:11:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python-一等函数">
 <meta name="twitter:description" content="在Python中，函数是一等对象。">
@@ -361,6 +361,13 @@
 <li>能作为参数传递给函数</li>
 <li>能作为函数的返回结果</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; def factorial(n):</div><div class="line">...     &apos;&apos;&apos;return n!&apos;&apos;&apos;</div><div class="line">...     return 1 if n &lt; 2 else n * factorial(n-1)</div><div class="line">... </div><div class="line">&gt;&gt;&gt; factorial(10)</div><div class="line">3628800</div><div class="line">&gt;&gt;&gt; factorial.__doc__</div><div class="line">&apos;return n!&apos;</div><div class="line">&gt;&gt;&gt; type(factorial)</div><div class="line">&lt;class &apos;function&apos;&gt;</div></pre></td></tr></table></figure>
+<p>从这个测试中我们可以看出，Python的function是一个对象，其中<strong>doc</strong>是函数对象众多属性中的一个，我们可以把函数作为参数传递给变量，然后通过变量名调用，也可以作为参数传递给其他函数，例如传递给map函数，map返回一个可迭代对象，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; fact = factorial</div><div class="line">&gt;&gt;&gt; fact(5)</div><div class="line">120</div><div class="line">&gt;&gt;&gt; fact</div><div class="line">&lt;function factorial at 0x101096f28&gt;</div><div class="line">&gt;&gt;&gt; map(factorial, range(5))</div><div class="line">&lt;map object at 0x1014d46a0&gt;</div><div class="line">&gt;&gt;&gt; list(map(factorial, range(5)))</div><div class="line">[1, 1, 2, 6, 24]</div></pre></td></tr></table></figure>
+<p>有了一等函数之后，我们就可以使用函数式编程风格</p>
+<h3 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h3><p>函数式编程的一大特点之一就是使用高阶函数，高阶函数的定义如下：<br><code>接受函数作为参数，或者把函数作为返回值的函数都是高阶函数(high-order function)</code><br>sorted就是一个高阶函数，它可以使用可选参数用于提供一个函数来进行排序，如下所示，把len函数传递给key参数，就可以进行排序操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; fruits = [&apos;aaa&apos;, &apos;banana&apos;, &apos;apple&apos;]</div><div class="line">&gt;&gt;&gt; sorted(fruits, key=len)</div><div class="line">[&apos;aaa&apos;, &apos;apple&apos;, &apos;banana&apos;]</div></pre></td></tr></table></figure>
+<p>在函数式编程中，最为人熟知的就是map filter reduce函数了，不过在现有的情况下，可以用列表推导和生成器表达式来替代，其中在Python3中，map和filter返回生成器，因此最接近他们的替代品是生成器表达式，在Python2中返回列表，因此最接近的替代品是列表推导</p>
 
       
     </div>
@@ -448,8 +455,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -505,6 +521,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#高阶函数"><span class="nav-number">1.</span> <span class="nav-text">高阶函数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

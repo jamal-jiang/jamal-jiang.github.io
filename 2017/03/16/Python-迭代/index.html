@@ -92,7 +92,7 @@
 <meta property="og:url" content="https://jamal-jiang.github.io/2017/03/16/Python-迭代/index.html">
 <meta property="og:site_name" content="落玄的博客">
 <meta property="og:description" content="给定一个list或tuple，我们可以通过for循环来遍历这个list或tuple，我们称为迭代（iteration）。在python中，迭代是通过for…in…来实现的，在java和c中是通过下标来完成的，从这个角度来说，python是一种更加高级的抽象。">
-<meta property="og:updated_time" content="2017-03-16T13:55:02.000Z">
+<meta property="og:updated_time" content="2018-02-22T03:10:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python-迭代">
 <meta name="twitter:description" content="给定一个list或tuple，我们可以通过for循环来遍历这个list或tuple，我们称为迭代（iteration）。在python中，迭代是通过for…in…来实现的，在java和c中是通过下标来完成的，从这个角度来说，python是一种更加高级的抽象。">
@@ -354,11 +354,16 @@
       
 
       
-        <p>给定一个list或tuple，我们可以通过for循环来遍历这个list或tuple，我们称为迭代（iteration）。<br>在python中，迭代是通过for…in…来实现的，在java和c中是通过下标来完成的，从这个角度来说，python是一种更加高级的抽象。<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">java代码：</div><div class="line">String[] args = &#123;&quot;aaa&quot;, &quot;bbb&quot;&#125;;</div><div class="line">for (int i = 0; i &lt; args.length; i++) &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>python的list是有下标的，但是其他很多的数据类型是没有下标的，但是只要是一个可迭代的对象，就可以被迭代，例如dict:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">d = &#123;&apos;a&apos;: 1, &apos;b&apos;: 2&#125;</div><div class="line">for key in d:</div><div class="line">    print(key)</div></pre></td></tr></table></figure></p>
-<p>默认情况下，dict迭代的是key，如果需要迭代value，那么可以<code>for value in d.values()</code>,同时迭代k v 可以使用<code>for k, v in d.items()</code><br>字符串也是一个可迭代的对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">for i in `abc`</div></pre></td></tr></table></figure></p>
-<p>综上：使用for的时候，只要作用于一个可迭代的对象，就可以正常运行而不用关心到底是什么数据结构<br>如果需要对list实现游标遍历，可以使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for i, value in enumerate[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]:</div><div class="line">    print(i, value)</div></pre></td></tr></table></figure></p>
-<p>for中同时引用两个变量，在python中比较常见：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for x, y in [(1, 2), (3, 4)]</div><div class="line">    print(x, y)</div></pre></td></tr></table></figure></p>
+        <p>给定一个list或tuple，我们可以通过for循环来遍历这个list或tuple，我们称为迭代（iteration）。<br>在python中，迭代是通过for…in…来实现的，在java和c中是通过下标来完成的，从这个角度来说，python是一种更加高级的抽象。<br><a id="more"></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">java代码：</div><div class="line">String[] args = &#123;&quot;aaa&quot;, &quot;bbb&quot;&#125;;</div><div class="line">for (int i = 0; i &lt; args.length; i++) &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>python的list是有下标的，但是其他很多的数据类型是没有下标的，但是只要是一个可迭代的对象，就可以被迭代，例如dict:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">d = &#123;&apos;a&apos;: 1, &apos;b&apos;: 2&#125;</div><div class="line">for key in d:</div><div class="line">    print(key)</div></pre></td></tr></table></figure>
+<p>默认情况下，dict迭代的是key，如果需要迭代value，那么可以<code>for value in d.values()</code>,同时迭代k v 可以使用<code>for k, v in d.items()</code><br>字符串也是一个可迭代的对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">for i in `abc`</div></pre></td></tr></table></figure>
+<p>综上：使用for的时候，只要作用于一个可迭代的对象，就可以正常运行而不用关心到底是什么数据结构<br>如果需要对list实现游标遍历，可以使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for i, value in enumerate[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]:</div><div class="line">    print(i, value)</div></pre></td></tr></table></figure>
+<p>for中同时引用两个变量，在python中比较常见：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for x, y in [(1, 2), (3, 4)]</div><div class="line">    print(x, y)</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -391,7 +396,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/16/Python-generator/" rel="next" title="Python-生成器">
+              <a href="/2017/03/16/Python-生成器/" rel="next" title="Python-生成器">
                 <i class="fa fa-chevron-left"></i> Python-生成器
               </a>
             
@@ -401,8 +406,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/18/Python-classmethod和-staticmethod的区别/" rel="prev" title="Python-@classmethod和@staticmethod的区别">
-                Python-@classmethod和@staticmethod的区别 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/16/Python-迭代器/" rel="prev" title="Python-迭代器">
+                Python-迭代器 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -464,7 +469,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

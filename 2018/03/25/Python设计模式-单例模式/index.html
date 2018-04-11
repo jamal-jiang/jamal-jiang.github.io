@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux,Jstorm,分布式" />
+  <meta name="keywords" content="Python," />
 
 
 
@@ -86,28 +86,16 @@
 
 
 
-<meta name="description" content="recv 
-
-和read功能类似，只能读取socket内容
-可以指定接收的行为
-主要有用的读取的类型有两种: (1) 指定接收带外数据，也就是紧急指针 (2) 可以接受缓冲区的数据，但是并不将数据从缓冲区清除;">
+<meta name="description" content="单例模式的主要目的是确保某一个类只有一个实例存在。当你希望在整个系统中，某个类只能出现一个实例时，单例对象就能派上用场。例如一个程序的配置文件，客户端通过一个 AppConfig 的类来读取配置文件的信息。如果在程序运行期间，有很多地方都需要使用配置文件的内容，也就是说，很多地方都需要创建 AppConfig 对象的实例，这就导致系统中存在多个 AppConfig 的实例对象，而这样会严重浪费内存">
 <meta property="og:type" content="article">
-<meta property="og:title" content="网络开发-3-recv函数">
-<meta property="og:url" content="https://jamal-jiang.github.io/2017/06/11/网络开发-3-recv函数/index.html">
+<meta property="og:title" content="Python设计模式-单例模式(Singleton Pattern)">
+<meta property="og:url" content="https://jamal-jiang.github.io/2018/03/25/Python设计模式-单例模式/index.html">
 <meta property="og:site_name" content="Jamal的博客">
-<meta property="og:description" content="recv 
-
-和read功能类似，只能读取socket内容
-可以指定接收的行为
-主要有用的读取的类型有两种: (1) 指定接收带外数据，也就是紧急指针 (2) 可以接受缓冲区的数据，但是并不将数据从缓冲区清除;">
-<meta property="og:updated_time" content="2017-10-25T03:12:55.000Z">
+<meta property="og:description" content="单例模式的主要目的是确保某一个类只有一个实例存在。当你希望在整个系统中，某个类只能出现一个实例时，单例对象就能派上用场。例如一个程序的配置文件，客户端通过一个 AppConfig 的类来读取配置文件的信息。如果在程序运行期间，有很多地方都需要使用配置文件的内容，也就是说，很多地方都需要创建 AppConfig 对象的实例，这就导致系统中存在多个 AppConfig 的实例对象，而这样会严重浪费内存">
+<meta property="og:updated_time" content="2018-03-25T14:50:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="网络开发-3-recv函数">
-<meta name="twitter:description" content="recv 
-
-和read功能类似，只能读取socket内容
-可以指定接收的行为
-主要有用的读取的类型有两种: (1) 指定接收带外数据，也就是紧急指针 (2) 可以接受缓冲区的数据，但是并不将数据从缓冲区清除;">
+<meta name="twitter:title" content="Python设计模式-单例模式(Singleton Pattern)">
+<meta name="twitter:description" content="单例模式的主要目的是确保某一个类只有一个实例存在。当你希望在整个系统中，某个类只能出现一个实例时，单例对象就能派上用场。例如一个程序的配置文件，客户端通过一个 AppConfig 的类来读取配置文件的信息。如果在程序运行期间，有很多地方都需要使用配置文件的内容，也就是说，很多地方都需要创建 AppConfig 对象的实例，这就导致系统中存在多个 AppConfig 的实例对象，而这样会严重浪费内存">
 
 
 
@@ -135,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://jamal-jiang.github.io/2017/06/11/网络开发-3-recv函数/"/>
+  <link rel="canonical" href="https://jamal-jiang.github.io/2018/03/25/Python设计模式-单例模式/"/>
 
 
 
 
 
-  <title> 网络开发-3-recv函数 | Jamal的博客 </title>
+  <title> Python设计模式-单例模式(Singleton Pattern) | Jamal的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -264,7 +252,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2017/06/11/网络开发-3-recv函数/">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2018/03/25/Python设计模式-单例模式/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="jamal-jiang">
@@ -288,7 +276,7 @@
             
             
               
-                网络开发-3-recv函数
+                Python设计模式-单例模式(Singleton Pattern)
               
             
           </h2>
@@ -303,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-11T19:39:00+08:00">
-                2017-06-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-25T20:42:00+08:00">
+                2018-03-25
               </time>
             
 
@@ -326,8 +314,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/网络开发/" itemprop="url" rel="index">
-                    <span itemprop="name">网络开发</span>
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
                   </a>
                 </span>
 
@@ -366,17 +354,10 @@
       
 
       
-        <p>recv </p>
-<ol>
-<li>和read功能类似，只能读取socket内容</li>
-<li>可以指定接收的行为</li>
-<li>主要有用的读取的类型有两种: (1) 指定接收带外数据，也就是紧急指针 (2) 可以接受缓冲区的数据，但是并不将数据从缓冲区清除;<a id="more"></a>
-封装一个recv_peek函数:</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">ssize_t recv_peek(int fd, void *buf, size_t len) &#123;</div><div class="line">    while (1) &#123;</div><div class="line">        int ret = recv(fd, buf, len, MSG_PEEK);</div><div class="line">        if(ret == -1 &amp;&amp; errno == EINTR) &#123;</div><div class="line">            // 信号中断,continue</div><div class="line">            continue;</div><div class="line">        &#125;</div><div class="line">        return ret;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>封装一个readline函数:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">ssize_t readline(int fd, void *buf, size_t maxline) &#123;</div><div class="line">    int ret;</div><div class="line">    int nread;</div><div class="line">    char *bufp = buf;</div><div class="line">    int nleft = maxline;</div><div class="line"></div><div class="line">    while (1) &#123;</div><div class="line">        ret = recv_peek(fd, bufp, nleft);</div><div class="line">        if (ret &lt; 0) &#123;</div><div class="line">            return ret;</div><div class="line">        &#125; else if (ret == 0) &#123;</div><div class="line">            // 对方关闭套接口</div><div class="line">            return ret;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        nread = ret;</div><div class="line">        int i;</div><div class="line">        for (i = 0; i &lt; nread; i++) &#123;</div><div class="line">            if (bufp[i] == &apos;\n&apos;) &#123;</div><div class="line">                ret = readn(fd, bufp, i + 1);</div><div class="line">                if (ret != i + 1) &#123;</div><div class="line">                    exit(EXIT_FAILURE);</div><div class="line">                &#125;</div><div class="line">                return ret;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if (nread &gt; nleft) &#123;</div><div class="line">            exit(EXIT_FAILURE);</div><div class="line">        &#125;</div><div class="line">        nleft -= nread;</div><div class="line">        ret = readn(fd, bufp, nread);</div><div class="line">        if (ret != nread) &#123;</div><div class="line">            exit(EXIT_FAILURE);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        bufp += nread;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return -1;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
+        <p>单例模式的主要目的是确保某一个类只有一个实例存在。当你希望在整个系统中，某个类只能出现一个实例时，单例对象就能派上用场。<br>例如一个程序的配置文件，客户端通过一个 AppConfig 的类来读取配置文件的信息。如果在程序运行期间，有很多地方都需要使用配置文件的内容，也就是说，很多地方都需要创建 AppConfig 对象的实例，这就导致系统中存在多个 AppConfig 的实例对象，而这样会严重浪费内存资源，尤其是在配置文件内容很多的情况下。事实上，类似 AppConfig 这样的类，我们希望在程序运行期间只存在一个实例对象。<br><a id="more"></a><br>单例模式有很多种实现方式，以下是几种实例：</p>
+<h4 id="1-使用模块实现"><a href="#1-使用模块实现" class="headerlink" title="1. 使用模块实现"></a>1. 使用模块实现</h4><p>python的模块是天然的单例实现，在第一次使用的时候会导入.pyc文件，第二次就直接使用，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SingleTon1</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(self)</span>:</span></div><div class="line">        print(<span class="string">'s1'</span>)</div><div class="line"></div><div class="line">singleton = SingleTon1()</div></pre></td></tr></table></figure>
+<h4 id="2-使用装饰器实现"><a href="#2-使用装饰器实现" class="headerlink" title="2. 使用装饰器实现"></a>2. 使用装饰器实现</h4>
       
     </div>
 
@@ -397,13 +378,19 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/11/网络开发-1-前言/" rel="next" title="网络开发-1-前言">
-                <i class="fa fa-chevron-left"></i> 网络开发-1-前言
+              <a href="/2018/02/23/Python-函数装饰器和闭包/" rel="next" title="Python-函数装饰器和闭包">
+                <i class="fa fa-chevron-left"></i> Python-函数装饰器和闭包
               </a>
             
           </div>
@@ -411,10 +398,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/25/使用MWeb外部模式支持Hexo/" rel="prev" title="使用MWeb外部模式支持Hexo">
-                使用MWeb外部模式支持Hexo <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -461,8 +444,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -518,6 +510,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-使用模块实现"><span class="nav-number">1.</span> <span class="nav-text">1. 使用模块实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-使用装饰器实现"><span class="nav-number">2.</span> <span class="nav-text">2. 使用装饰器实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

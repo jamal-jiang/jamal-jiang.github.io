@@ -354,33 +354,14 @@
 
       
         
-          
-            <p>这个系列是翻译的StackStrom官方文档。<br>&lt;!–- more -–&gt;<br>系列文章<br><a href="https://jamal-jiang.github.io/2018/07/20/StackStorm%20Learning%20-%20Introduction/">总览</a><br><a href="https://jamal-jiang.github.io/2018/09/09/2018-09-09/">安装</a></p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>由于只是学习使用，最简单的方式就是docker跑起来了，到实际部署环节的时候再来考虑高可用能力。<br>根据官方文档docker使用一章，时使用的docker-compose来管理的，所以先确保已经安装了docker-compose.<br>如果已经安装了的话，就执行下面的操作吧。</p>
-<ul>
-<li>clone一个st2的镜像</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/stackstorm/st2-docker</div><div class="line">cd st2-docker</div></pre></td></tr></table></figure>
-<ul>
-<li>执行初始化</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make env</div></pre></td></tr></table></figure>
-<ul>
-<li>启动容器</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker-compose up -d</div></pre></td></tr></table></figure>
-<ul>
-<li>关闭容器</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker-compose down</div></pre></td></tr></table></figure>
-<ul>
-<li>登录容器</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker-compose exec stackstorm bash</div></pre></td></tr></table></figure>
-<h3 id="web-ui"><a href="#web-ui" class="headerlink" title="web ui"></a>web ui</h3><p>defalut的镜像是绑定了localhost的443端口的，如下:<br><img src="/images/15364989667963.jpg" alt=""><br>没什么特殊的情况下usename就是st2admin，密码可以看下容器上~/.st2/config中。<br>可以看到webui还是很丰富的：<br><img src="/images/15365006657418.jpg" alt=""></p>
-<p>另外还提供了很丰富的api：<br><a href="https://api.stackstorm.com/" target="_blank" rel="external">https://api.stackstorm.com/</a></p>
-
-          
+          <p>这个系列是翻译的StackStrom官方文档。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/09/09/2018-09-09/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

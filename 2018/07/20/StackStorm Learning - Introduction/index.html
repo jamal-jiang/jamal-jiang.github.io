@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Jamal的博客">
 <meta property="og:description" content="这个系列是翻译的StackStrom官方文档。">
 <meta property="og:image" content="https://jamal-jiang.github.io/images/15364973320559.jpg">
-<meta property="og:updated_time" content="2018-09-09T13:48:34.000Z">
+<meta property="og:updated_time" content="2018-09-09T13:54:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="StackStorm Learning - Introduction">
 <meta name="twitter:description" content="这个系列是翻译的StackStrom官方文档。">
@@ -356,7 +356,7 @@
       
 
       
-        <p>这个系列是翻译的StackStrom官方文档。<br><a id="more"></a><br>系列文章<br><a href="https://jamal-jiang.github.io/2018/07/20/StackStorm%20Learning%20-%20Introduction/">总览</a><br><a href="">安装</a></p>
+        <p>这个系列是翻译的StackStrom官方文档。<br><a id="more"></a><br>系列文章<br><a href="https://jamal-jiang.github.io/2018/07/20/StackStorm%20Learning%20-%20Introduction/">总览</a><br><a href="https://jamal-jiang.github.io/2018/09/09/2018-09-09/">安装</a></p>
 <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>st2实际上是一个做自愈的流程引擎，通过事件的触发-&gt;规则匹配-&gt;执行动作来进行自愈，举个例子，某天线上生产的服务器load突然冲高了，机器上的监控发出报警，触发st2进行规则判断，规则判断是由于服务器异常导致，此时自动的根据之前设定好的规则进行服务器下线，这就是st2在做的事情，除此之外，业界现在非常流行的chatops也是他的一部分，所以本质上他是将人工的规则沉淀到系统上，成为标准的处理方式，是我们在做故障自愈三部曲（人工-&gt;规则化-&gt;智能化）中的规则化的环节，也是在做故障的发现、定位、止血的一个流程化工具。<br>当然作为一个流程化的工具，st2不仅仅可以用来做故障定位，持续集成等也是他的强项。</p>
 <h4 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h4><p><img src="/images/15364973320559.jpg" alt=""></p>
 <p>这是st2的一个架构图，包含了以下的插件：</p>

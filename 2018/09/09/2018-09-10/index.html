@@ -1,0 +1,764 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="EQ8iDaZYMG" />
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="self-healing," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="这个系列是翻译的StackStrom官方文档。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="StackStorm Learning - Actions">
+<meta property="og:url" content="https://jamal-jiang.github.io/2018/09/09/2018-09-10/index.html">
+<meta property="og:site_name" content="Jamal的博客">
+<meta property="og:description" content="这个系列是翻译的StackStrom官方文档。">
+<meta property="og:updated_time" content="2018-09-10T04:47:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="StackStorm Learning - Actions">
+<meta name="twitter:description" content="这个系列是翻译的StackStrom官方文档。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jamal-jiang.github.io/2018/09/09/2018-09-10/"/>
+
+
+
+
+
+  <title> StackStorm Learning - Actions | Jamal的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Jamal的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">Jamal的博客</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2018/09/09/2018-09-10/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="jamal-jiang">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Jamal的博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Jamal的博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                StackStorm Learning - Actions
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-09T22:08:00+08:00">
+                2018-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/StackStorm/" itemprop="url" rel="index">
+                    <span itemprop="name">StackStorm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这个系列是翻译的StackStrom官方文档。<br><a id="more"></a><br>因为工具不太方便加之前写过的系统稳定头，所以只做追加。<br>系列文章<br><a href="https://jamal-jiang.github.io/2018/07/20/StackStorm%20Learning%20-%20Introduction/">总览</a><br><a href="https://jamal-jiang.github.io/2018/09/09/2018-09-09/">安装</a><br><a href="">Actios</a></p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Action是一个动作，用来执行一些自动化的任务，例如重启机器、创建一个新机器、重启一个镜像等，st2内置了很多action，我们也可以使用任意的语言自定义自己的action。<br>在st2中，action是trigger被触发后，通过rule规则判断后执行的动作，action可以是一个单一的动作（例如重启机器），也可以多个action合起来成为一个workflow（例如先检查当前业务受损情况，然后重启机器，然后观察业务恢复情况这样一个流程），workflow本质上也是一个action。action可以通过cli、api和web ui来触发。</p>
+<h3 id="内置action"><a href="#内置action" class="headerlink" title="内置action"></a>内置action</h3><h5 id="通过简单的命令查询action："><a href="#通过简单的命令查询action：" class="headerlink" title="通过简单的命令查询action："></a>通过简单的命令查询action：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">root@5b0c7bc6be62:/# st2 action list -p core</div><div class="line">+-------------------+------+-----------------------------------------------------------+</div><div class="line">| ref               | pack | description                                               |</div><div class="line">+-------------------+------+-----------------------------------------------------------+</div><div class="line">| core.announcement | core | Action that broadcasts the announcement to all stream     |</div><div class="line">|                   |      | consumers.                                                |</div><div class="line">| core.ask          | core | Action for initiating an Inquiry (usually in a workflow)  |</div><div class="line">| core.echo         | core | Action that executes the Linux echo command on the        |</div><div class="line">|                   |      | localhost.                                                |</div><div class="line">| core.http         | core | Action that performs an http request.                     |</div><div class="line">| core.local        | core | Action that executes an arbitrary Linux command on the    |</div><div class="line">|                   |      | localhost.                                                |</div><div class="line">| core.local_sudo   | core | Action that executes an arbitrary Linux command on the    |</div><div class="line">|                   |      | localhost.                                                |</div><div class="line">| core.noop         | core | Action that does nothing                                  |</div><div class="line">| core.pause        | core | Action to pause current thread of workflow/sub-workflow.  |</div><div class="line">| core.remote       | core | Action to execute arbitrary linux command remotely.       |</div><div class="line">| core.remote_sudo  | core | Action to execute arbitrary linux command remotely.       |</div><div class="line">| core.sendmail     | core | This sends an email                                       |</div><div class="line">| core.uuid         | core | Generate a new UUID (default uuid4)                       |</div><div class="line">| core.windows_cmd  | core | Action to execute arbitrary Windows command remotely.     |</div><div class="line">+-------------------+------+-----------------------------------------------------------+</div></pre></td></tr></table></figure>
+<p>-p代表的是core这个pack的action。</p>
+<h5 id="查看action详情"><a href="#查看action详情" class="headerlink" title="查看action详情"></a>查看action详情</h5><p>看一下core.local这个action的详细描述：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">root@5b0c7bc6be62:/# st2 action get core.local</div><div class="line">+-------------+--------------------------------------------------------------+</div><div class="line">| Property    | Value                                                        |</div><div class="line">+-------------+--------------------------------------------------------------+</div><div class="line">| id          | 5b8a4832feeadc010e616fd1                                     |</div><div class="line">| uid         | action:core:local                                            |</div><div class="line">| ref         | core.local                                                   |</div><div class="line">| pack        | core                                                         |</div><div class="line">| name        | local                                                        |</div><div class="line">| description | Action that executes an arbitrary Linux command on the       |</div><div class="line">|             | localhost.                                                   |</div><div class="line">| enabled     | True                                                         |</div><div class="line">| entry_point |                                                              |</div><div class="line">| runner_type | local-shell-cmd                                              |</div><div class="line">| parameters  | &#123;                                                            |</div><div class="line">|             |     &quot;cmd&quot;: &#123;                                                 |</div><div class="line">|             |         &quot;required&quot;: true,                                    |</div><div class="line">|             |         &quot;type&quot;: &quot;string&quot;,                                    |</div><div class="line">|             |         &quot;description&quot;: &quot;Arbitrary Linux command to be        |</div><div class="line">|             | executed on the local host.&quot;                                 |</div><div class="line">|             |     &#125;,                                                       |</div><div class="line">|             |     &quot;sudo&quot;: &#123;                                                |</div><div class="line">|             |         &quot;immutable&quot;: true                                    |</div><div class="line">|             |     &#125;                                                        |</div><div class="line">|             | &#125;                                                            |</div><div class="line">| notify      |                                                              |</div><div class="line">| tags        |                                                              |</div><div class="line">+-------------+--------------------------------------------------------------+</div></pre></td></tr></table></figure>
+<ul>
+<li>pack: Action归属的Pack，StackStorm中Action和Workflow， Rule和Sensor都归属于Pack。可以通过st2 packlist查询Pack</li>
+<li>entry_point ：Action的执行入口，类似Docker的ENTRYPOINT。</li>
+<li>runner_type：Action的Action Runner类型，core.local的Runner是local-shell-cmd</li>
+<li>parameters : Action的参数信息，core.local的参数有cmd和sudo，其中cmd是必须的，即需要运行的命令</li>
+</ul>
+<h5 id="执行具体的action："><a href="#执行具体的action：" class="headerlink" title="执行具体的action："></a>执行具体的action：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">root@5b0c7bc6be62:/# st2 run core.local cmd=&quot;echo test&quot;</div><div class="line">.</div><div class="line">id: 5b95ee1ec8daae032cbb3c85</div><div class="line">status: succeeded</div><div class="line">parameters: </div><div class="line">  cmd: echo test</div><div class="line">result: </div><div class="line">  failed: false</div><div class="line">  return_code: 0</div><div class="line">  stderr: &apos;&apos;</div><div class="line">  stdout: test</div><div class="line">  succeeded: true</div></pre></td></tr></table></figure>
+<p>我们还可以查看具体每个action的执行详情：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">root@5b0c7bc6be62:/# st2 execution get 5b95ee1ec8daae032cbb3c85</div><div class="line">id: 5b95ee1ec8daae032cbb3c85</div><div class="line">status: succeeded (1s elapsed)</div><div class="line">parameters: </div><div class="line">  cmd: echo test</div><div class="line">result: </div><div class="line">  failed: false</div><div class="line">  return_code: 0</div><div class="line">  stderr: &apos;&apos;</div><div class="line">  stdout: test</div><div class="line">  succeeded: true</div></pre></td></tr></table></figure>
+<p>在action详情中我们说到了runner_type，runner_type决定了action跑在什么环境中，目前st2提供了以下几个runner：</p>
+<ul>
+<li><code>local-shell-cmd</code> 是一个local runner，表示在当前服务器上执行shell命令</li>
+<li><code>local-shell-script</code> 表示在本地执行shell脚本</li>
+<li><code>remote-shell-cmd</code> 远程执行shell命令</li>
+<li><code>remote-shell-script</code> 远程执行shell脚本</li>
+<li><code>python-script</code> python脚本，实现action的run方法就可以，是一个本地跑的脚本</li>
+<li><code>http-request</code>：http请求</li>
+<li><code>action-chain</code>： action执行链，st2自己的workflow，只支持线性workflow</li>
+<li><code>mistral-v2</code>：openstack的一个流程引擎，支持复杂的workflow规则</li>
+<li><code>cloudslang</code>：另一个流程引擎，java编写，详情可以看下<a href="https://docs.stackstorm.com/cloudslang.html" target="_blank" rel="external">cloudslang</a></li>
+<li><code>inquirer</code>：st2的core.ask的一层封装，主要用来通知外部</li>
+</ul>
+<h3 id="自定义action"><a href="#自定义action" class="headerlink" title="自定义action"></a>自定义action</h3><p>st2提供了强大的自定义能力，我们可以写自定义的action脚本。<br>一个action分为两部分组成：</p>
+<ol>
+<li>一个yaml的metadata文件，描述了action的基本信息和入参</li>
+<li>一个脚本，实现具体的action逻辑<br>脚本可以用任意语言实现，只要遵循以下的规则：</li>
+<li>脚本执行完成的时候返回0表示脚本执行成功，非0表示脚本执行失败</li>
+<li>所有的日志信息打印在标准错误输出中<h5 id="action-metadata"><a href="#action-metadata" class="headerlink" title="action metadata"></a>action metadata</h5>action meta信息用来描述一个action，一般用yaml来编写。有以下的参数需要在meta文件中体现：</li>
+</ol>
+<ul>
+<li>name：action名字</li>
+<li>runner_type：执行action的runner类型</li>
+<li>enabled：是否生效</li>
+<li>entry_point：执行入口，类似Docker的ENTRYPOINT，一般脚本放在/opt/stackstorm/packs/${pack_name}/actions/下面</li>
+<li>parameters：入参。目前支持string、boolean、number、object、integer、array，遵循<a href="http://json-schema.org/documentation.html" target="_blank" rel="external">JSON Schema</a> 定义</li>
+<li>tags</li>
+</ul>
+<p>我们来看一个实例，</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/self-healing/" rel="tag"># self-healing</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/09/StackStorm Learning - Install/" rel="next" title="StackStorm Learning - Install">
+                <i class="fa fa-chevron-left"></i> StackStorm Learning - Install
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="jamal-jiang" />
+          <p class="site-author-name" itemprop="name">jamal-jiang</p>
+          <p class="site-description motion-element" itemprop="description">程序员,技术,生活</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内置action"><span class="nav-number">2.</span> <span class="nav-text">内置action</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#通过简单的命令查询action："><span class="nav-number">2.0.1.</span> <span class="nav-text">通过简单的命令查询action：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看action详情"><span class="nav-number">2.0.2.</span> <span class="nav-text">查看action详情</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#执行具体的action："><span class="nav-number">2.0.3.</span> <span class="nav-text">执行具体的action：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义action"><span class="nav-number">3.</span> <span class="nav-text">自定义action</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#action-metadata"><span class="nav-number">3.0.1.</span> <span class="nav-text">action metadata</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jamal-jiang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+      <!-- UY END -->
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

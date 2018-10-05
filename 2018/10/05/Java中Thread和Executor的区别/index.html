@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="life," />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -86,16 +86,16 @@
 
 
 
-<meta name="description" content="writting blob always slow down and even forget it for some time, now I made a decision that write 2 blobs one week in English and Chinese.">
+<meta name="description" content="真是人品好，写了文档都赶上11:02这种时间点，一种注孤生的感觉，幸亏我已经有老婆了哈哈。这篇文章介绍一下Java中Thread和Executor的区别。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="做了一个决定">
-<meta property="og:url" content="https://jamal-jiang.github.io/2018/09/02/2018-09-02-1/index.html">
+<meta property="og:title" content="Java中Thread和Executor的区别">
+<meta property="og:url" content="https://jamal-jiang.github.io/2018/10/05/Java中Thread和Executor的区别/index.html">
 <meta property="og:site_name" content="Jamal的博客">
-<meta property="og:description" content="writting blob always slow down and even forget it for some time, now I made a decision that write 2 blobs one week in English and Chinese.">
-<meta property="og:updated_time" content="2018-09-02T02:47:45.000Z">
+<meta property="og:description" content="真是人品好，写了文档都赶上11:02这种时间点，一种注孤生的感觉，幸亏我已经有老婆了哈哈。这篇文章介绍一下Java中Thread和Executor的区别。">
+<meta property="og:updated_time" content="2018-10-05T04:09:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="做了一个决定">
-<meta name="twitter:description" content="writting blob always slow down and even forget it for some time, now I made a decision that write 2 blobs one week in English and Chinese.">
+<meta name="twitter:title" content="Java中Thread和Executor的区别">
+<meta name="twitter:description" content="真是人品好，写了文档都赶上11:02这种时间点，一种注孤生的感觉，幸亏我已经有老婆了哈哈。这篇文章介绍一下Java中Thread和Executor的区别。">
 
 
 
@@ -123,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="https://jamal-jiang.github.io/2018/09/02/2018-09-02-1/"/>
+  <link rel="canonical" href="https://jamal-jiang.github.io/2018/10/05/Java中Thread和Executor的区别/"/>
 
 
 
@@ -144,7 +144,7 @@
 })();
 </script>
 
-  <title> 做了一个决定 | Jamal的博客 </title>
+  <title> Java中Thread和Executor的区别 | Jamal的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -267,7 +267,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2018/09/02/2018-09-02-1/">
+  <link itemprop="mainEntityOfPage" href="https://jamal-jiang.github.io/2018/10/05/Java中Thread和Executor的区别/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="jamal-jiang">
@@ -291,7 +291,7 @@
             
             
               
-                做了一个决定
+                Java中Thread和Executor的区别
               
             
           </h2>
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-02T10:46:00+08:00">
-                2018-09-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-05T11:02:00+08:00">
+                2018-10-05
               </time>
             
 
@@ -329,8 +329,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/life/" itemprop="url" rel="index">
-                    <span itemprop="name">life</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -369,7 +369,22 @@
       
 
       
-        <p>writting blob always slow down and even forget it for some time, now I made a decision that write 2 blobs one week in English and Chinese.</p>
+        <p>真是人品好，写了文档都赶上11:02这种时间点，一种注孤生的感觉，幸亏我已经有老婆了哈哈。<br>这篇文章介绍一下Java中Thread和Executor的区别。</p>
+<a id="more"></a>
+<p>主要是翻译的<a href="https://javarevisited.blogspot.com/2016/12/difference-between-thread-and-executor.html" target="_blank" rel="external">这篇文章</a>。</p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Thread和Executor都是Java里用来并发执行一些code的，他们之间最主要的区别是在于Executor能提供一个线程池的实现，当然还包括一些同步的实现包括 CountDownLatch, CyclicBarrier, Semaphore, FutureTask, Callable interface, Conditions等。Java中也提供了一个内置的线程池，以一个线程的集合并发的执行code，考虑到创建和运行一个线程是非常昂贵的操作，在之前很多Java应用都在启动的时候创建一个线程池出来，直到Java有了内置线程池，这个线程池的实现就是大名鼎鼎的<a href="http://javarevisited.blogspot.com/2013/07/how-to-create-thread-pools-in-java-executors-framework-example-tutorial.html" target="_blank" rel="external">Executor framework</a>，Executor的出现减轻了很多Java开发者自己创建和管理线程的负担。</p>
+<h3 id="Thread和Executor的区别"><a href="#Thread和Executor的区别" class="headerlink" title="Thread和Executor的区别"></a>Thread和Executor的区别</h3><p>前言中我们说过，Thread和Executor都是Java里用来并发执行一些code的，你可以通过继承<code>java.lang.Thread</code>类或者是实现<code>java.lang.Runnable</code>接口来实现，而Executor是一个接口，也提供了并发执行的能力，但是是通过线程池的形式，这对于大型Java应用来说更加适用，下面我们聊一下他们之间的区别：</p>
+<ul>
+<li>Thread是一个类，Executor是一个接口；</li>
+<li>Executor是并发计算的一个抽象，它允许代码以托管的方式运行，而Thread则是并发运行代码的一个具体实现；</li>
+<li>Executor把任务本身和执行过程解耦，这在Thread是紧密结合在一起的；</li>
+<li>Executor提供了一个executor方法接受一个Runnable对象，而Thread是在构造方法里传入一个Runnable对象，这里会造成一个问题，Executor可以执行不同类型的Runnable对象，而Thread不行，这是一个非常大的区别；</li>
+</ul>
+<p>这么讲比较抽象，我们来看一个实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadAndExecutorTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Runnable task = <span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"Task is executed by : "</span></div><div class="line">                + Thread.currentThread().getName());</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        Thread t = <span class="keyword">new</span> Thread(task, <span class="string">"MY_THREAD"</span>);</div><div class="line">        t.start();</div><div class="line"></div><div class="line">        Executor e = Executors.newSingleThreadExecutor();</div><div class="line">        e.execute(task);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Task is executed by : MY_THREAD</div><div class="line">Task is executed by : pool-1-thread-1</div></pre></td></tr></table></figure>
+<p>这里可以看出几件事情：</p>
 
       
     </div>
@@ -393,7 +408,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/life/" rel="tag"># life</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -402,8 +417,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/20/StackStorm Learning - Introduction/" rel="next" title="StackStorm Learning - Introduction">
-                <i class="fa fa-chevron-left"></i> StackStorm Learning - Introduction
+              <a href="/2018/09/24/Python requests timeout/" rel="next" title="Python requests timeout">
+                <i class="fa fa-chevron-left"></i> Python requests timeout
               </a>
             
           </div>
@@ -412,8 +427,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/09/StackStorm Learning - Install/" rel="prev" title="StackStorm Learning - Install">
-                StackStorm Learning - Install <i class="fa fa-chevron-right"></i>
+              <a href="/2018/10/05/What I did in this National Day holiday/" rel="prev" title="What I did in this National Day holiday">
+                What I did in this National Day holiday <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -461,8 +476,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -475,7 +499,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -484,7 +508,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -493,7 +517,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -518,6 +542,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread和Executor的区别"><span class="nav-number">2.</span> <span class="nav-text">Thread和Executor的区别</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
